@@ -1,0 +1,1303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ForeignLanguageCenterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="bigint" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="bigint" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TeacherID" Type="bigint" Nullable="false" />
+          <Property Name="CourseID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassStudent">
+          <Key>
+            <PropertyRef Name="ClassStudentID" />
+          </Key>
+          <Property Name="ClassStudentID" Type="bigint" Nullable="false" />
+          <Property Name="ClassID" Type="bigint" Nullable="false" />
+          <Property Name="StudentID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassWeekDay">
+          <Key>
+            <PropertyRef Name="ClassWeekDayID" />
+          </Key>
+          <Property Name="ClassWeekDayID" Type="bigint" Nullable="false" />
+          <Property Name="ClassID" Type="bigint" />
+          <Property Name="WeekDayID" Type="bigint" Nullable="false" />
+          <Property Name="ClassWeekDayTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="bigint" Nullable="false" />
+          <Property Name="Lessons" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Tern" Type="nvarchar" MaxLength="255" />
+          <Property Name="LanguageID" Type="bigint" Nullable="false" />
+          <Property Name="LevelID" Type="bigint" Nullable="false" />
+          <Property Name="CategoryID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="LanguageID" />
+          </Key>
+          <Property Name="LanguageID" Type="bigint" Nullable="false" />
+          <Property Name="LanguageName" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="LevelID" />
+          </Key>
+          <Property Name="LevelID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Code" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NewFeed">
+          <Key>
+            <PropertyRef Name="NewFeedID" />
+          </Key>
+          <Property Name="NewFeedID" Type="bigint" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="bigint" Nullable="false" />
+          <Property Name="PaymentDate" Type="datetime" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentMethodID" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="StudentID" Type="bigint" Nullable="false" />
+          <Property Name="ClassID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodID" />
+          </Key>
+          <Property Name="PaymentMethodID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="RegistrationClass">
+          <Key>
+            <PropertyRef Name="RegistrationClassID" />
+          </Key>
+          <Property Name="RegistrationClassID" Type="bigint" Nullable="false" />
+          <Property Name="StudentID" Type="bigint" Nullable="false" />
+          <Property Name="ClassID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="bigint" Nullable="false" />
+          <Property Name="Position" Type="tinyint" />
+          <Property Name="FirtName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="NumberPhone" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="StaffAccount">
+          <Key>
+            <PropertyRef Name="StaffAccountID" />
+          </Key>
+          <Property Name="StaffAccountID" Type="bigint" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWordLogin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StaffID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="bigint" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="CurrentAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="CityID" Type="bigint" />
+          <Property Name="FirtName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="StudentAccount">
+          <Key>
+            <PropertyRef Name="StudentAccountID" />
+          </Key>
+          <Property Name="StudentAccountID" Type="bigint" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWordLogin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StudentID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="bigint" Nullable="false" />
+          <Property Name="AvatarUrl" Type="varchar" MaxLength="255" />
+          <Property Name="FirtName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="NumberPhone" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TeacherAccount">
+          <Key>
+            <PropertyRef Name="TeacherAccountID" />
+          </Key>
+          <Property Name="TeacherAccountID" Type="bigint" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWordLogin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TeacherID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TrainingResult">
+          <Key>
+            <PropertyRef Name="TrainingResultID" />
+          </Key>
+          <Property Name="TrainingResultID" Type="bigint" Nullable="false" />
+          <Property Name="ClassID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TrainingResultDetail">
+          <Key>
+            <PropertyRef Name="TrainingResultDetailID" />
+          </Key>
+          <Property Name="TrainingResultDetailID" Type="bigint" Nullable="false" />
+          <Property Name="TrainingResultID" Type="bigint" Nullable="false" />
+          <Property Name="StudentID" Type="bigint" Nullable="false" />
+          <Property Name="ScoreFirt" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ScoreLast" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="WeekDay">
+          <Key>
+            <PropertyRef Name="WeekDayID" />
+          </Key>
+          <Property Name="WeekDayID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_Class_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Class_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassStudent_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="ClassStudent" Type="Self.ClassStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="ClassStudent">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassStudent_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="ClassStudent" Type="Self.ClassStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="ClassStudent">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassWeekDay_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="ClassWeekDay" Type="Self.ClassWeekDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="ClassWeekDay">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassWeekDay_WeekDay">
+          <End Role="WeekDay" Type="Self.WeekDay" Multiplicity="1" />
+          <End Role="ClassWeekDay" Type="Self.ClassWeekDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeekDay">
+              <PropertyRef Name="WeekDayID" />
+            </Principal>
+            <Dependent Role="ClassWeekDay">
+              <PropertyRef Name="WeekDayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Level">
+          <End Role="Level" Type="Self.Level" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="LevelID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="LevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentMethod">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffAccount_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="StaffAccount" Type="Self.StaffAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="StaffAccount">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentAccount_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="StudentAccount" Type="Self.StudentAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentAccount">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherAccount_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="TeacherAccount" Type="Self.TeacherAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="TeacherAccount">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingResult_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="TrainingResult" Type="Self.TrainingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="TrainingResult">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingResultDetail_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="TrainingResultDetail" Type="Self.TrainingResultDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="TrainingResultDetail">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingResultDetail_TrainingResult">
+          <End Role="TrainingResult" Type="Self.TrainingResult" Multiplicity="1" />
+          <End Role="TrainingResultDetail" Type="Self.TrainingResultDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrainingResult">
+              <PropertyRef Name="TrainingResultID" />
+            </Principal>
+            <Dependent Role="TrainingResultDetail">
+              <PropertyRef Name="TrainingResultID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="uspTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="char" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ForeignLanguageCenterModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassStudent" EntityType="Self.ClassStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassWeekDay" EntityType="Self.ClassWeekDay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewFeed" EntityType="Self.NewFeed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegistrationClass" EntityType="Self.RegistrationClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffAccount" EntityType="Self.StaffAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentAccount" EntityType="Self.StudentAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherAccount" EntityType="Self.TeacherAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrainingResult" EntityType="Self.TrainingResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrainingResultDetail" EntityType="Self.TrainingResultDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeekDay" EntityType="Self.WeekDay" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Class_Course" Association="Self.FK_Class_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassStudent_Class" Association="Self.FK_ClassStudent_Class">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassStudent" EntitySet="ClassStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassStudent_Student" Association="Self.FK_ClassStudent_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="ClassStudent" EntitySet="ClassStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassWeekDay_Class" Association="Self.FK_ClassWeekDay_Class">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassWeekDay" EntitySet="ClassWeekDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassWeekDay_WeekDay" Association="Self.FK_ClassWeekDay_WeekDay">
+            <End Role="WeekDay" EntitySet="WeekDay" />
+            <End Role="ClassWeekDay" EntitySet="ClassWeekDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Category" Association="Self.FK_Course_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Language" Association="Self.FK_Course_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Level" Association="Self.FK_Course_Level">
+            <End Role="Level" EntitySet="Level" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentMethod" Association="Self.FK_Payment_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Student" Association="Self.FK_Payment_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffAccount_Staff" Association="Self.FK_StaffAccount_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StaffAccount" EntitySet="StaffAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentAccount_Student" Association="Self.FK_StudentAccount_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentAccount" EntitySet="StudentAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherAccount_Teacher" Association="Self.FK_TeacherAccount_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="TeacherAccount" EntitySet="TeacherAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingResult_Class" Association="Self.FK_TrainingResult_Class">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="TrainingResult" EntitySet="TrainingResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingResultDetail_Student" Association="Self.FK_TrainingResultDetail_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="TrainingResultDetail" EntitySet="TrainingResultDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingResultDetail_TrainingResult" Association="Self.FK_TrainingResultDetail_TrainingResult">
+            <End Role="TrainingResult" EntitySet="TrainingResult" />
+            <End Role="TrainingResultDetail" EntitySet="TrainingResultDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ForeignLanguageCenterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int64" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_Course_Category" FromRole="Category" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="Int64" Nullable="false" />
+          <Property Name="ClassName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TeacherID" Type="Int64" Nullable="false" />
+          <Property Name="CourseID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Class_Course" FromRole="Class" ToRole="Course" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Class_Teacher" FromRole="Class" ToRole="Teacher" />
+          <NavigationProperty Name="ClassStudents" Relationship="Self.FK_ClassStudent_Class" FromRole="Class" ToRole="ClassStudent" />
+          <NavigationProperty Name="ClassWeekDays" Relationship="Self.FK_ClassWeekDay_Class" FromRole="Class" ToRole="ClassWeekDay" />
+          <NavigationProperty Name="TrainingResults" Relationship="Self.FK_TrainingResult_Class" FromRole="Class" ToRole="TrainingResult" />
+        </EntityType>
+        <EntityType Name="ClassStudent">
+          <Key>
+            <PropertyRef Name="ClassStudentID" />
+          </Key>
+          <Property Name="ClassStudentID" Type="Int64" Nullable="false" />
+          <Property Name="ClassID" Type="Int64" Nullable="false" />
+          <Property Name="StudentID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_ClassStudent_Class" FromRole="ClassStudent" ToRole="Class" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_ClassStudent_Student" FromRole="ClassStudent" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="ClassWeekDay">
+          <Key>
+            <PropertyRef Name="ClassWeekDayID" />
+          </Key>
+          <Property Name="ClassWeekDayID" Type="Int64" Nullable="false" />
+          <Property Name="ClassID" Type="Int64" />
+          <Property Name="WeekDayID" Type="Int64" Nullable="false" />
+          <Property Name="ClassWeekDayTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_ClassWeekDay_Class" FromRole="ClassWeekDay" ToRole="Class" />
+          <NavigationProperty Name="WeekDay" Relationship="Self.FK_ClassWeekDay_WeekDay" FromRole="ClassWeekDay" ToRole="WeekDay" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="Int64" Nullable="false" />
+          <Property Name="Lessons" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tern" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageID" Type="Int64" Nullable="false" />
+          <Property Name="LevelID" Type="Int64" Nullable="false" />
+          <Property Name="CategoryID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Course_Category" FromRole="Course" ToRole="Category" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK_Class_Course" FromRole="Course" ToRole="Class" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Course_Language" FromRole="Course" ToRole="Language" />
+          <NavigationProperty Name="Level" Relationship="Self.FK_Course_Level" FromRole="Course" ToRole="Level" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="LanguageID" />
+          </Key>
+          <Property Name="LanguageID" Type="Int64" Nullable="false" />
+          <Property Name="LanguageName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_Course_Language" FromRole="Language" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="LevelID" />
+          </Key>
+          <Property Name="LevelID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_Course_Level" FromRole="Level" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="NewFeed">
+          <Key>
+            <PropertyRef Name="NewFeedID" />
+          </Key>
+          <Property Name="NewFeedID" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int64" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentMethodID" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="StudentID" Type="Int64" Nullable="false" />
+          <Property Name="ClassID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK_Payment_PaymentMethod" FromRole="Payment" ToRole="PaymentMethod" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Payment_Student" FromRole="Payment" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodID" />
+          </Key>
+          <Property Name="PaymentMethodID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_PaymentMethod" FromRole="PaymentMethod" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="RegistrationClass">
+          <Key>
+            <PropertyRef Name="RegistrationClassID" />
+          </Key>
+          <Property Name="RegistrationClassID" Type="Int64" Nullable="false" />
+          <Property Name="StudentID" Type="Int64" Nullable="false" />
+          <Property Name="ClassID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int64" Nullable="false" />
+          <Property Name="Position" Type="Byte" />
+          <Property Name="FirtName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NumberPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StaffAccounts" Relationship="Self.FK_StaffAccount_Staff" FromRole="Staff" ToRole="StaffAccount" />
+        </EntityType>
+        <EntityType Name="StaffAccount">
+          <Key>
+            <PropertyRef Name="StaffAccountID" />
+          </Key>
+          <Property Name="StaffAccountID" Type="Int64" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWordLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StaffID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_StaffAccount_Staff" FromRole="StaffAccount" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int64" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="CurrentAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CityID" Type="Int64" />
+          <Property Name="FirtName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassStudents" Relationship="Self.FK_ClassStudent_Student" FromRole="Student" ToRole="ClassStudent" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Student" FromRole="Student" ToRole="Payment" />
+          <NavigationProperty Name="StudentAccounts" Relationship="Self.FK_StudentAccount_Student" FromRole="Student" ToRole="StudentAccount" />
+          <NavigationProperty Name="TrainingResultDetails" Relationship="Self.FK_TrainingResultDetail_Student" FromRole="Student" ToRole="TrainingResultDetail" />
+        </EntityType>
+        <EntityType Name="StudentAccount">
+          <Key>
+            <PropertyRef Name="StudentAccountID" />
+          </Key>
+          <Property Name="StudentAccountID" Type="Int64" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWordLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StudentID" Type="Int64" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_StudentAccount_Student" FromRole="StudentAccount" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="Int64" Nullable="false" />
+          <Property Name="AvatarUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FirtName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NumberPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK_Class_Teacher" FromRole="Teacher" ToRole="Class" />
+          <NavigationProperty Name="TeacherAccounts" Relationship="Self.FK_TeacherAccount_Teacher" FromRole="Teacher" ToRole="TeacherAccount" />
+        </EntityType>
+        <EntityType Name="TeacherAccount">
+          <Key>
+            <PropertyRef Name="TeacherAccountID" />
+          </Key>
+          <Property Name="TeacherAccountID" Type="Int64" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWordLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeacherID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_TeacherAccount_Teacher" FromRole="TeacherAccount" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="TrainingResult">
+          <Key>
+            <PropertyRef Name="TrainingResultID" />
+          </Key>
+          <Property Name="TrainingResultID" Type="Int64" Nullable="false" />
+          <Property Name="ClassID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_TrainingResult_Class" FromRole="TrainingResult" ToRole="Class" />
+          <NavigationProperty Name="TrainingResultDetails" Relationship="Self.FK_TrainingResultDetail_TrainingResult" FromRole="TrainingResult" ToRole="TrainingResultDetail" />
+        </EntityType>
+        <EntityType Name="TrainingResultDetail">
+          <Key>
+            <PropertyRef Name="TrainingResultDetailID" />
+          </Key>
+          <Property Name="TrainingResultDetailID" Type="Int64" Nullable="false" />
+          <Property Name="TrainingResultID" Type="Int64" Nullable="false" />
+          <Property Name="StudentID" Type="Int64" Nullable="false" />
+          <Property Name="ScoreFirt" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ScoreLast" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_TrainingResultDetail_Student" FromRole="TrainingResultDetail" ToRole="Student" />
+          <NavigationProperty Name="TrainingResult" Relationship="Self.FK_TrainingResultDetail_TrainingResult" FromRole="TrainingResultDetail" ToRole="TrainingResult" />
+        </EntityType>
+        <EntityType Name="WeekDay">
+          <Key>
+            <PropertyRef Name="WeekDayID" />
+          </Key>
+          <Property Name="WeekDayID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassWeekDays" Relationship="Self.FK_ClassWeekDay_WeekDay" FromRole="WeekDay" ToRole="ClassWeekDay" />
+        </EntityType>
+        <Association Name="FK_Course_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Class_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Class_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassStudent_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="ClassStudent" Type="Self.ClassStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="ClassStudent">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassWeekDay_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="ClassWeekDay" Type="Self.ClassWeekDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="ClassWeekDay">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingResult_Class">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="TrainingResult" Type="Self.TrainingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="TrainingResult">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassStudent_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="ClassStudent" Type="Self.ClassStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="ClassStudent">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassWeekDay_WeekDay">
+          <End Role="WeekDay" Type="Self.WeekDay" Multiplicity="1" />
+          <End Role="ClassWeekDay" Type="Self.ClassWeekDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeekDay">
+              <PropertyRef Name="WeekDayID" />
+            </Principal>
+            <Dependent Role="ClassWeekDay">
+              <PropertyRef Name="WeekDayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Level">
+          <End Role="Level" Type="Self.Level" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="LevelID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="LevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentMethod">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StaffAccount_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="StaffAccount" Type="Self.StaffAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="StaffAccount">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentAccount_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="StudentAccount" Type="Self.StudentAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentAccount">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingResultDetail_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="TrainingResultDetail" Type="Self.TrainingResultDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="TrainingResultDetail">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherAccount_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="TeacherAccount" Type="Self.TeacherAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="TeacherAccount">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingResultDetail_TrainingResult">
+          <End Role="TrainingResult" Type="Self.TrainingResult" Multiplicity="1" />
+          <End Role="TrainingResultDetail" Type="Self.TrainingResultDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrainingResult">
+              <PropertyRef Name="TrainingResultID" />
+            </Principal>
+            <Dependent Role="TrainingResultDetail">
+              <PropertyRef Name="TrainingResultID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ForeignLanguageCenterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="ClassStudents" EntityType="Self.ClassStudent" />
+          <EntitySet Name="ClassWeekDays" EntityType="Self.ClassWeekDay" />
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Languages" EntityType="Self.Language" />
+          <EntitySet Name="Levels" EntityType="Self.Level" />
+          <EntitySet Name="NewFeeds" EntityType="Self.NewFeed" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethod" />
+          <EntitySet Name="RegistrationClasses" EntityType="Self.RegistrationClass" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="StaffAccounts" EntityType="Self.StaffAccount" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="StudentAccounts" EntityType="Self.StudentAccount" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="TeacherAccounts" EntityType="Self.TeacherAccount" />
+          <EntitySet Name="TrainingResults" EntityType="Self.TrainingResult" />
+          <EntitySet Name="TrainingResultDetails" EntityType="Self.TrainingResultDetail" />
+          <EntitySet Name="WeekDays" EntityType="Self.WeekDay" />
+          <AssociationSet Name="FK_Course_Category" Association="Self.FK_Course_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Class_Course" Association="Self.FK_Class_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassStudent_Class" Association="Self.FK_ClassStudent_Class">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="ClassStudent" EntitySet="ClassStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassWeekDay_Class" Association="Self.FK_ClassWeekDay_Class">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="ClassWeekDay" EntitySet="ClassWeekDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingResult_Class" Association="Self.FK_TrainingResult_Class">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="TrainingResult" EntitySet="TrainingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassStudent_Student" Association="Self.FK_ClassStudent_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="ClassStudent" EntitySet="ClassStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassWeekDay_WeekDay" Association="Self.FK_ClassWeekDay_WeekDay">
+            <End Role="WeekDay" EntitySet="WeekDays" />
+            <End Role="ClassWeekDay" EntitySet="ClassWeekDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Language" Association="Self.FK_Course_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Level" Association="Self.FK_Course_Level">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentMethod" Association="Self.FK_Payment_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethods" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Student" Association="Self.FK_Payment_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffAccount_Staff" Association="Self.FK_StaffAccount_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="StaffAccount" EntitySet="StaffAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentAccount_Student" Association="Self.FK_StudentAccount_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentAccount" EntitySet="StudentAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingResultDetail_Student" Association="Self.FK_TrainingResultDetail_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="TrainingResultDetail" EntitySet="TrainingResultDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherAccount_Teacher" Association="Self.FK_TeacherAccount_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="TeacherAccount" EntitySet="TeacherAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingResultDetail_TrainingResult" Association="Self.FK_TrainingResultDetail_TrainingResult">
+            <End Role="TrainingResult" EntitySet="TrainingResults" />
+            <End Role="TrainingResultDetail" EntitySet="TrainingResultDetails" />
+          </AssociationSet>
+          <FunctionImport Name="uspTest" ReturnType="Collection(ForeignLanguageCenterModel.uspTest_Result)">
+            <Parameter Name="id" Mode="In" Type="Int64" />
+            <Parameter Name="char" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="uspTest_Result">
+          <Property Type="Int64" Name="CategoryID" Nullable="false" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="255" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ForeignLanguageCenterModelStoreContainer" CdmEntityContainer="ForeignLanguageCenterEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassStudents">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.ClassStudent">
+              <MappingFragment StoreEntitySet="ClassStudent">
+                <ScalarProperty Name="ClassStudentID" ColumnName="ClassStudentID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassWeekDays">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.ClassWeekDay">
+              <MappingFragment StoreEntitySet="ClassWeekDay">
+                <ScalarProperty Name="ClassWeekDayID" ColumnName="ClassWeekDayID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="WeekDayID" ColumnName="WeekDayID" />
+                <ScalarProperty Name="ClassWeekDayTime" ColumnName="ClassWeekDayTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="Lessons" ColumnName="Lessons" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Tern" ColumnName="Tern" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="LevelID" ColumnName="LevelID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="LanguageName" ColumnName="LanguageName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Levels">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Level">
+              <MappingFragment StoreEntitySet="Level">
+                <ScalarProperty Name="LevelID" ColumnName="LevelID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewFeeds">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.NewFeed">
+              <MappingFragment StoreEntitySet="NewFeed">
+                <ScalarProperty Name="NewFeedID" ColumnName="NewFeedID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethods">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.PaymentMethod">
+              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegistrationClasses">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.RegistrationClass">
+              <MappingFragment StoreEntitySet="RegistrationClass">
+                <ScalarProperty Name="RegistrationClassID" ColumnName="RegistrationClassID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="FirtName" ColumnName="FirtName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffAccounts">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.StaffAccount">
+              <MappingFragment StoreEntitySet="StaffAccount">
+                <ScalarProperty Name="StaffAccountID" ColumnName="StaffAccountID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+                <ScalarProperty Name="PassWordLogin" ColumnName="PassWordLogin" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="CurrentAddress" ColumnName="CurrentAddress" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="FirtName" ColumnName="FirtName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentAccounts">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.StudentAccount">
+              <MappingFragment StoreEntitySet="StudentAccount">
+                <ScalarProperty Name="StudentAccountID" ColumnName="StudentAccountID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+                <ScalarProperty Name="PassWordLogin" ColumnName="PassWordLogin" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
+                <ScalarProperty Name="FirtName" ColumnName="FirtName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherAccounts">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.TeacherAccount">
+              <MappingFragment StoreEntitySet="TeacherAccount">
+                <ScalarProperty Name="TeacherAccountID" ColumnName="TeacherAccountID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+                <ScalarProperty Name="PassWordLogin" ColumnName="PassWordLogin" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainingResults">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.TrainingResult">
+              <MappingFragment StoreEntitySet="TrainingResult">
+                <ScalarProperty Name="TrainingResultID" ColumnName="TrainingResultID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainingResultDetails">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.TrainingResultDetail">
+              <MappingFragment StoreEntitySet="TrainingResultDetail">
+                <ScalarProperty Name="TrainingResultDetailID" ColumnName="TrainingResultDetailID" />
+                <ScalarProperty Name="TrainingResultID" ColumnName="TrainingResultID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ScoreFirt" ColumnName="ScoreFirt" />
+                <ScalarProperty Name="ScoreLast" ColumnName="ScoreLast" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeekDays">
+            <EntityTypeMapping TypeName="ForeignLanguageCenterModel.WeekDay">
+              <MappingFragment StoreEntitySet="WeekDay">
+                <ScalarProperty Name="WeekDayID" ColumnName="WeekDayID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspTest" FunctionName="ForeignLanguageCenterModel.Store.uspTest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ForeignLanguageCenterModel.uspTest_Result">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
