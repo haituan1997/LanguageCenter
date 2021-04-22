@@ -9,22 +9,17 @@ using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
-
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeAdminController : Controller
     {
-
+         
         // GET: Home/Home
-        private readonly ClassRepository _ClassRepository;
-        public HomeController()
+        public HomeAdminController()
         {
-            _ClassRepository = new ClassRepository();
-
 
         }
         public ActionResult Index()
         {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-             
             return View();
 
         }
