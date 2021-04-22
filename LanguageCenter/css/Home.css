@@ -264,6 +264,8 @@
     }
 .home-footer {
     background: rgb(63,135,232);
+    top: 0px;
+    position: relative;
 }
 .home-footer-box {
     background: rgb(63,135,232);
@@ -299,4 +301,10 @@
     .home-div5-right-box {
         padding: 41px 40px;
     }
+        .home-div5-right-box {
+            padding: 115px 60px 67px 60px;
+        }
+        .div5-left {
+            padding: 119px 50px;
+        }
 }
