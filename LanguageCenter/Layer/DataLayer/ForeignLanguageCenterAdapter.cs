@@ -1,6 +1,7 @@
 ﻿using LanguageCenter.DataLayer.Shared;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,9 @@ namespace LanguageCenter.DataLayer
 {
     public static class ForeignLanguageCenterAdapter
     {
-        private static readonly string ConnectionString = @"Data Source=DESKTOP-RCFES7K;Initial Catalog=ForeignLanguageCenter;Integrated Security=True";
+        private static readonly string ConnectionStringName = ConfigurationManager.AppSettings.Get("ForeignLanguageCenterConnectionString");
+        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings[ConnectionStringName].ConnectionString;
+
 
         #region Fast data readers
 

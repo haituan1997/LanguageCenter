@@ -262,23 +262,9 @@
         color: white !important;
         border-radius: 5px;
     }
-.home-footer {
-    background: rgb(63,135,232);
-}
-.home-footer-box {
-    background: rgb(63,135,232);
-    color: white;
-}
-    .home-footer-box h5 {
-        font-size:20px;
-    }
-    .home-footer-box a {
-        color:white !important;
-    }
 
-
-    @media only screen and (max-width: 1500px) {
-        .div1-left {
+@media only screen and (max-width: 1500px) {
+    .div1-left {
         padding: 40px 45px 40px 45px;
     }
     .home-div1-left h2 {
