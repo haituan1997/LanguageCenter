@@ -14,17 +14,12 @@ namespace LanguageCenter.Areas.Home.Controllers
     {
 
         // GET: Home/Home
-        private readonly ClassRepository _ClassRepository;
         public HomeAdminController()
         {
-            _ClassRepository = new ClassRepository();
-
 
         }
         public ActionResult Index()
         {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-             
             return View();
 
         }
