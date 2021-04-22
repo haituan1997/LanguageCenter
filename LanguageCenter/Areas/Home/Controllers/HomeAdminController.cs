@@ -12,7 +12,7 @@ namespace LanguageCenter.Areas.Home.Controllers
     [Authorize]
     public class HomeAdminController : Controller
     {
-
+         
         // GET: Home/Home
         public HomeAdminController()
         {
