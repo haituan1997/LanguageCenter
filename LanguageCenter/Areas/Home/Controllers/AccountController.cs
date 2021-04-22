@@ -42,7 +42,7 @@ namespace LanguageCenter.Controllers
                                                               .Select(c => c.Value).SingleOrDefault();
                     var loginUser = _UserRepository.Get_Users(userName,pass);
 
-                    return this.RedirectToPage(loginUser);
+                    return this.RedirectToPage(loginUser, returnUrl);
                 }
             }
             catch (Exception ex)
@@ -73,8 +73,11 @@ namespace LanguageCenter.Controllers
                         // Login In.
                         this.SignInUser(logindetails, false);
 
-                        // Info.
-                        return this.RedirectToPage(logindetails);
+                        // Info.return this.RedirectToAction("Index", "Home");
+                     
+                        return this.RedirectToPage(logindetails, returnUrl);
+                        
+                        
                     }
                     else
                     {
@@ -155,9 +158,13 @@ namespace LanguageCenter.Controllers
             return this.RedirectToAction("LogOff", "Account");
         }
 
-        private ActionResult RedirectToPage(User user)
+        private ActionResult RedirectToPage(User user, string returnUrl)
         {
-            return this.RedirectToAction("Index", "Home");
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+            return this.Redirect(returnUrl);
 
         }
 
