@@ -19,6 +19,8 @@ namespace LanguageCenter.Areas.Home.Controllers
         public HomeController()
         {
             _ClassRepository = new ClassRepository();
+
+
         }
         public ActionResult Index()
         {
