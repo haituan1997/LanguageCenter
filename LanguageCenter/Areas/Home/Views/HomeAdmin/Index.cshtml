@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <button id="button-delete">Delete selected row</button>
-<button id="button-new">Delete selected row</button>
+<button id="button-new">thêm mới</button>
 <table id="example" class="display" style="width:100%">
     <thead>
         <tr>
@@ -90,7 +90,7 @@
             });
         });
         // xử lý thêm mới
-        $('#button-delete').click(function () {
+        $('#button-new').click(function () {
             // lấy được dòng vào đang selected xong mình lấy dk ID rồi truyền vào
             window.location = "link thêm mới";
         });
