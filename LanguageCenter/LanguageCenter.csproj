@@ -280,6 +280,7 @@
     <Content Include="css\stylesheets\flexslider.css" />
     <Content Include="css\stylesheets\font-awesome.css" />
     <Content Include="css\stylesheets\font-awesome.min.css" />
+    <Content Include="css\stylesheets\jquery.dataTables.min.css" />
     <Content Include="css\stylesheets\owl.carousel.css" />
     <Content Include="css\stylesheets\responsive.css" />
     <Content Include="css\stylesheets\revolution-slider.css" />
@@ -8312,10 +8313,12 @@
     <Content Include="javascript\gmap3.min.js" />
     <Content Include="javascript\html5shiv.js" />
     <Content Include="javascript\imagesloaded.min.js" />
+    <Content Include="javascript\jquery-3.5.1.js" />
     <Content Include="javascript\jquery-countTo.js" />
     <Content Include="javascript\jquery-validate.js" />
     <Content Include="javascript\jquery-waypoints.js" />
     <Content Include="javascript\jquery.cookie.js" />
+    <Content Include="javascript\jquery.dataTables.min.js" />
     <Content Include="javascript\jquery.easing.js" />
     <Content Include="javascript\jquery.easypiechart.min.js" />
     <Content Include="javascript\jquery.fitvids.js" />
