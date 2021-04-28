@@ -1,57 +1,98 @@
-﻿@{ 
+﻿@model IEnumerable<LanguageCenter.Models.UserModel>
+@{
     ViewBag.Title = "Trang chủ quản trị";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; 
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<div class="container-fluid">
-    <h1 class="mt-4">Bảng thống kê</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Primary Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Warning Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">Success Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">Danger Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="card mb-4">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
-        <div class="card-body">
-            <div class="table-responsive">
+<button id="button-delete">Delete selected row</button>
+<button id="button-new">Delete selected row</button>
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+        </tr>
+    </thead>
+</table>
+
+<script type="text/javascript">
+ 
+
+    $(document).ready(function () {
+
+        // tạo search cho lưới
+        $('#example thead tr').clone(true).appendTo('#example thead');
+        $('#example thead tr:eq(1) th').each(function (i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function () {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw(); 
+                }
+            });
+        });
+
+        // build table
+        var table=   $('#example').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/HomeAdmin/getpage",
+                "type": "POST",
                 
-            </div>
-        </div>
-    </div>
-</div>
+            },
+            "columns": [
+                { "data": "UserID" },
+                { "data": "FullName" },
+            ],
+            "initComplete": function () {
+                eventDoubleClick();
+            } 
+        });
+        // sự kiện dupclick thì  vào trang chi tiết
+        var eventDoubleClick = function () {
+            
+            $('#example tr').dblclick(function () {
+                debugger
+                var row = $('#example').DataTable().row($(this)).data();
+                window.location = "/Account/Login";
+            });
+        };
+        // xử lý selected dòng trên lưới
+        $('#example tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+        // xử lý xóa dòng selected
+        $('#button-delete').click(function () {
+            // lấy được dòng vào đang selected xong mình lấy dk ID rồi truyền vào
+            var record = table.row('.selected').data();
+            $.ajax({
+                method: "GET",
+                url: "link xóa",
+                data: {
+                    id: 1,
+                },
+
+                success: function (data) {
+                    table.ajax.reload();
+                },
+                error: function (data) {
+                }
+            });
+        });
+        // xử lý thêm mới
+        $('#button-delete').click(function () {
+            // lấy được dòng vào đang selected xong mình lấy dk ID rồi truyền vào
+            window.location = "link thêm mới";
+        });
+    });
+</script>
