@@ -17,7 +17,7 @@ namespace LanguageCenter.Areas.Home.Controllers
     {
         private readonly UserRepository _UserRepository;
         // GET: Home/Home
-        public HomeAdminController()
+        public HomeAdminController()  
         {
             _UserRepository = new UserRepository();
         }
