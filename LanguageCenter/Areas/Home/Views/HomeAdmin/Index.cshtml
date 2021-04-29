@@ -14,14 +14,110 @@
     </thead>
 </table>
 
+
+@*<div class="container p-30">
+    <div class="row">
+        <div class="col-md-12 main-datatable">
+            <div class="card_body">
+                <div class="row d-flex">
+                    <div class="col-sm-4 createSegment">
+                        <a class="btn dim_button create_new"> <span class="glyphicon glyphicon-plus"></span> Create New</a>
+                    </div>
+                    <div class="col-sm-8 add_flex">
+                        <div class="form-group searchInput">
+                            <label for="email">Search:</label>
+                            <input type="search" class="form-control" id="filterbox" placeholder=" ">
+                        </div>
+                    </div>
+                </div>
+                <div class="overflow-x">
+                    <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
+                        <thead>
+                            <tr>
+                                <th style="min-width:50px;">ID</th>
+                                <th style="min-width:150px;">Name</th>
+                                <th style="min-width:150px;">Mode</th>
+                                <th style="min-width:100px;">Event</th>
+                                <th style="min-width:100px;">Date</th>
+                                <th style="min-width:150px;">Status</th>
+                                <th style="min-width:150px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Dummy</td>
+                                <td><span class="mode mode_process">Processing</span></td>
+                                <td>Journey</td>
+                                <td>17-Apr-2020</td>
+                                <td><span class="mode mode_on">Active</span></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" target="_blank">
+                                                    Dummy Details
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank">
+                                                    Dummy Details
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank">
+                                                    Dummy Details
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <span class="actionCust">
+                                        <a href="#"><i class="fa fa-line-chart"></i></a>
+                                    </span>
+                                    <div class="btn-group">
+                                        <a class="dropdown-toggle dropdown_icon" data-toggle="dropdown">
+                                            <i class="fa fa-ellipsis-h"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown_more">
+                                            <li>
+                                                <a href="#" target="_black">
+                                                    <i class="fa fa-clone"></i>Duplicate
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_black">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_black">
+                                                    <i class="fa fa-list"></i>Activity
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
 <script type="text/javascript">
- 
+
 
     $(document).ready(function () {
 
         // tạo search cho lưới
         $('#example thead tr').clone(true).appendTo('#example thead');
         $('#example thead tr:eq(1) th').each(function (i) {
+            debugger
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');
 
@@ -30,19 +126,19 @@
                     table
                         .column(i)
                         .search(this.value)
-                        .draw(); 
+                        .draw();
                 }
             });
         });
 
         // build table
-        var table=   $('#example').DataTable({
+        var table = $('#example').DataTable({
             "processing": true,
             "serverSide": true,
             "ajax": {
                 "url": "/HomeAdmin/getpage",
                 "type": "POST",
-                
+
             },
             "columns": [
                 { "data": "UserID" },
@@ -50,11 +146,11 @@
             ],
             "initComplete": function () {
                 eventDoubleClick();
-            } 
+            }
         });
         // sự kiện dupclick thì  vào trang chi tiết
         var eventDoubleClick = function () {
-            
+
             $('#example tr').dblclick(function () {
                 debugger
                 var row = $('#example').DataTable().row($(this)).data();
@@ -67,7 +163,7 @@
                 $(this).removeClass('selected');
             }
             else {
-                table.$('tr.selected').removeClass('selected');
+                //table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
             }
         });

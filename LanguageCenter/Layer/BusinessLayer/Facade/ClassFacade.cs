@@ -1,5 +1,6 @@
 ﻿using LanguageCenter.BusinessLayer.Facade;
 using LanguageCenter.DataLayer.Object;
+using LanguageCenter.DataLayer.SqlServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
 {
     public class ClassFacade
     {
-        DataLayer.SqlServer.SqlServerClass sqlServerClass = new DataLayer.SqlServer.SqlServerClass();
+        SqlServerClass sqlServerClass = new SqlServerClass();
         public class ClassResponse : ResponseBase
         {
             public long ClassID { get; set; }
