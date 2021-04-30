@@ -16,6 +16,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public TeacherController() {
             _teacherRepository = new TeacherRepository();
             Mapper.CreateMap<Teacher, TeacherModel>();
+            Mapper.CreateMap<TeacherModel,Teacher >();
         }
         // GET: Home/Teacher
         public ActionResult Teacheres()
@@ -57,23 +58,36 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult PostTeacher(TeacherModel model)
         {
             if (!ModelState.IsValid)
-                throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
+                 throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
             try
             {
-                if (model.IsEdit == true)
-                {
-                    var teacher = Mapper.Map<TeacherModel, Teacher>(model);
-                    return Json(new { success = true, message = "Cập nhập giáo viên thành công!" }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    var teacher = Mapper.Map<TeacherModel, Teacher>(model);
-                    return Json(new { success = true, message = "Thêm mới giáo viên thành công!" }, JsonRequestBehavior.AllowGet);
-                }
+                var teacher = Mapper.Map<TeacherModel, Teacher>(model);
+                _teacherRepository.InsertOrUpdate(teacher);
+                var message = model.IsEdit == true ? "Cập nhập giáo viên thành công!" : "Thêm mới giáo viên thành công!";
+                return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message}, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        [ActionName("DeleteTeacher")]
+        public ActionResult DeleteTeacher(List<long> id)
+        {
+            if (id == null)
+                return Json(new { success = false, message = "Bạn chưa chọn bản ghi!"}, JsonRequestBehavior.AllowGet);
+            try
+            {
+                _teacherRepository.Delete(id);
+                var message = "Xóa giáo viên thành công!";
+                return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }
