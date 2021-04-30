@@ -27,11 +27,11 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
-        public string Insert(Teacher teacher)
+        public string InsertOrUpdate(Teacher teacher)
         {
             try
             {
-                var response = teacherFacade.Insert(teacher);
+                var response = teacherFacade.InsertOrUpdate(teacher);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
@@ -44,6 +44,21 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
             
+        }
+        public void Delete(List<long> id)
+        {
+            try
+            {
+                var response = teacherFacade.Delete(id);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
