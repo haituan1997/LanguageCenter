@@ -8,6 +8,7 @@ namespace LanguageCenter.Areas.Home.Models.TeacherModel
     public class TeacherModel
     {
         public string Title { get; set; }
+        public bool IsEdit { get; set; }
 
         public long TeacherID { get; set; }
 

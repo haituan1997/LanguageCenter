@@ -1,4 +1,5 @@
-﻿using LanguageCenter.Layer.BusinessLayer.Facade;
+﻿using LanguageCenter.BusinessLayer.Facade;
+using LanguageCenter.Layer.BusinessLayer.Facade;
 using LanguageCenter.Layer.DataLayer.Object;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,24 @@ namespace LanguageCenter.Repository
             {
                 throw new Exception(ex.Message);
             }
+        }
+        public string Insert(Teacher teacher)
+        {
+            try
+            {
+                var response = teacherFacade.Insert(teacher);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+                return response.TeacherID.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
         }
     }
 }

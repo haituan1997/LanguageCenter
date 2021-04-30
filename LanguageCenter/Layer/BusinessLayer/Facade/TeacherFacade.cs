@@ -15,10 +15,28 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerTeacher.Get_Teacheres();
         }
-        //public class ClassResponse : ResponseBase
-        //{
-        //    public long ClassID { get; set; }
-        //    public string ResponseMessage { get; set; }
-        //}
+
+        public TeacherResponse Insert(Teacher teacher)
+        {
+            var response = new TeacherResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                sqlServerTeacher.Insert(teacher);
+
+                response.TeacherID = teacher.TeacherID;
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public class TeacherResponse : ResponseBase
+        {
+            public long TeacherID { get; set; }
+            public string ResponseMessage { get; set; }
+        }
     }
 }

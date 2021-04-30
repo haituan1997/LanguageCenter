@@ -16,6 +16,22 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspGet_Tearcheres";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public void Insert(Teacher teacher )
+        {
+            const string procedure = "uspInsert_Teacher";
+            ForeignLanguageCenterAdapter.Insert(procedure, Take(teacher)).AsString();
+        }
+        public void Update(Teacher teacher)
+        {
+            const string procedure = "uspUpdate_Teacher";
+            ForeignLanguageCenterAdapter.Update(procedure, Take(teacher)).AsString();
+        }
+        public void Delete(long id)
+        {
+            const string procedure = "uspDelete_Teacher";
+            object[] parms = { "@TeacherID", id };
+            ForeignLanguageCenterAdapter.Update(procedure, parms);
+        }
         private static readonly Func<IDataReader, Teacher> Make = reader =>
            new Teacher
            {
@@ -28,5 +44,18 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                Description = reader["Description"].AsString(),
 
            };
+        private static object[] Take(Teacher teacher)
+        {
+            return new object[]
+            {
+                "@TeacherID",teacher.TeacherID,
+                "@AvatarUrl",teacher.AvatarUrl,
+                "@FirtName",teacher.FirtName,
+                "@LastName",teacher.LastName,
+                "@Email",teacher.Email,
+                "@NumberPhone",teacher.NumberPhone,
+                "@Description",teacher.Description,
+            };
+        }
     }
 }

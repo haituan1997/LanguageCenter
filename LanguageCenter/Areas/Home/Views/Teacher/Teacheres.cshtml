@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
-    <div class="modal-dialog modal-side modal-top-right ">
+    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right;">
         <div class="modal-content">
         </div>
     </div>
@@ -41,6 +41,7 @@
 <script href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
 <script>
+    
     $(document).ready(function () {
         //$.fn.dataTable.ext.search.push(
         //    function (settings, data, dataIndex) {
@@ -52,6 +53,7 @@
         var popUpName = "popUp";
         var totalColum = 6;
         var dataJson;
+        
         var buildTable = $('#' + tableName + '').DataTable({
             "ajax": {
                 "url": "/Teacher/GetTeacheres",
@@ -105,10 +107,11 @@
                     }
                 },
             },
-            "dom": '<"top"l>rt<"bottom"ip><"clear">',
+            //"dom": '<"top"l>rt<"bottom"ip><"clear">',
+            "dom": '<"top">rt<"bottom"lirp><"clear">',
             "fnInitComplete": function (oSettings, json, obj) {
                 addSearchControl(oSettings, json);
-                eventDoubleClick();
+                //eventDoubleClick();
                 selected();
                 caculatorHeightTable();
                 changeCss();
@@ -207,8 +210,11 @@
                 $('#' + popUpName).modal('show');
                 //$('#' + popUpName).css('margin-right', '0');
                 $('#' + popUpName + ' .modal-content').load(url);
-                
             });
+
+
         }
+        
+
     });
 </script>
