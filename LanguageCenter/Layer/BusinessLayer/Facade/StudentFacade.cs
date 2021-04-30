@@ -15,6 +15,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerStudent.Get_Students(page,pageSize,orderBy,searchBy);
         }
+        public Student Get_StudentByStudentID(long studenIDl)
+        {
+            return sqlServerStudent.Get_StudentByStudentID(studenIDl);
+        }
         public int Count( string whereClause)
         {
             return sqlServerStudent.Count( whereClause);
@@ -27,6 +31,44 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
                 sqlServerStudent.Insert(Student);
 
                 response.StudentID = Student.StudentID;
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public StudentResponse Update(Student Student)
+        {
+            var response = new StudentResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                sqlServerStudent.Update(Student);
+
+                response.StudentID = Student.StudentID;
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public StudentResponse Delete(List<long> ids)
+        {
+            var response = new StudentResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                if (ids.Count > 0)
+                {
+                    foreach (var item in ids)
+                    {
+                        sqlServerStudent.Delete(item);
+                    }
+                }
             }
             catch (Exception ex)
             {

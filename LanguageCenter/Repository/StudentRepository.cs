@@ -28,6 +28,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public Student Get_StudentByStudentID(long studentID)
+        {
+            try
+            { 
+                return studentFacade.Get_StudentByStudentID(studentID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public string Insert(Student student)
         {
             try
@@ -45,6 +56,39 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
             
+        }
+        public string Update(Student student)
+        {
+            try
+            {
+                var response = studentFacade.Update(student);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+                return response.StudentID.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        public void Delete(List<long> id)
+        {
+            try
+            {
+                var response = studentFacade.Delete(id);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -12,8 +12,6 @@ namespace LanguageCenter.Areas.Home.Models.StudentModel
 
         public long StudentID { get; set; }
 
-        public string AvatarUrl { get; set; }
-
         public string FirtName { get; set; }
 
         public string LastName { get; set; }
@@ -22,6 +20,9 @@ namespace LanguageCenter.Areas.Home.Models.StudentModel
 
         public string PhoneNumber { get; set; }
 
-        public string Description { get; set; }
+        public string CurrentAddress { get; set; }
+        public string CityName { get; set; }
+        public DateTime  DateOfBirth { get; set; }
+        public string  DateOfBirthBackUp { get; set; }
     }
 }

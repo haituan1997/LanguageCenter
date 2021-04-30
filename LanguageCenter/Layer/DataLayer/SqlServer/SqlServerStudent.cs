@@ -17,6 +17,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = {  "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy};
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make,parms);
         }
+        public Student Get_StudentByStudentID(long studentID)
+        {
+            const string procedure = "uspGet_studentByStudentID";
+            object[] parms = { "@studentID", studentID };
+            return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
+        }
         public int Count( string whereClause = null, bool isCreated = true)
         {
             const string procedure = "uspCount_Student";
@@ -43,12 +49,13 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
            new Student
            {
                StudentID = reader["StudentID"].AsLong(),
-               AvatarUrl = reader["AvatarUrl"].AsString(),
+               DateOfBirth = reader["DateOfBirth"].AsDateTimeForNull(),
                FirtName = reader["FirtName"].AsString(),
                LastName = reader["LastName"].AsString(),
                Email = reader["Email"].AsString(),
                PhoneNumber = reader["PhoneNumber"].AsString(),
-               Description = reader["Description"].AsString(),
+               CurrentAddress = reader["CurrentAddress"].AsString(),
+               CityName = reader["CityName"].AsString(),
 
            };
         private static object[] Take(Student Student)
@@ -56,12 +63,13 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             return new object[]
             {
                 "@StudentID",Student.StudentID,
-                "@AvatarUrl",Student.AvatarUrl,
+                "@DateOfBirth",Student.DateOfBirth,
                 "@FirtName",Student.FirtName,
                 "@LastName",Student.LastName,
                 "@Email",Student.Email,
                 "@PhoneNumber",Student.PhoneNumber,
-                "@Description",Student.Description,
+                "@CurrentAddress",Student.CurrentAddress,
+                "@CityName",Student.CityName,
             };
         }
     }

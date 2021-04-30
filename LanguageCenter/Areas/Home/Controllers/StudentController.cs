@@ -18,6 +18,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public StudentController() {
             _StudentRepository = new StudentRepository();
             Mapper.CreateMap<Student, StudentModel>();
+            Mapper.CreateMap<StudentModel, Student>();
         }
         // GET: Home/Student
         public ActionResult Students()
@@ -27,7 +28,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetStudents([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
+        public ActionResult GetPage_Students([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
             var requestForm = Request.Form;
             int totalRows;
@@ -45,19 +46,20 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult Student(long? id)
         {
-            var Student = new Student();
             if (id == null)
             {
-                var model = Mapper.Map <Student, StudentModel>(Student);
-                model.Title = "Thêm mới giáo viên";
+                
+                var model = new StudentModel();
+                model.DateOfBirth = DateTime.Now;
+                model.Title = "Thêm mới học sinh";
                 model.IsEdit = false;
                 return PartialView("_StudentPopup", model);
             }
             else
             {
-                Student = new Student();
+                var Student = _StudentRepository.Get_StudentByStudentID((long)id);
                 var model = Mapper.Map<Student, StudentModel>(Student);
-                model.Title = "Cập nhập giáo viên";
+                model.Title = "Cập nhập học sinh";
                 model.IsEdit = true;
                 return PartialView("_StudentPopup", model);
             }
@@ -74,17 +76,41 @@ namespace LanguageCenter.Areas.Home.Controllers
                 if (model.IsEdit == true)
                 {
                     var Student = Mapper.Map<StudentModel, Student>(model);
-                    return Json(new { success = true, message = "Cập nhập giáo viên thành công!" }, JsonRequestBehavior.AllowGet);
+                    Student.DateOfBirth = DateTime.ParseExact(model.DateOfBirthBackUp, "dd/MM/yyyy", null);
+                    _StudentRepository.Update(Student);
+
+                    return Json(new { success = true, message = "Cập nhập học sinh thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     var Student = Mapper.Map<StudentModel, Student>(model);
-                    return Json(new { success = true, message = "Thêm mới giáo viên thành công!" }, JsonRequestBehavior.AllowGet);
+                    Student.DateOfBirth = DateTime.ParseExact(model.DateOfBirthBackUp, "dd/MM/yyyy", null);
+                    _StudentRepository.Insert(Student);
+
+                    return Json(new { success = true, message = "Thêm mới học sinh thành công!" }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message}, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        [ActionName("DeleteStudent")]
+        public ActionResult DeleteStudent(List<long> id)
+        {
+            if (id == null)
+                return Json(new { success = false, message = "Bạn chưa chọn bản ghi!" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                _StudentRepository.Delete(id);
+                var message = "Xóa học sinh thành công!";
+                return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }

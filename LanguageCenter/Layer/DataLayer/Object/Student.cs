@@ -6,10 +6,8 @@ using System.Web;
 namespace LanguageCenter.Layer.DataLayer.Object
 {
     public class Student
-    {
-        public long StudentID { get; set; }
-
-        public string AvatarUrl { get; set; }
+    { 
+        public long StudentID { get; set; } 
 
         public string FirtName { get; set; }
 
@@ -19,7 +17,9 @@ namespace LanguageCenter.Layer.DataLayer.Object
 
         public string PhoneNumber { get; set; }
 
-        public string Description { get; set; }
+        public string CurrentAddress { get; set; }
+        public string CityName { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
     }
 
