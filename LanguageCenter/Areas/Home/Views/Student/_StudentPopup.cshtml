@@ -1,0 +1,242 @@
+﻿@model LanguageCenter.Areas.Home.Models.StudentModel.StudentModel
+
+
+<div class="modal-header" style=" background-color: #3ca4ab; color: white;">
+    <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body" style="height:100%">
+    <form method="post" id="StudentForm" action="@Url.Action("PostStudent")">
+        @*@Html.AntiForgeryToken()*@
+        @Html.HiddenFor(x => x.StudentID)
+        @Html.HiddenFor(x => x.IsEdit)
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example1">Họ học sinh</label>
+            <input type="text" name="FirtName" id="FirtName" value="@Model.FirtName" autofocus class="form-control" tabindex="1" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Tên học sinh</label>
+            <input type="text" name="LastName" id="LastName" value="@Model.LastName" class="form-control" tabindex="2" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Ngày sinh</label>
+            <input type="text" name="DateOfBirthBackUp" id="DateOfBirthBackUp" value="@Model.DateOfBirth.ToString("dd/MM/yyyy")" class="form-control" tabindex="3" />
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Thành phố</label>
+            <input type="text" name="CityName" id="CityName" value="@Model.CityName" class="form-control" tabindex="3" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Địa chỉ</label>
+            <input type="text" name="CurrentAddress" id="CurrentAddress" value="@Model.CurrentAddress" class="form-control" tabindex="3" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Số điện thoại</label>
+            <input type="text" name="PhoneNumber" id="PhoneNumber" value="@Model.PhoneNumber" class="form-control" tabindex="4" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Email</label>
+            <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" tabindex="4" />
+        </div> 
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="StudentForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+    <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+</div>
+<script src="~/javascript/notify.min.js"></script>
+<script src="~/javascript/jquery.validate.js"></script>
+<script>
+    $(document).ready(function () {
+        
+        var valid = function () {
+            $("#StudentForm").validate({
+                rules: {
+                    FirtName: { required: true, maxlength:255}, 
+                    CurrentAddress: { required: true, maxlength: 255 },
+                    PhoneNumber: { required: true, maxlength: 255, checkPhoneNumber: true },
+                    DateOfBirthBackUp: { required: true, maxlength: 255, validDate: true }, 
+                    Email: { email: true}, 
+                },
+                messages: {
+                    FirtName: {
+                        required: "Họ giáo viên không được để trống !", 
+                        maxlength: "Họ giáo viên không được quá 255 ký tự !", 
+                    },
+                    CurrentAddress: { 
+                        required: "Địa chỉ không được để trống !", 
+                        maxlength: "Địa chỉ không được quá 255 ký tự !", 
+                    },
+                    PhoneNumber: { 
+                        required: "Số điện thoại không được để trống !", 
+                        maxlength: "Số điện thoại không được quá 255 ký tự !", 
+                        checkPhoneNumber: "Số điện thoại không đúng định dạng !", 
+                    },
+                    DateOfBirthBackUp: { 
+                        required: "Ngày sinh không được để trống !",
+                        maxlength: "Ngày sinh không được quá 255 ký tự !",
+                    },
+                    Email: {
+                        email: "Email không đúng định dạng vui lòng xem lại !",
+                         
+                    },
+                },
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element, "label-error");
+                }
+            })
+        };
+        valid();
+        $('.btn-exit-popup,.btn-close').off('click').on('click', function (e) {
+            e.preventDefault();
+            $('#popUp').modal('hide');
+            return;
+        });
+
+        // xử lý kiểm tra định dạng ngày tháng
+        jQuery.validator.addMethod("checkPhoneNumber", function (value) {
+            var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+            var rsdate_format = vnf_regex.test(value);
+            if (!rsdate_format) {
+                return false
+            }
+
+            return true;
+
+        }, ''); 
+        // xử lý kiểm tra định dạng ngày tháng
+        jQuery.validator.addMethod("validDate", function (value) {
+            debugger
+            var result = checkdate(value, true, true);
+            if (result.rs) {
+                return result.rs
+            }
+            else {
+                $.validator.messages.validDate = result.message
+                return result.rs
+            }
+
+        }, '');
+        function checkdate(input, checkWith1753, checkWithPresentYear) {
+            if (input == "") {
+                return { rs: true };
+            }
+            var result = validateDate(input);
+            if (!result.rs) {
+                return { rs: false, message: result.mes };
+            }
+            var dateSplit = input.split("/");
+            if (dateSplit[2] != undefined) {
+                return normalCheck(input, checkWith1753, checkWithPresentYear);
+            }
+            else {
+                return { rs: false, message: "Định dạng ngày không đúng yêu cầu nhập lại" };
+            }
+        }
+        function validateDate(input) {
+            //var a = /(^(0[1-9]|1[012])[\/][0-9][0-9]\d\d$)/g;
+            //var b = /(^[0-9][0-9]\d\d$)/g;
+            var date_format = /(^\d{2}\/\d{2}\/\d{4})|(^\d{2}\/\d{4})|(^\d{4})$/;
+            var date_regex = /(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/]([0-9][0-9])\d\d$)|(^29[\/]02[\/]([0-9][0-9])(04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)|(^29[\/]02[\/]([13579][026]|[2,4,6,8][4,8])(00)$)|(^(0[1-9]|1[012])[\/][0-9][0-9]\d\d$)|(^[0-9][0-9]\d\d$)/g;
+
+            var rsdate_format = date_format.test(input);
+            var rsdate_regex = date_regex.test(input);
+            if (!rsdate_format) {
+                return { rs: false, mes: "Định dạng ngày không đúng yêu cầu nhập lại" }
+            }
+            if (!rsdate_regex) {
+                return { rs: false, mes: "Ngày tháng năm không tồn tại" }
+            }
+            return { rs: true };
+        }
+        function normalCheck(input, checkWith1753, checkWithPresentYear) {
+            if (checkWith1753 != undefined && checkWithPresentYear != undefined && checkWith1753 && checkWithPresentYear) {
+                var bDate = new Date(moment(new Date(), "DD/MM/YYYY"));
+                var cDate = new Date(moment(new Date(1753, 00, 01), "DD/MM/YYYY"));
+
+                var aDate = new Date(moment(input, "DD/MM/YYYY"));
+                if (moment(input, "DD/MM/YYYY", true).isValid() === true &&
+                    aDate <= bDate &&
+                    aDate >= cDate) {
+                    return { rs: true };
+                }
+                return { rs: false, message: "Ngày lựa chọn không được nhỏ hơn 01/01/1753 và không được lớn hơn ngày hiện tại" };
+
+            }
+            else if (checkWith1753 != undefined && checkWith1753) {
+                var cDate = new Date(moment(new Date(1753, 00, 01), "DD/MM/YYYY"));
+                var aDate = new Date(moment(input, "DD/MM/YYYY"));
+                if (moment(input, "DD/MM/YYYY", true).isValid() === true && aDate >= cDate) {
+                    return { rs: true };
+                }
+                return { rs: false, message: "Ngày lựa chọn không được nhỏ hơn 01/01/1753" };
+            }
+            else if (checkWithPresentYear != undefined && checkWithPresentYear) {
+                var bDate = new Date(moment(new Date(), "DD/MM/YYYY"));
+
+                var aDate = new Date(moment(input, "DD/MM/YYYY"));
+                if (moment(input, "DD/MM/YYYY", true).isValid() === true && aDate <= bDate) {
+                    return { rs: true };
+                }
+                return { rs: false, message: "Ngày lựa chọn không được lớn hơn ngày hiện tại" };
+            }
+        };
+
+        
+
+        $('#btnSave').off('click').on('click', function (e) {
+            e.preventDefault();
+            var isValid = $('#StudentForm').valid();
+            if (!isValid) {
+                //$("select.error + span")
+                //    .find('span.select2-selection--single')
+                //    .css('cssText', 'border: 1px solid #f58a73 !important');
+                return false;
+            }
+            var data = $('#StudentForm').serialize();
+            var message = "";
+            $.ajax({
+                url: urlUpdatePopup,
+                data: data,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    debugger
+                    if (result.success) {
+                        var data = result.message;
+                        $.notify(data, {
+                            globalPosition: "top center",
+                            className: "success"
+                        });
+                        $('#' + popUpName).modal('hide');
+                        buildTable.ajax.reload();
+
+                    }
+                    else {
+                        $.each(result,
+                            function (index) {
+                                message = result[index].Message;
+                            });
+                        $.notify(result.message, {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                    }
+
+                },
+                error: function (result) {
+                    $.each(result,
+                        function (index) {
+                            message = result[index].Message;
+                        });
+                    $.notify(result.message, {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                }
+            });
+        })
+    });
+</script>
