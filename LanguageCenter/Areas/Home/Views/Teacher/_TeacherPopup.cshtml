@@ -45,12 +45,14 @@
             $("#TeacherForm").validate({
                 rules: {
                     FirtName: "required",
+                    Email: { email: true },
                 },
                 messages: {
                     FirtName: {
-                        required: "Họ giáo viên không được để trống !",
+                        required: "Họ giáo viên không được để trống!",
                         //minlength: "Địa chỉ ngắn vậy, chém gió ah?"
-                    }
+                    },
+                    Email: { email: "Email không đúng địng dạng!" },
                 },
                 errorPlacement: function (error, element) {
                     error.insertAfter(element, "label-error");
