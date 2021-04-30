@@ -8,6 +8,49 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css");
 @import url('https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic');
 
+
+.action-FormList {
+    display: inline-flex;
+}
+.btn-add-new:hover, button.btn-save-popup:hover {
+    border: 1px solid #3ca4ab !important;
+    background: #0c7c87 !important;
+    cursor: pointer;
+}
+.btn-delete-all {
+    background-color: #ffffff;
+    color: #3ca4ab !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 35px;
+    font-weight: 600;
+    border: 1px solid #3ca4ab;
+    display: block;
+    border-radius: 5px;
+    padding: 8px 20px 0px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.btn-delete-all:hover, .btn-exit-popup:hover{
+    color: #fff !important;
+    background: #3ca4ab !important;
+    border: 1px solid #3ca4ab !important;
+    cursor: pointer;
+}
+.btn-add-new {
+    background-color: #3ca4ab;
+    color: #ffffff;
+    height: 35px;
+    font-weight: 600;
+    display: block;
+    border-radius: 3px !important;
+    padding: 0px 25px;
+    border: 1px;
+}
+
+#popUp label.error {
+    color: red;
+}
 .btn-exit-popup {
     margin-right: 47px;
     background-color: #ffffff;
@@ -44,7 +87,7 @@
 .title {
     font-weight: 500;
     font-size: 25px;
-    margin: 20px 0px;
+    margin: 20px 0px 10px 0px;
 }
 
 .Table-Thead tr:first-child {

@@ -7,6 +7,8 @@ namespace LanguageCenter.Layer.DataLayer.Object
 {
     public class Teacher
     {
+        public bool IsEdit { get; set; }
+
         public long TeacherID { get; set; }
 
         public string AvatarUrl { get; set; }
