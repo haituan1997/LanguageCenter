@@ -56,7 +56,7 @@
                 rules: {
                     FirtName: { required: true, maxlength:255}, 
                     CurrentAddress: { required: true, maxlength: 255 },
-                    PhoneNumber: { required: true, maxlength: 255 },
+                    PhoneNumber: { required: true, maxlength: 255, checkPhoneNumber: true },
                     DateOfBirthBackUp: { required: true, maxlength: 255, validDate: true }, 
                     Email: { email: true}, 
                 },
@@ -72,6 +72,7 @@
                     PhoneNumber: { 
                         required: "Số điện thoại không được để trống !", 
                         maxlength: "Số điện thoại không được quá 255 ký tự !", 
+                        checkPhoneNumber: "Số điện thoại không đúng định dạng !", 
                     },
                     DateOfBirthBackUp: { 
                         required: "Ngày sinh không được để trống !",
@@ -94,6 +95,17 @@
             return;
         });
 
+        // xử lý kiểm tra định dạng ngày tháng
+        jQuery.validator.addMethod("checkPhoneNumber", function (value) {
+            var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+            var rsdate_format = vnf_regex.test(value);
+            if (!rsdate_format) {
+                return false
+            }
+
+            return true;
+
+        }, ''); 
         // xử lý kiểm tra định dạng ngày tháng
         jQuery.validator.addMethod("validDate", function (value) {
             debugger
