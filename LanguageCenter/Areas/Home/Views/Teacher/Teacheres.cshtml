@@ -59,7 +59,8 @@
     var idColum = "TeacherID";
     var buildTable
     $(document).ready(function () {
-         buildTable = $('#' + tableName + '').DataTable({
+        var createTable = function () {
+            buildTable = $('#' + tableName + '').DataTable({
                 "ajax": {
                     "url": urlDataTable,
                     "type": "Get",
@@ -74,7 +75,7 @@
                     { "data": "Description", "name": "Description" },
                     {
                         "data": "TeacherID", "render": function (data) {
-                            return "<a class='btn btn-edit-table' id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                            return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                         },
                         "orderable": false,
                         "searchable": false,
@@ -113,18 +114,17 @@
                 //"dom": '<"top"l>rt<"bottom"ip><"clear">',
                 "dom": '<"top">rt<"bottom"lirp><"clear">',
                 "fnInitComplete": function (oSettings, json, obj) {
-                      
                     if (json.data.length > 0) {
                         addSearchControl(oSettings, json);
                         //eventDoubleClick();
                         selected();
                         caculatorHeightTable();
-                        actionControl();
-                    }
+                    };
+                    actionControl();
                     changeCss();
-
                 }
-         });
+            });
+        }
         function hoverTbody() {
             $('#' + tableName + ' tbody')
                 .on('mouseenter', 'td', function () {
@@ -205,15 +205,16 @@
                 }
             })
         };
-
-        var actionControl = function () {
+        
+        var action = function () {
             $('#btnAddNew').off('click').on('click', function () {
+                 
                 var url = urlDetailPopup;
                 $('#' + popUpName).modal('show');
                 $('#' + popUpName + ' .modal-content').load(url);
             });
             $('#btnDeleteAll').off('click').on('click', function () {
-                debugger
+                 
                 var listItemToDelete = [];
                 $("#" + tableName + "_wrapper .selected").each(function () {
                     var row = buildTable.row($(this));
@@ -223,7 +224,7 @@
                     }
                 });
                 if (!confirm("Bạn có đồng ý xóa???")) {
-                    
+
                     return false;
                 }
                 else {
@@ -237,7 +238,7 @@
                     else {
                         $.ajax({
                             url: urlDeleteDetail,
-                            data: { id:listItemToDelete },
+                            data: { id: listItemToDelete },
                             type: 'POST',
                             dataType: 'json',
                             success: function (result) {
@@ -277,63 +278,84 @@
                 }
 
             });
-            $('.btn-edit-table').off('click').on('click', function () {
-                let row = buildTable.row($(this).parents("tr"));
-                var url = urlDetailPopup + $(row.data()).attr(idColum);;
-                $('#' + popUpName).modal('show');
-                //$('#' + popUpName).css('margin-right', '0');
-                $('#' + popUpName + ' .modal-content').load(url);
-            });
-            $('.btn-delele-table').off('click').on('click', function () {
+        };
+        var actionControl = function (element) {
+            $('#' + tableName).each(function () {
                 debugger
-                let row = buildTable.row($(this).parents("tr"));
-                var id = [];
-                var itemDeleteID = $(row.data()).attr(idColum);;          
-                id.push(itemDeleteID);
-                if (!confirm("Bạn có đồng ý xóa???")) {
-                    
-                    return false;
-                }
-                else {
-                    $.ajax({
-                        url: urlDeleteDetail,
-                        data: { id },
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function (result) {
-                            if (result.success) {
-                                var data = result.message;
-                                $.notify(data, {
-                                    globalPosition: "top center",
-                                    className: "success"
-                                });
-                                id = [];
-                                buildTable.ajax.reload();
-                            }
-                            else {
-                                $.each(result,
-                                    function (index) {
-                                        message = result[index].Message;
+                var obj = $(this);
+                var item = $("tbody", obj);
+                item.on("click",
+                    ".btn-edit-table",
+                    function (e) {
+                        let row = buildTable.row($(this).parents("tr"));
+                        var url = urlDetailPopup + $(row.data()).attr(idColum);;
+                        $('#' + popUpName).modal('show');
+                        //$('#' + popUpName).css('margin-right', '0');
+                        $('#' + popUpName + ' .modal-content').load(url);
+                        e.stopPropagation();
+                    })
+            });
+            $('#' + tableName).each(function () {
+                var obj = $(this);
+                var item = $("tbody", obj);
+                item.on("click",
+                    ".btn-delele-table",
+                    function (e) {
+                        let row = buildTable.row($(this).parents("tr"));
+                        var id = [];
+                        var itemDeleteID = $(row.data()).attr(idColum);;
+                        id.push(itemDeleteID);
+                        if (!confirm("Bạn có đồng ý xóa???")) {
+                            return false;
+                        }
+                        else {
+                            $.ajax({
+                                url: urlDeleteDetail,
+                                data: { id },
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (result) {
+                                    if (result.success) {
+                                        var data = result.message;
+                                        $.notify(data, {
+                                            globalPosition: "top center",
+                                            className: "success"
+                                        });
+                                        id = [];
+                                        buildTable.ajax.reload();
+                                    }
+                                    else {
+                                        $.each(result,
+                                            function (index) {
+                                                message = result[index].Message;
+                                            });
+                                        $.notify(message, {
+                                            globalPosition: "top center",
+                                            className: "error"
+                                        });
+                                    }
+                                },
+                                error: function (result) {
+                                    $.each(result,
+                                        function (index) {
+                                            message = result[index].Message;
+                                        });
+                                    $.notify(message, {
+                                        globalPosition: "top center",
+                                        className: "error"
                                     });
-                                $.notify(message, {
-                                    globalPosition: "top center",
-                                    className: "error"
-                                });
-                            }
-                        },
-                        error: function (result) {
-                            $.each(result,
-                                function (index) {
-                                    message = result[index].Message;
-                                });
-                            $.notify(message, {
-                                globalPosition: "top center",
-                                className: "error"
+                                }
                             });
                         }
-                    });
-                }
-            });
+                        e.stopPropagation();
+                    })
+            })
+        };
+        async function asyncCall() {
+            actionControl();
+            createTable();
+            action();
         }
+        asyncCall();
     });
 </script>
