@@ -34,6 +34,15 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "xoa-hoc-sinh", defaults: new { controller = "Student", action = "DeleteStudent", area = "Home", id = UrlParameter.Optional });
 
             #endregion
+            #region khóa đào tạo
+            context.MapRoute("", "khoa-dao-tao", defaults: new { controller = "Course", action = "Courses", area = "Home" });
+            context.MapRoute("", "danh-sach-khoa-dao-tao", defaults: new { controller = "Course", action = "GetPage_Courses", area = "Home" });
+            context.MapRoute("", "chi-tiet-khoa-dao-tao/{id}", defaults: new { controller = "Course", action = "Course", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-khoa-dao-tao", defaults: new { controller = "Course", action = "PostCourse", area = "Home" });
+            context.MapRoute("", "xoa-khoa-dao-tao", defaults: new { controller = "Course", action = "DeleteCourse", area = "Home", id = UrlParameter.Optional });
+            #endregion
+
+
         }
     }
 }
