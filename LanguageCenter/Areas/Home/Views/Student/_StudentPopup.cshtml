@@ -108,7 +108,7 @@
         }, ''); 
         // xử lý kiểm tra định dạng ngày tháng
         jQuery.validator.addMethod("validDate", function (value) {
-            debugger
+             
             var result = checkdate(value, true, true);
             if (result.rs) {
                 return result.rs
@@ -203,7 +203,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
-                    debugger
+                     
                     if (result.success) {
                         var data = result.message;
                         $.notify(data, {

@@ -1,0 +1,331 @@
+﻿@model LanguageCenter.Areas.Home.Models.Course.CourseModel
+@using LanguageCenter.Layer.DataLayer.Object
+@{
+    var languages = (IEnumerable<Language>)ViewBag.Languages;
+    var categories = (IEnumerable<Category>)ViewBag.Categories;
+    var levels = (IEnumerable<Level>)ViewBag.Levels;
+}
+<style>
+    
+</style>
+<div style="display:flex">
+    <div class="course-popup" style="width:500px">
+        <div class="modal-header" style=" background-color: #3ca4ab; color: white;">
+            <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style=" background: white;">
+            <form method="post" id="CourseForm" action="@Url.Action("PostCourse")">
+                @*@Html.AntiForgeryToken()*@
+                @Html.HiddenFor(x => x.CourseID)
+                @Html.HiddenFor(x => x.IsEdit)
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form1Example1">Tên khóa học</label>
+                    <input type="text" name="Code" id="Code" value="@Model.Code" autofocus class="form-control" tabindex="1" />
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form1Example2">Mã khóa học</label>
+                    <input type="text" name="Name" id="Name" value="@Model.Name" class="form-control" tabindex="2" />
+                </div>
+                <div class="form-outline mb-4">
+                    <div class="add-plus-in-row">
+                        <div id="CategoryID-Grp">
+                            <label>Danh mục</label>
+                            <select class="form-control js-select2-enable-search-form-search" name="CategoryID" id="CategoryID" data-placeholder="Chọn học sinh" tabindex="4">
+                                <option></option>
+                                @foreach (var categorie in categories)
+                                {
+                                    var selected = Model.CategoryID == categorie.CategoryID ? "selected" : ""; ;
+                                    <option @selected value="@categorie.CategoryID">@categorie.CategoryName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <a class='btn btn-add-table' id="addCategory"><i class='fa fa-plus icon-edit-table'></i></a>
+                </div>
+                <div class="form-outline mb-4">
+                    <div class="add-plus-in-row" >
+                        <div id="LanguageID-Grp">
+                            <label>Ngôn ngữ</label>
+                            <select class="form-control js-select2-enable-search-form-search" name="LanguageID" id="LanguageID" data-placeholder="Chọn học sinh" tabindex="4">
+                                <option></option>
+                                @foreach (var language in languages)
+                                {
+                                    var selected = Model.LanguageID == language.LanguageID ? "selected" : ""; ;
+                                    <option @selected value="@language.LanguageID">@language.LanguageName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <a class='btn btn-add-table' id="addLanguage"><i class='fa fa-plus icon-edit-table'></i></a>
+                </div>
+                <div class="form-outline mb-4">
+                    <div class="add-plus-in-row" >
+                        <div id="LevelID-Grp">
+                            <label>Ngôn ngữ</label>
+                            <select class="form-control js-select2-enable-search-form-search" name="LevelID" id="LevelID" data-placeholder="Chọn học sinh" tabindex="4">
+                                <option></option>
+                                @foreach (var level in levels)
+                                {
+                                    var selected = Model.LevelID == level.LevelID ? "selected" : ""; ;
+                                    <option @selected value="@level.LevelID">@level.Code - @level.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <a class='btn btn-add-table' id="addLevel"><i class='fa fa-plus icon-edit-table'></i></a>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form1Example2">Mô tả</label>
+                    <textarea type="text" name="Description" id="Description" value="@Model.Description" class="form-control" tabindex="5" />
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer" style=" background: white;">
+            <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="CourseForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+            <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+        </div>
+    </div>
+    <div class="language-popup hide" style="width:310px;margin-left:10px">
+        @{
+            Html.RenderAction("Language", "Course");
+
+        }
+    </div>
+    <div class="category-popup hide" style="width:310px;margin-left:10px">
+        @{
+            Html.RenderAction("Category", "Course");
+
+        }
+    </div>
+    <div class="level-popup hide" style="width:310px;margin-left:10px">
+        @{
+            Html.RenderAction("Level", "Course");
+
+        }
+    </div>
+</div>
+
+
+<script src="~/javascript/notify.min.js"></script>
+<script src="~/javascript/jquery.validate.js"></script>
+<script>
+    var loadCategory = function () {
+        $.ajax({
+            method: "GET",
+            url: "/load-danh-muc",
+        })
+            .done(function (data) {
+                var results = data.data;
+                if (results.length > 0) {
+                    $("#CategoryID").empty();
+                    $("#CategoryID").append('<option value="x" disabled>-- Chọn danh mục --</option>');
+                    $.each(results,
+                        function (index) {
+                            $("#CategoryID")
+                                .append('<option value=' +
+                                    results[index].CategoryID +
+                                    ' ' +
+                                    '>' +
+                                    results[index].CategoryName +
+                                    '</option>');
+                        });
+                } else {
+                    $("#CategoryID")
+                        .empty()
+                        .append('<option value=""></option>')
+                        .select2("val", "");
+                }
+            });
+    }
+    var loadLanguage = function () {
+        $.ajax({
+            method: "GET",
+            url: "/load-ngon-ngu",
+        })
+            .done(function (data) {
+                 
+                var results = data.data;
+                if (results.length > 0) {
+                    $("#LanguageID").empty();
+                    $("#LanguageID").append('<option value="x" disabled>-- Chọn ngôn ngữ --</option>');
+                    $.each(results,
+                        function (index) {
+                            $("#LanguageID")
+                                .append('<option value=' +
+                                    results[index].LanguageID +
+                                    ' ' +
+                                    '>' +
+                                    results[index].LanguageName +
+                                    '</option>');
+                        });
+                } else {
+                    $("#LanguageID")
+                        .empty()
+                        .append('<option value=""></option>')
+                        .select2("val", "");
+                }
+            });
+    }
+    var loadLevel = function () {
+        $.ajax({
+            method: "GET",
+            url: "/load-cap-do",
+        })
+            .done(function (data) {
+                var results = data.data;
+                if (results.length > 0) {
+                    $("#LevelID").empty();
+                    $("#LevelID").append('<option value="x" disabled>-- Chọn cấp độ --</option>');
+                    $.each(results,
+                        function (index) {
+                            $("#LevelID")
+                                .append('<option value=' +
+                                results[index].LevelID +
+                                    ' ' +
+                                '>' +
+                                results[index].Code + " - " + results[index].Name+
+                                    '</option>');
+                        });
+                } else {
+                    $("#LevelID")
+                        .empty()
+                        .append('<option value=""></option>')
+                        .select2("val", "");
+                }
+            });
+    }
+    $(document).ready(function () {
+        var valid = function () {
+            $("#CourseForm").validate({
+                rules: {
+                    Code: { required: true, maxlength: 255 },
+                    Name: { required: true, maxlength: 255 },
+                    CategoryID: { required: true},
+                    LanguageID: { required: true},
+                    LevelID: { required: true},
+                },
+                messages: {
+                    Code: {
+                        required: "Mã khóa học không được để trống !",
+                        maxlength: "Mã khóa học không được quá 255 ký tự !",
+                    },
+                    Name: {
+                        required: "Tên khóa học không được để trống !",
+                        maxlength: "Tên khóa học không được quá 255 ký tự !",
+                    },
+                    CategoryID: {
+                        required: "Danh mục không được để trống !",
+                    },
+                    LanguageID: {
+                        required: "Ngôn ngữ không được để trống !",
+                    },
+                    LevelID: {
+                        required: "Cấp độ không được để trống !",
+                    },
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") === "CategoryID") {
+                        error.insertAfter("#CategoryID-Grp");
+                    } else if (element.attr("name") === "LanguageID") {
+                        error.insertAfter("#LanguageID-Grp");
+                    } else if (element.attr("name") === "LevelID") {
+                        error.insertAfter("#LevelID-Grp");
+                    } else 
+                    error.insertAfter(element, "label-error");
+                }
+            })
+        };
+        valid();
+        $('.btn-exit-popup,.btn-close').off('click').on('click', function (e) {
+            e.preventDefault();
+            $('#popUp').modal('hide');
+            return;
+        });
+
+
+        $('#btnSave').off('click').on('click', function (e) {
+            e.preventDefault();
+            var isValid = $('#CourseForm').valid();
+            if (!isValid) {
+                //$("select.error + span")
+                //    .find('span.select2-selection--single')
+                //    .css('cssText', 'border: 1px solid #f58a73 !important');
+                return false;
+            }
+            var data = $('#CourseForm').serialize();
+            var message = "";
+            $.ajax({
+                url: urlUpdatePopup,
+                data: data,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                     
+                    if (result.success) {
+                        var data = result.message;
+                        $.notify(data, {
+                            globalPosition: "top center",
+                            className: "success"
+                        });
+                        $('#' + popUpName).modal('hide');
+                        buildTable.ajax.reload();
+
+                    }
+                    else {
+                        $.each(result,
+                            function (index) {
+                                message = result[index].Message;
+                            });
+                        $.notify(result.message, {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                    }
+
+                },
+                error: function (result) {
+                    $.each(result,
+                        function (index) {
+                            message = result[index].Message;
+                        });
+                    $.notify(result.message, {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                }
+            });
+        })
+
+        var addClick = function () {
+            $('#addCategory').off('click').on('click', function (e) {
+                 
+                e.preventDefault();
+                $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:820px;max-width:100%;float:right;");
+                $('.category-popup').removeClass('hide');
+                $('.language-popup').addClass('hide');
+                $('.level-popup').addClass('hide');
+                return;
+            });
+            $('#addLanguage').off('click').on('click', function (e) {
+                 
+                e.preventDefault();
+                $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:820px;max-width:100%;float:right;");
+                $('.language-popup').removeClass('hide');
+                $('.category-popup').addClass('hide');
+                $('.level-popup').addClass('hide');
+                return;
+            });
+            $('#addLevel').off('click').on('click', function (e) {
+                 
+                e.preventDefault();
+                $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:820px;max-width:100%;float:right;");
+                $('.level-popup').removeClass('hide');
+                $('.category-popup').addClass('hide');
+                $('.language-popup').addClass('hide');
+                return;
+            });
+        }
+        addClick();
+    });
+</script>

@@ -42,6 +42,21 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "xoa-tai-khoan-hoc-sinh", defaults: new { controller = "StudentAccount", action = "DeleteStudentAccount", area = "Home", id = UrlParameter.Optional });
 
             #endregion
+            #region khóa đào tạo
+            context.MapRoute("", "khoa-dao-tao", defaults: new { controller = "Course", action = "Courses", area = "Home" });
+            context.MapRoute("", "danh-sach-khoa-dao-tao", defaults: new { controller = "Course", action = "GetPage_Courses", area = "Home" });
+            context.MapRoute("", "chi-tiet-khoa-dao-tao/{id}", defaults: new { controller = "Course", action = "Course", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-khoa-dao-tao", defaults: new { controller = "Course", action = "PostCourse", area = "Home" });
+            context.MapRoute("", "xoa-khoa-dao-tao", defaults: new { controller = "Course", action = "DeleteCourse", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-danh-muc", defaults: new { controller = "Course", action = "PostCategory", area = "Home" });
+            context.MapRoute("", "luu-ngon-ngu", defaults: new { controller = "Course", action = "PostLanguage", area = "Home" });
+            context.MapRoute("", "luu-cap-do", defaults: new { controller = "Course", action = "PostLevel", area = "Home" });
+            context.MapRoute("", "load-ngon-ngu", defaults: new { controller = "Course", action = "GetLanguages", area = "Home" });
+            context.MapRoute("", "load-danh-muc", defaults: new { controller = "Course", action = "GetCategories", area = "Home" });
+            context.MapRoute("", "load-cap-do", defaults: new { controller = "Course", action = "GetLevels", area = "Home" });
+            #endregion
+
+
         }
     }
 }
