@@ -15,6 +15,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerStudent.Get_Students(page,pageSize,orderBy,searchBy);
         }
+        public IEnumerable<Student> GetAll_Students()
+        {
+            return sqlServerStudent.GetAll_Students();
+        }
         public Student Get_StudentByStudentID(long studenIDl)
         {
             return sqlServerStudent.Get_StudentByStudentID(studenIDl);

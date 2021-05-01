@@ -17,6 +17,11 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = {  "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy};
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make,parms);
         }
+        public IEnumerable<Student> GetAll_Students()
+        {
+            const string procedure = "uspGetAll_student";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
         public Student Get_StudentByStudentID(long studentID)
         {
             const string procedure = "uspGet_studentByStudentID";

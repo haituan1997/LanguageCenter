@@ -34,6 +34,14 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "xoa-hoc-sinh", defaults: new { controller = "Student", action = "DeleteStudent", area = "Home", id = UrlParameter.Optional });
 
             #endregion
+            #region tài khoản đăng nhập của học sinh
+            context.MapRoute("", "tai-khoan-hoc-sinh", defaults: new { controller = "StudentAccount", action = "StudentAccounts", area = "Home" });
+            context.MapRoute("", "danh-sach-tai-khoan-hoc-sinh", defaults: new { controller = "StudentAccount", action = "GetPage_StudentAccounts", area = "Home" });
+            context.MapRoute("", "chi-tiet-tai-khoan-hoc-sinh/{id}", defaults: new { controller = "StudentAccount", action = "StudentAccount", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-tai-khoan-hoc-sinh", defaults: new { controller = "StudentAccount", action = "PostStudentAccount", area = "Home" });
+            context.MapRoute("", "xoa-tai-khoan-hoc-sinh", defaults: new { controller = "StudentAccount", action = "DeleteStudentAccount", area = "Home", id = UrlParameter.Optional });
+
+            #endregion
         }
     }
 }
