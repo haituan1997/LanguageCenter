@@ -83,8 +83,8 @@
                 { "data": "CurrentAddress", "name": "CurrentAddress" },
                 { "data": "Email", "name": "Email" },
                 {
-                    "data": "StudentID", "render": function (data) {
-                        return "<a class='btn btn-edit-table' id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                    "data": "TeacherID", "render": function (data) {
+                        return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                     },
                     "orderable": false,
                     "searchable": false,
@@ -288,61 +288,75 @@
                 }
 
             });
-            $('.btn-edit-table').off('click').on('click', function () {
-                let row = buildTable.row($(this).parents("tr"));
-                var url = urlDetailPopup + $(row.data()).attr(idColum);;
-                $('#' + popUpName).modal('show');
-                //$('#' + popUpName).css('margin-right', '0');
-                $('#' + popUpName + ' .modal-content').load(url);
-            });
-            $('.btn-delele-table').off('click').on('click', function () {
-                let row = buildTable.row($(this).parents("tr"));
-                var id = [];
-                var itemDeleteID = $(row.data()).attr(idColum);;
-                id.push(itemDeleteID);
-                if (!confirm("Bạn có đồng ý xóa???")) {
+            $('#' + tableName).each(function () {
 
-                    return false;
-                }
-                else {
-                    $.ajax({
-                        url: urlDeleteDetail,
-                        data: { id },
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function (result) {
-                            if (result.success) {
-                                var data = result.message;
-                                $.notify(data, {
-                                    globalPosition: "top center",
-                                    className: "success"
-                                });
-                                id = [];
-                                buildTable.ajax.reload();
-                            }
-                            else {
-                                $.each(result,
-                                    function (index) {
-                                        message = result[index].Message;
+                var obj = $(this);
+                var item = $("tbody", obj);
+                item.on("click",
+                    ".btn-edit-table",
+                    function (e) {
+                        let row = buildTable.row($(this).parents("tr"));
+                        var url = urlDetailPopup + $(row.data()).attr(idColum);;
+                        $('#' + popUpName).modal('show');
+                        //$('#' + popUpName).css('margin-right', '0');
+                        $('#' + popUpName + ' .modal-content').load(url);
+                        e.stopPropagation();
+                    })
+            });
+            $('#' + tableName).each(function () {
+                var obj = $(this);
+                var item = $("tbody", obj);
+                item.on("click",
+                    ".btn-delele-table",
+                    function (e) {
+                        let row = buildTable.row($(this).parents("tr"));
+                        var id = [];
+                        var itemDeleteID = $(row.data()).attr(idColum);;
+                        id.push(itemDeleteID);
+                        if (!confirm("Bạn có đồng ý xóa???")) {
+                            return false;
+                        }
+                        else {
+                            $.ajax({
+                                url: urlDeleteDetail,
+                                data: { id },
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (result) {
+                                    if (result.success) {
+                                        var data = result.message;
+                                        $.notify(data, {
+                                            globalPosition: "top center",
+                                            className: "success"
+                                        });
+                                        id = [];
+                                        buildTable.ajax.reload();
+                                    }
+                                    else {
+                                        $.each(result,
+                                            function (index) {
+                                                message = result[index].Message;
+                                            });
+                                        $.notify(message, {
+                                            globalPosition: "top center",
+                                            className: "error"
+                                        });
+                                    }
+                                },
+                                error: function (result) {
+                                    $.each(result,
+                                        function (index) {
+                                            message = result[index].Message;
+                                        });
+                                    $.notify(message, {
+                                        globalPosition: "top center",
+                                        className: "error"
                                     });
-                                $.notify(message, {
-                                    globalPosition: "top center",
-                                    className: "error"
-                                });
-                            }
-                        },
-                        error: function (result) {
-                            $.each(result,
-                                function (index) {
-                                    message = result[index].Message;
-                                });
-                            $.notify(message, {
-                                globalPosition: "top center",
-                                className: "error"
+                                }
                             });
                         }
-                    });
-                }
+                        e.stopPropagation();
+                    })
             });
         }
     });

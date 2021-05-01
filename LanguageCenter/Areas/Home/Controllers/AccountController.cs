@@ -103,9 +103,8 @@ namespace LanguageCenter.Controllers
 
             try
             {
-                // Setting
                 claims.Add(new Claim(ClaimTypes.Name, username.FullName));
-                claims.Add(new Claim("Type", username.FullName));
+                claims.Add(new Claim("UserID", username.UserID.ToString())); 
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;

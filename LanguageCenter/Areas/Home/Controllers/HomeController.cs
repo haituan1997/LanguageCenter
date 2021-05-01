@@ -22,9 +22,9 @@ namespace LanguageCenter.Areas.Home.Controllers
 
         }
         public ActionResult Index()
-        {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-             
+        {  
+            ViewBag.User = User.Identity.Name;
+            ViewBag.UserID = long.Parse(((ClaimsIdentity)User.Identity).FindFirst("UserID").Value);
             return View();
 
         }
