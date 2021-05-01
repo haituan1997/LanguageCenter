@@ -10,6 +10,7 @@ namespace LanguageCenter.Layer.DataLayer.Object
         public long LanguageID { get; set; }
 
         public string LanguageName { get; set; }
+        public string Title { get; set; }
 
     }
 }

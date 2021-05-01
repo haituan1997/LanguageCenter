@@ -10,6 +10,7 @@ namespace LanguageCenter.Layer.DataLayer.Object
         public long CategoryID { get; set; }
 
         public string CategoryName { get; set; }
+        public string Title { get; set; }
 
     }
 }

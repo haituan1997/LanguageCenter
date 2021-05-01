@@ -117,7 +117,7 @@
         // tạo search cho lưới
         $('#example thead tr').clone(true).appendTo('#example thead');
         $('#example thead tr:eq(1) th').each(function (i) {
-            debugger
+             
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');
 
@@ -152,7 +152,7 @@
         var eventDoubleClick = function () {
 
             $('#example tr').dblclick(function () {
-                debugger
+                 
                 var row = $('#example').DataTable().row($(this)).data();
                 window.location = "/Account/Login";
             });

@@ -1,0 +1,115 @@
+﻿
+@model LanguageCenter.Layer.DataLayer.Object.Level
+
+<div class="modal-header" style=" background-color: #3ca4ab; color: white;">
+    <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+    <button type="button" class="btn-close-level" data-mdb-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body" style="background: white;">
+    <form method="post" id="LevelForm" action="@Url.Action("PostCategory")">
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example1">Mã cấp độ</label>
+            <input type="text" name="Code" id="Code" value="@Model.Code" autofocus class="form-control" tabindex="1" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example1">Tên cấp độ</label>
+            <input type="text" name="Name" id="Name" value="@Model.Name" autofocus class="form-control" tabindex="1" />
+        </div>
+    </form>
+</div>
+<div class="modal-footer" style="background: white;">
+    <button id="btnSave-level" name="submit" value="Save" class="btn-save-popup" form="LevelForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+    <a name="submit" value="Save" id="btn-level-exit" class="btn-level-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+</div>
+<script src="~/javascript/notify.min.js"></script>
+<script src="~/javascript/jquery.validate.js"></script>
+<script>
+    $(document).ready(function () {
+        var valid3 = function () {
+            $("#LevelForm").validate({
+                rules: {
+                    Code: { required: true, maxlength: 50 },
+                    Name: { required: true, maxlength: 255 },
+                },
+                messages: {
+                    Code: {
+                        required: "Mã cấp độ không được để trống !",
+                        maxlength: "Mã cấp độ không được quá {0} ký tự !",
+                    },
+                    Name: {
+                        required: "Tên cấp độ không được để trống !",
+                        maxlength: "Tên cấp độ không được quá {0} ký tự !",
+                    },
+
+                },
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element, "label-error");
+                }
+            })
+        };
+        valid3();
+        $('.btn-close-level,#btn-level-exit').off('click').on('click', function (e) {
+             
+            e.preventDefault();
+            $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:500px;max-width:500px;float: right");
+            $('.level-popup').addClass('hide');
+            $('#' + popUpName).modal('show');
+            return;
+        });
+        $('#btnSave-level').off('click').on('click', function (e) {
+             
+            e.preventDefault();
+            var isValid = $('#LevelForm').valid();
+            if (!isValid) {
+                //$("select.error + span")
+                //    .find('span.select2-selection--single')
+                //    .css('cssText', 'border: 1px solid #f58a73 !important');
+                return false;
+            }
+            var data = $('#LevelForm').serialize();
+            var message = "";
+            $.ajax({
+                url: "/luu-cap-do",
+                data: data,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                     
+                    if (result.success) {
+                        var data = result.message;
+                        $.notify(data, {
+                            globalPosition: "top center",
+                            className: "success"
+                        });
+                        $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:500px;max-width:500px;float: right");
+                        $('.level-popup').addClass('hide');
+                        $('#' + popUpName).modal('show');
+                        loadLevel();
+                    }
+                    else {
+                        $.each(result,
+                            function (index) {
+                                message = result[index].Message;
+                            });
+                        $.notify(result.message, {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                    }
+
+                },
+                error: function (result) {
+                    $.each(result,
+                        function (index) {
+                            message = result[index].Message;
+                        });
+                    $.notify(result.message, {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                }
+            });
+        })
+
+    });
+</script>

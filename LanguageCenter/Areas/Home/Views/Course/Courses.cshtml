@@ -37,8 +37,8 @@
     </div>
 </div>
 <div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
-    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
-        <div class="modal-content" style="height:100%">
+    <div class="modal-dialog modal-side modal-top-right " style="float:right" @*width: 820px;max-width:100%;*@>
+        <div class="modal-content" style="background:none">
         </div>
     </div>
 </div>
@@ -56,7 +56,8 @@
     var urlDataTable = "/danh-sach-khoa-dao-tao";
     var urlDeleteDetail = "/xoa-khoa-dao-tao";
     var idColum = "CourseID";
-    var buildTable
+    var buildTable;
+    
     $(document).ready(function () {
         buildTable = $('#' + tableName + '').DataTable({
             "ajax": {
@@ -118,10 +119,9 @@
                 if (json.data.length > 0) {
                     addSearchControl(oSettings, json);
                     //eventDoubleClick();
-                    selected();
                     caculatorHeightTable();
-
                 }
+                selected();
                 changeCss();
                 actionControl();
             }
@@ -206,14 +206,87 @@
                 }
             })
         };
-
-        var actionControl = function () {
+        var actionControl = function (element) {
+            $('#' + tableName).each(function () {
+                 
+                var obj = $(this);
+                var item = $("tbody", obj);
+                item.on("click",
+                    ".btn-edit-table",
+                    function (e) {
+                        let row = buildTable.row($(this).parents("tr"));
+                        var url = urlDetailPopup + $(row.data()).attr(idColum);;
+                        $('#' + popUpName).modal('show');
+                        //$('#' + popUpName).css('margin-right', '0');
+                        $('#' + popUpName + ' .modal-content').load(url);
+                        e.stopPropagation();
+                    })
+            });
+            $('#' + tableName).each(function () {
+                var obj = $(this);
+                var item = $("tbody", obj);
+                item.on("click",
+                    ".btn-delele-table",
+                    function (e) {
+                        let row = buildTable.row($(this).parents("tr"));
+                        var id = [];
+                        var itemDeleteID = $(row.data()).attr(idColum);;
+                        id.push(itemDeleteID);
+                        if (!confirm("Bạn có đồng ý xóa???")) {
+                            return false;
+                        }
+                        else {
+                            $.ajax({
+                                url: urlDeleteDetail,
+                                data: { id },
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (result) {
+                                    if (result.success) {
+                                        var data = result.message;
+                                        $.notify(data, {
+                                            globalPosition: "top center",
+                                            className: "success"
+                                        });
+                                        id = [];
+                                        buildTable.ajax.reload();
+                                    }
+                                    else {
+                                        $.each(result,
+                                            function (index) {
+                                                message = result[index].Message;
+                                            });
+                                        $.notify(message, {
+                                            globalPosition: "top center",
+                                            className: "error"
+                                        });
+                                    }
+                                },
+                                error: function (result) {
+                                    $.each(result,
+                                        function (index) {
+                                            message = result[index].Message;
+                                        });
+                                    $.notify(message, {
+                                        globalPosition: "top center",
+                                        className: "error"
+                                    });
+                                }
+                            });
+                        }
+                        e.stopPropagation();
+                    })
+            })
+        };
+        var action = function () {
             $('#btnAddNew').off('click').on('click', function () {
+
                 var url = urlDetailPopup;
                 $('#' + popUpName).modal('show');
                 $('#' + popUpName + ' .modal-content').load(url);
             });
             $('#btnDeleteAll').off('click').on('click', function () {
+
                 var listItemToDelete = [];
                 $("#" + tableName + "_wrapper .selected").each(function () {
                     var row = buildTable.row($(this));
@@ -277,62 +350,12 @@
                 }
 
             });
-            $('.btn-edit-table').off('click').on('click', function () {
-                let row = buildTable.row($(this).parents("tr"));
-                var url = urlDetailPopup + $(row.data()).attr(idColum);;
-                $('#' + popUpName).modal('show');
-                //$('#' + popUpName).css('margin-right', '0');
-                $('#' + popUpName + ' .modal-content').load(url);
-            });
-            $('.btn-delele-table').off('click').on('click', function () {
-                let row = buildTable.row($(this).parents("tr"));
-                var id = [];
-                var itemDeleteID = $(row.data()).attr(idColum);;
-                id.push(itemDeleteID);
-                if (!confirm("Bạn có đồng ý xóa???")) {
-
-                    return false;
-                }
-                else {
-                    $.ajax({
-                        url: urlDeleteDetail,
-                        data: { id },
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function (result) {
-                            if (result.success) {
-                                var data = result.message;
-                                $.notify(data, {
-                                    globalPosition: "top center",
-                                    className: "success"
-                                });
-                                id = [];
-                                buildTable.ajax.reload();
-                            }
-                            else {
-                                $.each(result,
-                                    function (index) {
-                                        message = result[index].Message;
-                                    });
-                                $.notify(message, {
-                                    globalPosition: "top center",
-                                    className: "error"
-                                });
-                            }
-                        },
-                        error: function (result) {
-                            $.each(result,
-                                function (index) {
-                                    message = result[index].Message;
-                                });
-                            $.notify(message, {
-                                globalPosition: "top center",
-                                className: "error"
-                            });
-                        }
-                    });
-                }
-            });
+        };
+        async function asyncCall() {
+             
+            actionControl();
+            action();
         }
+        asyncCall();
     });
 </script>

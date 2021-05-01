@@ -19,6 +19,7 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerCourse.GetCourseByCouresID(id);
         }
+       
         public int Count(string whereClause)
         {
             return sqlServerCourse.Count(whereClause);
@@ -80,6 +81,84 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         public class CourseResponse : ResponseBase
         {
             public long CourseID { get; set; }
+            public string ResponseMessage { get; set; }
+        }
+
+
+        public IEnumerable<Category> Get_Categories()
+        {
+            return sqlServerCourse.Get_Categories();
+        }
+        public CategoryResponse InsertCategory(Category category)
+        {
+            var response = new CategoryResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                sqlServerCourse.InsertCategory(category);
+                response.CategoryID = category.CategoryID;
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public class CategoryResponse : ResponseBase
+        {
+            public long CategoryID { get; set; }
+            public string ResponseMessage { get; set; }
+        }
+
+        public IEnumerable<Language> Get_Languages()
+        {
+            return sqlServerCourse.Get_Languages();
+        }
+        public LanguageResponse InsertLanguage(Language language)
+        {
+            var response = new LanguageResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                sqlServerCourse.InsertLanguage(language);
+                response.LanguageID = language.LanguageID;
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public class LanguageResponse : ResponseBase
+        {
+            public long LanguageID { get; set; }
+            public string ResponseMessage { get; set; }
+        }
+        public IEnumerable<Level> Get_Levels()
+        {
+            return sqlServerCourse.Get_Levels();
+        }
+        public LevelResponse InsertLevel(Level level)
+        {
+            var response = new LevelResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                sqlServerCourse.InsertLevel(level);
+                response.LevelID = level.LevelID;
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public class LevelResponse : ResponseBase
+        {
+            public long LevelID { get; set; }
             public string ResponseMessage { get; set; }
         }
     }

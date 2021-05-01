@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using DataTables.Mvc;
 using LanguageCenter.Areas.Home.Models.Course;
-using LanguageCenter.Areas.Home.Models.StudentModel;
 using LanguageCenter.Code.Helper.DatatableHelper;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Controllers
@@ -22,6 +20,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             Mapper.CreateMap<Course, CourseModel>();
             Mapper.CreateMap<CourseModel, Course>();
         }
+        #region khóa đào tạo
         // GET: Home/Student
         public ActionResult Courses()
         {
@@ -46,6 +45,10 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult Course(long? id)
         {
+            ViewBag.Categories = _courseRepository.Get_Categories();
+            ViewBag.Languages = _courseRepository.Get_Languages();
+            ViewBag.Levels = _courseRepository.Get_Levels();
+
             if (id == null)
             {
                 var model = new CourseModel();
@@ -91,8 +94,8 @@ namespace LanguageCenter.Areas.Home.Controllers
         }
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        [ActionName("DeleteStudent")]
-        public ActionResult DeleteStudent(List<long> id)
+        [ActionName("DeleteCourse")]
+        public ActionResult DeleteCourse(List<long> id)
         {
             if (id == null)
                 return Json(new { success = false, message = "Bạn chưa chọn bản ghi!" }, JsonRequestBehavior.AllowGet);
@@ -107,5 +110,112 @@ namespace LanguageCenter.Areas.Home.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+#endregion
+        #region ngôn ngữ
+        public ActionResult Language()
+        {
+            var language = new Language { Title="Thêm mới ngôn ngữ"};
+            return PartialView(language);
+        }
+
+        [HttpPost]
+        [ActionName("PostLanguage")]
+        public ActionResult PostLanguage(Language model)
+        {
+            if (!ModelState.IsValid)
+                throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
+            try
+            {
+                    _courseRepository.InsertLanguage(model);
+                    return Json(new { success = true, message = "Thêm mới ngôn ngữ thành công!" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetLanguages()
+        {
+            try
+            {
+                var datas = _courseRepository.Get_Languages();
+                return Json(new { success = true, data = datas }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
+        #region danh mục
+        public ActionResult Category()
+        {
+            var category = new Category { Title = "Thêm mới danh mục" };
+            return PartialView(category);
+        }
+        [HttpPost]
+        [ActionName("PostCategory")]
+        public ActionResult PostCategory(Category model)
+        {
+            if (!ModelState.IsValid)
+                throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
+            try
+            {
+                _courseRepository.InsertCategory(model);
+                return Json(new { success = true, message = "Thêm mới ngôn ngữ thành công!" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetCategories()
+        {
+            try
+            {
+                var datas = _courseRepository.Get_Categories();
+                return Json(new { success = true,data=datas}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
+        #region cấp độ
+        public ActionResult Level()
+        {
+            var level = new Level { Title = "Thêm mới cấp độ" };
+            return PartialView(level);
+        }
+        [HttpPost]
+        [ActionName("PostLevel")]
+        public ActionResult PostLevel(Level model)
+        {
+            if (!ModelState.IsValid)
+                throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
+            try
+            {
+                _courseRepository.InsertLevel(model);
+                return Json(new { success = true, message = "Thêm mới cấp độ thành công!" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetLevels()
+        {
+            try
+            {
+                var datas = _courseRepository.Get_Levels();
+                return Json(new { success = true, data = datas }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
     }
 }

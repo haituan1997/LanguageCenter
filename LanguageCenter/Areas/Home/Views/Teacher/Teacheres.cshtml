@@ -117,12 +117,12 @@
                     if (json.data.length > 0) {
                         addSearchControl(oSettings, json);
                         //eventDoubleClick();
-                        selected();
                         caculatorHeightTable();
                     };
-                    debugger
-                    actionControl();
+                     
+                    selected();
                     changeCss();
+                    actionControl();
                 }
             });
         }
@@ -282,7 +282,7 @@
         };
         var actionControl = function (element) {
             $('#' + tableName).each(function () {
-                debugger
+                 
                 var obj = $(this);
                 var item = $("tbody", obj);
                 item.on("click",
@@ -353,7 +353,7 @@
             })
         };
         async function asyncCall() {
-            debugger
+             
             actionControl();
             createTable();
             action();

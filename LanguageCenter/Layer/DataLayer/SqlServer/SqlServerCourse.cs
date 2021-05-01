@@ -26,7 +26,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
         public Course GetCourseByCouresID(long id)
         {
             const string procedure = "uspGet_CourseByCourseID";
-            object[] parms = { "@CouresID", id };
+            object[] parms = { "@CourseID", id };
             return ForeignLanguageCenterAdapter.Read(procedure, MakeCourse, parms);
         }
         public void InsertCourse(Course course)
@@ -42,7 +42,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
         public void DeleteCourse(long id)
         {
             const string procedure = "uspDelete_Course";
-            object[] parms = { "@TeacherID", id };
+            object[] parms = { "@CourseID", id };
             ForeignLanguageCenterAdapter.Update(procedure, parms);
         }
         public IEnumerable<Category> Get_Categories()
@@ -57,17 +57,17 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
         }
         public IEnumerable<Language> Get_Languages()
         {
-            const string procedure = "uspGet_Language";
+            const string procedure = "uspGet_Languages";
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakeLanguage);
         }
         public void InsertLanguage(Language language)
         {
-            const string procedure = "uspInsert_Category";
+            const string procedure = "uspInsert_Language";
             ForeignLanguageCenterAdapter.Insert(procedure, TakeLanguage(language)).AsString();
         }
         public IEnumerable<Level> Get_Levels()
         {
-            const string procedure = "uspGet_Level";
+            const string procedure = "uspGet_Levels";
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakeLevel);
         }
         public void InsertLevel(Level level)
@@ -85,6 +85,9 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
            LanguageID = reader["LanguageID"].AsLong(),
            LevelID = reader["LevelID"].AsLong(),
            CategoryID = reader["CategoryID"].AsLong(),
+           CategoryName = reader["CategoryName"].AsString(),
+           LanguageName = reader["LanguageName"].AsString(),
+           LevelName = reader["LevelName"].AsString(),
 
        };
         private static readonly Func<IDataReader, Category> MakeCategory = reader =>
@@ -138,9 +141,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             "@LanguageID",course.LanguageID,
             "@LevelID",course.LevelID,
             "@CategoryID",course.CategoryID,
-            "CategoryName",course.CategoryName,
-            "LanguageName",course.LanguageName,
-            "LevelName",course.LevelName
+            
             };
         }
         private static object[] TakeCategory(Category category)

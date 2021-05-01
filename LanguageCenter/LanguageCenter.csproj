@@ -8485,6 +8485,9 @@
     <Content Include="Areas\Home\Views\StudentAccount\StudentAccounts.cshtml" />
     <Content Include="Areas\Home\Views\Course\Courses.cshtml" />
     <Content Include="Areas\Home\Views\Course\_CoursePopup.cshtml" />
+    <Content Include="Areas\Home\Views\Course\Language.cshtml" />
+    <Content Include="Areas\Home\Views\Course\Category.cshtml" />
+    <Content Include="Areas\Home\Views\Course\Level.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

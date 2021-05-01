@@ -90,5 +90,97 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+
+
+        public IEnumerable<Category> Get_Categories()
+        {
+            try
+            {
+                return courseFacade.Get_Categories();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string InsertCategory(Category category)
+        {
+            try
+            {
+                var response = courseFacade.InsertCategory(category);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+                return response.CategoryID.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public IEnumerable<Language> Get_Languages()
+        {
+            try
+            {
+                return courseFacade.Get_Languages();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string InsertLanguage(Language language)
+        {
+            try
+            {
+                var response = courseFacade.InsertLanguage(language);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+                return response.LanguageID.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public IEnumerable<Level> Get_Levels()
+        {
+            try
+            {
+                return courseFacade.Get_Levels();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string InsertLevel(Level level)
+        {
+            try
+            {
+                var response = courseFacade.InsertLevel(level);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+                return response.LevelID.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
     }
 }
