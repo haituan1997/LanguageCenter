@@ -1,4 +1,4 @@
-﻿using LanguageCenter.Areas.Home.Models.StudentModel;
+﻿using LanguageCenter.Areas.Home.Models.PaymentModel;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
@@ -12,23 +12,23 @@ using LanguageCenter.Code.Helper.DatatableHelper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
-    public class StudentController : Controller
+    public class PaymentController : Controller
     {
-        private readonly StudentRepository _StudentRepository;
-        public StudentController() {
-            _StudentRepository = new StudentRepository();
-            Mapper.CreateMap<Student, StudentModel>();
-            Mapper.CreateMap<StudentModel, Student>();
+        private readonly PaymentRepository _PaymentRepository;
+        public PaymentController() {
+            _PaymentRepository = new PaymentRepository();
+            Mapper.CreateMap<Payment, PaymentModel>();
+            Mapper.CreateMap<PaymentModel, Payment>();
         }
-        // GET: Home/Student
-        public ActionResult Students()
+        // GET: Home/Payment
+        public ActionResult Payments()
         {
             return View();
             
         }
 
         [HttpPost]
-        public ActionResult GetPage_Students([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
+        public ActionResult GetPage_Payments([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
             var requestForm = Request.Form;
             int totalRows;
@@ -38,36 +38,36 @@ namespace LanguageCenter.Areas.Home.Controllers
             var orderBy = requestParams.OrderBy;
             var searchBy = requestParams.SearchBy;
 
-            var data = _StudentRepository.Get_Students(out totalRows, pageIndex,pageSize,orderBy,searchBy);
+            var data = _PaymentRepository.Get_Payments(out totalRows, pageIndex,pageSize,orderBy,searchBy);
             return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = data.ToArray() }, JsonRequestBehavior.AllowGet);
 
         }
 
         [HttpGet]
-        public ActionResult Student(long? id)
+        public ActionResult Payment(long? id)
         {
             if (id == null)
             {
                 
-                var model = new StudentModel();
-                model.DateOfBirth = DateTime.Now;
+                var model = new PaymentModel();
+                model.PaymentDate = DateTime.Now;
                 model.Title = "Thêm mới sinh viên";
                 model.IsEdit = false;
-                return PartialView("_StudentPopup", model);
+                return PartialView("_PaymentPopup", model);
             }
             else
             {
-                var Student = _StudentRepository.Get_StudentByStudentID((long)id);
-                var model = Mapper.Map<Student, StudentModel>(Student);
+                var Payment = _PaymentRepository.Get_PaymentByPaymentID((long)id);
+                var model = Mapper.Map<Payment, PaymentModel>(Payment);
                 model.Title = "Cập nhập sinh viên";
                 model.IsEdit = true;
-                return PartialView("_StudentPopup", model);
+                return PartialView("_PaymentPopup", model);
             }
         }
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        [ActionName("PostStudent")]
-        public ActionResult PostStudent(StudentModel model)
+        [ActionName("PostPayment")]
+        public ActionResult PostPayment(PaymentModel model)
         {
             if (!ModelState.IsValid)
                 throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
@@ -75,15 +75,15 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 if (model.IsEdit == true)
                 {
-                    var Student = Mapper.Map<StudentModel, Student>(model);
-                    _StudentRepository.Update(Student);
+                    var Payment = Mapper.Map<PaymentModel, Payment>(model); 
+                    _PaymentRepository.Update(Payment);
 
                     return Json(new { success = true, message = "Cập nhập sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    var Student = Mapper.Map<StudentModel, Student>(model);
-                    _StudentRepository.Insert(Student);
+                    var Payment = Mapper.Map<PaymentModel, Payment>(model); 
+                    _PaymentRepository.Insert(Payment);
 
                     return Json(new { success = true, message = "Thêm mới sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
@@ -95,14 +95,14 @@ namespace LanguageCenter.Areas.Home.Controllers
         }
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        [ActionName("DeleteStudent")]
-        public ActionResult DeleteStudent(List<long> id)
+        [ActionName("DeletePayment")]
+        public ActionResult DeletePayment(List<long> id)
         {
             if (id == null)
                 return Json(new { success = false, message = "Bạn chưa chọn bản ghi!" }, JsonRequestBehavior.AllowGet);
             try
             {
-                _StudentRepository.Delete(id);
+                _PaymentRepository.Delete(id);
                 var message = "Xóa sinh viên thành công!";
                 return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
             }

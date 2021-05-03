@@ -45,7 +45,7 @@
                             @Html.ValidationMessageFor(model => model.DateOfBirth)
                             <div class="form-group" id="DateOfBirth-grp">
                                 <label for="DateOfBirth"><i class="zmdi zmdi-view-day"></i></label>
-                                <input type="date" name="DateOfBirth" value="@Model.DateOfBirth" id="DateOfBirth" placeholder="Your Date Of Birth" />
+                                <input type="date" name="DateOfBirth" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" id="DateOfBirth" placeholder="Your Date Of Birth" />
                             </div>
 
                             @Html.ValidationMessageFor(model => model.PhoneNumber)

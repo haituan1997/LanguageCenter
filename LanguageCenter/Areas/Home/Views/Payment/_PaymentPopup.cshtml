@@ -1,4 +1,4 @@
-﻿@model LanguageCenter.Areas.Home.Models.StudentModel.StudentModel
+﻿@model LanguageCenter.Areas.Home.Models.PaymentModel.PaymentModel
 
 
 <div class="modal-header" style=" background-color: #3ca4ab; color: white;">
@@ -6,9 +6,9 @@
     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body" style="overflow-y:auto" >
-    <form method="post" id="StudentForm" action="@Url.Action("PostStudent")">
+    <form method="post" id="PaymentForm" action="@Url.Action("PostPayment")">
         @*@Html.AntiForgeryToken()*@
-        @Html.HiddenFor(x => x.StudentID)
+        @Html.HiddenFor(x => x.PaymentID)
         @Html.HiddenFor(x => x.IsEdit)
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Họ sinh viên</label>
@@ -20,9 +20,9 @@
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example2">Ngày sinh</label>
-            <input type="date" name="DateOfBirth" id="DateOfBirth" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" class="form-control" tabindex="3" />
+            <input type="text" name="DateOfBirthBackUp" id="DateOfBirthBackUp" value="@Model.DateOfBirth.ToString("dd/MM/yyyy")" class="form-control" tabindex="3" />
         </div>
-        
+
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example2">Thành phố</label>
             <input type="text" name="CityName" id="CityName" value="@Model.CityName" class="form-control" tabindex="3" />
@@ -41,7 +41,7 @@
         </div>
     </form>
     <div class="modal-footer">
-        <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="StudentForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+        <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="PaymentForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
         <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
     </div>
 </div>
@@ -52,7 +52,7 @@
     $(document).ready(function () {
         
         var valid = function () {
-            $("#StudentForm").validate({
+            $("#PaymentForm").validate({
                 rules: {
                     FirtName: { required: true, maxlength:255}, 
                     LastName: { required: true, maxlength:255}, 
@@ -193,14 +193,14 @@
 
         $('#btnSave').off('click').on('click', function (e) {
             e.preventDefault();
-            var isValid = $('#StudentForm').valid();
+            var isValid = $('#PaymentForm').valid();
             if (!isValid) {
                 //$("select.error + span")
                 //    .find('span.select2-selection--single')
                 //    .css('cssText', 'border: 1px solid #f58a73 !important');
                 return false;
             }
-            var data = $('#StudentForm').serialize();
+            var data = $('#PaymentForm').serialize();
             var message = "";
             $.ajax({
                 url: urlUpdatePopup,

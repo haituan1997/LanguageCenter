@@ -118,6 +118,14 @@
             },
             
         });
+        $('.js-select2-enable-search-form-search').on("select2:close", function () {
+            var studentID = $('#StudentID').find(":selected").val();
+            if (studentID > 0) {
+                $("#StudentAccountForm").validate().element("#StudentID");
+                $("#StudentID-grp .select2-selection--single")
+                    .css('cssText', 'border: 1px solid #d2d6de !important');
+            }
+        });
 
         $('#btnSave').off('click').on('click', function (e) {
             e.preventDefault();

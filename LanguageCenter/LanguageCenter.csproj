@@ -172,6 +172,7 @@
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
     <Compile Include="Areas\Home\Controllers\AccountController.cs" />
     <Compile Include="Areas\Home\Controllers\StudentAccountController.cs" />
+    <Compile Include="Areas\Home\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Home\Controllers\StudentController.cs" />
     <Compile Include="Areas\Home\Controllers\TeacherController.cs" />
     <Compile Include="Areas\Home\Controllers\UserModel1.cs" />
@@ -180,13 +181,16 @@
     <Compile Include="Areas\Home\Models\RegisterModel\RegisterModel.cs" />
     <Compile Include="Areas\Home\Models\RegisterModel\LoginViewModel.cs" />
     <Compile Include="Areas\Home\Models\StudentAcountModel\StudentAcountModel.cs" />
+    <Compile Include="Areas\Home\Models\PaymentModel\PaymentModel.cs" />
     <Compile Include="Areas\Home\Models\StudentModel\StudentModel.cs" />
     <Compile Include="Areas\Home\Models\TeacherModel\TeacherModel.cs" />
     <Compile Include="Areas\Home\Models\UserModel.cs" />
+    <Compile Include="Code\Enumerator\Enumerator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Layer\BusinessLayer\Facade\StudentAccountFacade.cs" />
+    <Compile Include="Layer\BusinessLayer\Facade\PaymentFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\StudentFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\TeacherFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\UserFacade.cs" />
@@ -194,12 +198,14 @@
     <Compile Include="Layer\BusinessLayer\Facade\ResponseBase.cs" />
     <Compile Include="Layer\DataLayer\Db.cs" />
     <Compile Include="Layer\DataLayer\ForeignLanguageCenterAdapter.cs" />
+    <Compile Include="Layer\DataLayer\Object\Payment.cs" />
     <Compile Include="Layer\DataLayer\Object\StudentAccount.cs" />
     <Compile Include="Layer\DataLayer\Object\Student.cs" />
     <Compile Include="Layer\DataLayer\Object\Tearcher.cs" />
     <Compile Include="Layer\DataLayer\Object\User.cs" />
     <Compile Include="Layer\DataLayer\Object\Class.cs" />
     <Compile Include="Layer\DataLayer\Shared\Extentions.cs" />
+    <Compile Include="Layer\DataLayer\SqlServer\SqlServerPayment.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerStudentAccount.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerStudent.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerTeacher.cs" />
@@ -288,6 +294,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\StudentAccountRepository.cs" />
+    <Compile Include="Repository\PaymentRepository.cs" />
     <Compile Include="Repository\StudentRepository.cs" />
     <Compile Include="Repository\TeacherRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
@@ -8565,6 +8572,8 @@
     <Content Include="fonts\poppins\roboto-condensed-v16-latin-regular.woff" />
     <Content Include="fonts\poppins\roboto-condensed-v16-latin-regular.woff2" />
     <Content Include="Areas\Home\Views\Account\Register.cshtml" />
+    <Content Include="Areas\Home\Views\Payment\_PaymentPopup.cshtml" />
+    <Content Include="Areas\Home\Views\Payment\Payments.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
