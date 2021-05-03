@@ -27,6 +27,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<Teacher> Get_TeacheresNotInTeacherAccount()
+        {
+            try
+            {
+                return teacherFacade.Get_TeacheresNotInTeacherAccount();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public string InsertOrUpdate(Teacher teacher)
         {
             try

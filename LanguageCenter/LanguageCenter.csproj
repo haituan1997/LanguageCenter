@@ -168,12 +168,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StartUp.Auth.cs" />
     <Compile Include="App_Start\WFHContext.cs" />
+    <Compile Include="Areas\Home\Controllers\ClassController.cs" />
     <Compile Include="Areas\Home\Controllers\CourseController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
     <Compile Include="Areas\Home\Controllers\AccountController.cs" />
     <Compile Include="Areas\Home\Controllers\StudentAccountController.cs" />
     <Compile Include="Areas\Home\Controllers\StudentController.cs" />
+    <Compile Include="Areas\Home\Controllers\TeacherAccountController.cs" />
     <Compile Include="Areas\Home\Controllers\TeacherController.cs" />
     <Compile Include="Areas\Home\Controllers\UserModel1.cs" />
     <Compile Include="Areas\Home\DatatableHelper.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Areas\Home\Models\LoginViewModel.cs" />
     <Compile Include="Areas\Home\Models\StudentAcountModel\StudentAcountModel.cs" />
     <Compile Include="Areas\Home\Models\StudentModel\StudentModel.cs" />
+    <Compile Include="Areas\Home\Models\TeacherAccountModel\TeacherAccountModel.cs" />
     <Compile Include="Areas\Home\Models\TeacherModel\TeacherModel.cs" />
     <Compile Include="Areas\Home\Models\UserModel.cs" />
     <Compile Include="Global.asax.cs">
@@ -190,6 +193,7 @@
     <Compile Include="Layer\BusinessLayer\Facade\StudentAccountFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\CourseFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\StudentFacade.cs" />
+    <Compile Include="Layer\BusinessLayer\Facade\TeacherAccountFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\TeacherFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\UserFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\ClassFacade.cs" />
@@ -202,6 +206,7 @@
     <Compile Include="Layer\DataLayer\Object\Level.cs" />
     <Compile Include="Layer\DataLayer\Object\StudentAccount.cs" />
     <Compile Include="Layer\DataLayer\Object\Student.cs" />
+    <Compile Include="Layer\DataLayer\Object\TeacherAccount.cs" />
     <Compile Include="Layer\DataLayer\Object\Tearcher.cs" />
     <Compile Include="Layer\DataLayer\Object\User.cs" />
     <Compile Include="Layer\DataLayer\Object\Class.cs" />
@@ -210,6 +215,7 @@
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerCourse.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerStudent.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerTeacher.cs" />
+    <Compile Include="Layer\DataLayer\SqlServer\SqlServerTeacherAccount.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerUser.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerClass.cs" />
     <Compile Include="model\Category.cs">
@@ -297,6 +303,7 @@
     <Compile Include="Repository\StudentAccountRepository.cs" />
     <Compile Include="Repository\CourseRepository.cs" />
     <Compile Include="Repository\StudentRepository.cs" />
+    <Compile Include="Repository\TeacherAccountRepository.cs" />
     <Compile Include="Repository\TeacherRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\ClassRepository.cs" />
@@ -8488,6 +8495,10 @@
     <Content Include="Areas\Home\Views\Course\Language.cshtml" />
     <Content Include="Areas\Home\Views\Course\Category.cshtml" />
     <Content Include="Areas\Home\Views\Course\Level.cshtml" />
+    <Content Include="Areas\Home\Views\TeacherAccount\TeacherAccounts.cshtml" />
+    <Content Include="Areas\Home\Views\TeacherAccount\_TeacherAccountPopup.cshtml" />
+    <Content Include="Areas\Home\Views\Class\Classes.cshtml" />
+    <Content Include="Areas\Home\Views\Class\Class.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

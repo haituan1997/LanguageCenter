@@ -1,0 +1,172 @@
+﻿@model LanguageCenter.Areas.Home.Models.TeacherAccountModel.TeacherAccountModel
+@using LanguageCenter.Layer.DataLayer.Object
+@{
+    ViewBag.Title = "Tài khoản giáo viên";
+    var teachers = (IEnumerable<Teacher>)ViewBag.Teachers;
+}
+
+<div class="modal-header" style=" background-color: #3ca4ab; color: white;">
+    <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body" style="height:100%">
+    <form method="post" id="TeacherAccountForm" action="@Url.Action("PostTeacherAccount")">
+        @*@Html.AntiForgeryToken()*@
+        @Html.HiddenFor(x => x.TeacherAccountID)
+        @Html.HiddenFor(x => x.IsEdit)
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example1">Tài khoản đăng nhập</label>
+            <input type="text" name="UserLogin" id="UserLogin" value="@Model.UserLogin" autofocus class="form-control" tabindex="1" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Mật khẩu</label>
+            <input type="text" name="PassWordLogin" id="PassWordLogin" value="@Model.PassWordLogin" class="form-control" tabindex="2" />
+        </div>
+        <div class="form-outline mb-4">
+            <div id="TeacherID-Grp">
+                <label>Giáo viên</label>
+                <select class="form-control js-select2-enable-search-form-search" name="TeacherID" id="TeacherID" data-placeholder="Chọn giáo viên" tabindex="4">
+                    <option></option>
+                    @foreach (var teacher in teachers)
+                    {
+                        var selected = Model.TeacherID == teacher.TeacherID ? "selected" : ""; ;
+                        <option @selected value="@teacher.TeacherID">@teacher.LastName @teacher.FirtName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+
+            <div class="squaredCheckbox" style="display:inline">
+                <input type="checkbox" class="hidden" id="IsActive" name="IsActive" checked="@Model.IsActive" tabindex="12">
+                <label for="IsActive" tabindex="13"></label>
+            </div>
+            <div style="display:inline">
+                <label> Được sử dụng</label>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="TeacherAccountForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+    <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+</div>
+<script src="~/javascript/notify.min.js"></script>
+<script src="~/javascript/jquery.validate.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var valid = function () {
+            $("#TeacherAccountForm").validate({
+                rules: {
+                    UserLogin: { required: true, maxlength: 255 },
+                    PassWordLogin: { required: true, maxlength: 255 },
+                    TeacherID: { required: true, maxlength: 255,  },
+                },
+                messages: {
+                    UserLogin: {
+                        required: "Tài khoản không được để trống !",
+                        maxlength: "Tài khoản viên không được quá 255 ký tự !",
+                    },
+                    PassWordLogin: {
+                        required: "Mật khẩu không được để trống !",
+                        maxlength: "Mật khẩu không được quá 255 ký tự !",
+                    },
+                    TeacherID: {
+                        required: "Giáo viên không được để trống !",
+                    },
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") === "TeacherID") {
+                        error.insertAfter("#TeacherID-Grp");
+                    } else
+                    error.insertAfter(element, "label-error");
+                }
+            })
+        };
+        valid();
+        $('.btn-exit-popup,.btn-close').off('click').on('click', function (e) {
+            e.preventDefault();
+            $('#popUp').modal('hide');
+            return;
+        });
+
+
+        // xử lý nút kd sủ dụng
+        if ($('#IsActive').attr("checked") === "checked") {
+            $('#IsActive').val("true");
+        } else {
+            $('#IsActive').val("false");
+        }
+        $('#IsActive').change(function () {
+            $(this).val($(this).prop('checked'));
+        });
+        // xử lý select 2
+
+        $('.js-select2-enable-search-form-search').select2({
+            language:
+            {
+                noResults: function () {
+                    return "Không có dữ liệu";
+                }
+            },
+
+        });
+
+        $('#btnSave').off('click').on('click', function (e) {
+            e.preventDefault();
+            var isValid = $('#TeacherAccountForm').valid();
+            if (!isValid) {
+                //$("select.error + span")
+                //    .find('span.select2-selection--single')
+                //    .css('cssText', 'border: 1px solid #f58a73 !important');
+                return false;
+            }
+            var data = $('#TeacherAccountForm').serialize();
+            var message = "";
+            $.ajax({
+                url: urlUpdatePopup,
+                data: data,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+
+                    if (result.success) {
+                        var data = result.message;
+                        $.notify(data, {
+                            globalPosition: "top center",
+                            className: "success"
+                        });
+                        $('#' + popUpName).modal('hide');
+                        buildTable.ajax.reload();
+                    }
+                    else {
+                        $.each(result,
+                            function (index) {
+                                message = result[index].Message;
+                            });
+                        $.notify(result.message, {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                    }
+
+                },
+                error: function (result) {
+                    $.each(result,
+                        function (index) {
+                            message = result[index].Message;
+                        });
+                    $.notify(result.message, {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                }
+            });
+        })
+    });
+</script>

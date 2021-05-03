@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Class";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="content-info">
+
+    <div class="row form-title title">
+        <div class="col-md-10 col-lg-10 " id="custom-title">
+            <i class="fa fa-arrow-left" style=" font-weight: 300; font-size: 14px; top: -4px; position: inherit;"></i>
+            <span class="QuickSand" id="title-form"> Thêm mới lớp</span>
+        </div>
+        <div class="col-md-2 col-lg-2 arrow-link" style="margin-right: 27px;">
+            <a class="btn btn-flat btn-icon-custom pull-right border-radius-class" id="btnRefresh" style="padding-top: 8px;">
+                <i class="fa fa-sync-alt"></i>
+                <span class="OpenSans" style="font-weight:400">Làm mới</span>
+            </a>
+        </div>
+    </div>
+    <div class="container-list step-by-step-container" style="max-height:75%">
+        <form action="/" method="post">
+            <section class="">
+                <div class="panel-group">
+                    <div class="panel panel-default" id="panel1">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#General">
+                                    <span class="QuickSand">
+                                        Thông tin hồ sơ
+                                    </span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="General" class="panel-collapse collapse in" style="display:block">
+                            <div class="panel-body">
+                                <div class="row info">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label>Tên lớp</label>
+                                            <input type="text" class="form-control" value="" tabindex="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 ">
+                                        <div class="form-group">
+                                            <label title="Cơ quan quản lý hồ sơ gốc">Ngày bắt đầu</label>
+                                            <input type="text" class="form-control" value="" tabindex="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label title="Số quyết định khen thưởng">Ngày kết thúc</label>
+                                            <input type="text" class="form-control" value="" tabindex="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label title="Số quyết định khen thưởng">Khóa học</label>
+                                            <input type="text" class="form-control" value="" tabindex="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label title="Số quyết định khen thưởng">Giáo viên</label>
+                                            <input type="text" class="form-control" value="" tabindex="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <label title="Số quyết định khen thưởng">Học phí</label>
+                                            <input type="text" class="form-control" value="" tabindex="1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="panel-group" style="margin-bottom: 0;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#formlist">
+                                    <span class="QuickSand">
+                                        Thông tin chế độ ưu đãi
+                                    </span>
+                                </a>
+                            </h4>
+                        </div>
+
+                    </div>
+                    <div class="" id="formlist">
+                        <div class="panel-body tab-body" style="border-bottom: none !important;">
+                            <div class="row" style=" position: relative; margin: 10px 10px 10px 0px;">
+                                <div class="action-FormList">
+                                    <button id="btnAddNew" class="btn-add-new"><span class="">Thêm mới</span></button>
+                                    <a id="btnDeleteAll" class="btn-delete-all" style="padding-top: 5px;"><span>Xóa tất cả</span></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 ">
+                                    <table style="width:100%;" id="CourseTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+                                        <thead class="Table-Thead">
+                                            <tr class="Table-Thead-tr">
+                                                <th>ID</th>
+                                                <th>Mã</th>
+                                                <th>Tên</th>
+                                                <th>Danh mục</th>
+                                                <th>Ngôn ngữ</th>
+                                                <th>Cấp độ</th>
+                                                <th>Mô tả</th>
+                                                <th>Hoạt động</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+
+

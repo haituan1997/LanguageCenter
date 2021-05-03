@@ -1,14 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "Khóa đào tạo";
+    ViewBag.Title = "Tài khoản giáo viên";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<style>
-</style>
+
+
 <div class="container-homeadmin">
     <div class="row">
         <div class="col-lg-12 col-md-12 title">
-            <span>Danh sách khóa đào tạo</span>
+            <span>Danh sách tài khoản giáo viên</span>
         </div>
     </div>
     <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
@@ -19,16 +19,15 @@
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 ">
-            <table style="width:100%;" id="CourseTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+            <table style="width:100%;" id="TeacherAccountTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
                 <thead class="Table-Thead">
                     <tr class="Table-Thead-tr">
-                        <th>ID</th>
-                        <th>Mã</th>
-                        <th>Tên</th>
-                        <th>Danh mục</th>
-                        <th>Ngôn ngữ</th>
-                        <th>Cấp độ</th>
+                        <th>ID tài khoản</th>
+                        <th>Tài khoản đăng nhập</th>
+                        <th>Mật Khẩu</th>
+                        <th>Họ và tên giáo viên</th>
                         <th>Mô tả</th>
+                        <th>Được sử dụng</th>
                         <th>Hoạt động</th>
                     </tr>
                 </thead>
@@ -37,8 +36,8 @@
     </div>
 </div>
 <div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
-    <div class="modal-dialog modal-side modal-top-right " style="float:right" @*width: 820px;max-width:100%;*@>
-        <div class="modal-content" style="background:none">
+    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
+        <div class="modal-content" style="height:100%">
         </div>
     </div>
 </div>
@@ -47,17 +46,16 @@
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
 <script>
-    var tableName = "CourseTable";
+    var tableName = "TeacherAccountTable";
     var popUpName = "popUp";
     var totalColum = 7;
     var dataJson;
-    var urlUpdatePopup = '/luu-khoa-dao-tao';
-    var urlDetailPopup = "/chi-tiet-khoa-dao-tao/";
-    var urlDataTable = "/danh-sach-khoa-dao-tao";
-    var urlDeleteDetail = "/xoa-khoa-dao-tao";
-    var idColum = "CourseID";
-    var buildTable;
-    
+    var urlUpdatePopup = '/luu-tai-khoan-giao-vien';
+    var urlDetailPopup = "/chi-tiet-tai-khoan-giao-vien/";
+    var urlDataTable = "/danh-sach-tai-khoan-giao-vien";
+    var urlDeleteDetail = "/xoa-tai-khoan-giao-vien";
+    var idColum = "TeacherAccountID";
+    var buildTable
     $(document).ready(function () {
         buildTable = $('#' + tableName + '').DataTable({
             "ajax": {
@@ -66,16 +64,26 @@
                 "datatype": "json"
             },
             "columns": [
-                { "data": "CourseID", "name": "CourseID" },
-                { "data": "Code", "name": "Code" },
-                { "data": "Name", "name": "Name" },
-                { "data": "CategoryName", "name": "CategoryName" },
-                { "data": "LanguageName", "name": "LanguageName" },
-                { "data": "LevelName", "name": "LevelName" },
-                { "data": "Description", "name": "Description", "width":"150px" },
+                { "data": "TeacherAccountID", "name": "TeacherAccountID", "width":"100px" },
+                { "data": "UserLogin", "name": "UserLogin" },
+                { "data": "PassWordLogin", "name": "PassWordLogin" },
+                { "data": "FullName", "name": "FullName" },
+                { "data": "Description", "name": "Description", "width": "200px"},
                 {
-                    "data": "CourseID", "render": function (data) {
-                        return "<a class='btn btn-edit-table' id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                    "data": "IsActive", "width": "110px", "render": function (data) {
+                         
+                        if (data) {
+                            return "<span class='mode mode_on'>Active</span>";
+                        }
+                        else {
+                            return "<span class='mode mode_off'>Inactive</span>";
+                        }
+
+                    }
+                },
+                {
+                    "data": "TeacherAccountID", "render": function (data) {
+                        return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                     },
                     "orderable": false,
                     "searchable": false,
@@ -119,11 +127,14 @@
                 if (json.data.length > 0) {
                     addSearchControl(oSettings, json);
                     //eventDoubleClick();
+                    selected();
                     caculatorHeightTable();
+
                 }
-                selected();
+
                 changeCss();
                 actionControl();
+                
             }
         });
         function hoverTbody() {
@@ -206,9 +217,86 @@
                 }
             })
         };
-        var actionControl = function (element) {
+        
+        var actionControl = function () {
+            $('span.mode').each(function () {
+                var obj = $(this);
+                obj.parent().css("cssText", "text-align: center;");
+            });
+            $('#btnAddNew').off('click').on('click', function () {
+                var url = urlDetailPopup;
+                $('#' + popUpName).modal('show');
+                $('#' + popUpName + ' .modal-content').load(url);
+            });
+            $('#btnDeleteAll').off('click').on('click', function () {
+                var listItemToDelete = [];
+                $("#" + tableName + "_wrapper .selected").each(function () {
+                    var row = buildTable.row($(this));
+                    var itemId = $(row.data()).attr(idColum);
+                    if (listItemToDelete.indexOf(itemId) < 0) {
+                        listItemToDelete.push(itemId);
+                    }
+                });
+                if (!confirm("Bạn có đồng ý xóa???")) {
+
+                    return false;
+                }
+                else {
+                    if (listItemToDelete.length <= 0) {
+                        $.notify("Bạn phải chọn bản ghi", {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                        return;
+                    }
+                    else {
+                        $.ajax({
+                            url: urlDeleteDetail,
+                            data: { id: listItemToDelete },
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                if (result.success) {
+                                    var data = result.message;
+                                    $.notify(data, {
+                                        globalPosition: "top center",
+                                        className: "success"
+                                    });
+                                    listItemToDelete = [];
+                                }
+                                else {
+                                    $.each(result,
+                                        function (index) {
+                                            message = result[index].Message;
+                                        });
+                                    $.notify(message, {
+                                        globalPosition: "top center",
+                                        className: "error"
+                                    });
+                                }
+                                buildTable.ajax.reload();
+
+                            },
+                            error: function (result) {
+                                $.each(result,
+                                    function (index) {
+                                        message = result[index].Message;
+                                    });
+                                $.notify(message, {
+                                    globalPosition: "top center",
+                                    className: "error"
+                                });
+                            }
+                        });
+                    }
+                }
+
+            });
+            
+
+            
             $('#' + tableName).each(function () {
-                 
+
                 var obj = $(this);
                 var item = $("tbody", obj);
                 item.on("click",
@@ -278,84 +366,6 @@
                     })
             })
         };
-        var action = function () {
-            $('#btnAddNew').off('click').on('click', function () {
 
-                var url = urlDetailPopup;
-                $('#' + popUpName).modal('show');
-                $('#' + popUpName + ' .modal-content').load(url);
-            });
-            $('#btnDeleteAll').off('click').on('click', function () {
-
-                var listItemToDelete = [];
-                $("#" + tableName + "_wrapper .selected").each(function () {
-                    var row = buildTable.row($(this));
-                    var itemId = $(row.data()).attr(idColum);
-                    if (listItemToDelete.indexOf(itemId) < 0) {
-                        listItemToDelete.push(itemId);
-                    }
-                });
-                if (!confirm("Bạn có đồng ý xóa???")) {
-
-                    return false;
-                }
-                else {
-                    if (listItemToDelete.length <= 0) {
-                        $.notify("Bạn phải chọn bản ghi", {
-                            globalPosition: "top center",
-                            className: "error"
-                        });
-                        return;
-                    }
-                    else {
-                        $.ajax({
-                            url: urlDeleteDetail,
-                            data: { id: listItemToDelete },
-                            type: 'POST',
-                            dataType: 'json',
-                            success: function (result) {
-                                if (result.success) {
-                                    var data = result.message;
-                                    $.notify(data, {
-                                        globalPosition: "top center",
-                                        className: "success"
-                                    });
-                                    listItemToDelete = [];
-                                }
-                                else {
-                                    $.each(result,
-                                        function (index) {
-                                            message = result[index].Message;
-                                        });
-                                    $.notify(message, {
-                                        globalPosition: "top center",
-                                        className: "error"
-                                    });
-                                }
-                                buildTable.ajax.reload();
-
-                            },
-                            error: function (result) {
-                                $.each(result,
-                                    function (index) {
-                                        message = result[index].Message;
-                                    });
-                                $.notify(message, {
-                                    globalPosition: "top center",
-                                    className: "error"
-                                });
-                            }
-                        });
-                    }
-                }
-
-            });
-        };
-        async function asyncCall() {
-             
-            actionControl();
-            action();
-        }
-        asyncCall();
     });
 </script>
