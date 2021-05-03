@@ -1,4 +1,5 @@
 ﻿using LanguageCenter.BusinessLayer.Facade;
+using LanguageCenter.DataLayer.Object;
 using LanguageCenter.Layer.BusinessLayer.Facade;
 using LanguageCenter.Layer.DataLayer.Object;
 using System;
@@ -33,6 +34,17 @@ namespace LanguageCenter.Repository
             try
             { 
                 return StudentAccountFacade.Get_StudentAccountByStudentAccountID(StudentAccountID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public User Get_StudentAccountByUserName(string user)
+        {
+            try
+            {
+                return StudentAccountFacade.Get_StudentAccountByUserName(user);
             }
             catch (Exception ex)
             {

@@ -120,7 +120,7 @@
                         selected();
                         caculatorHeightTable();
                     };
-                    debugger
+                     
                     actionControl();
                     changeCss();
                 }
@@ -282,7 +282,7 @@
         };
         var actionControl = function (element) {
             $('#' + tableName).each(function () {
-                debugger
+                 
                 var obj = $(this);
                 var item = $("tbody", obj);
                 item.on("click",
@@ -353,7 +353,7 @@
             })
         };
         async function asyncCall() {
-            debugger
+             
             actionControl();
             createTable();
             action();

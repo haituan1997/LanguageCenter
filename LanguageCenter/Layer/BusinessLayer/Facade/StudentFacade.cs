@@ -11,6 +11,7 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
     public class StudentFacade
     {
         SqlServerStudent sqlServerStudent = new SqlServerStudent();
+        SqlServerStudentAccount sqlServerStudentAccount = new SqlServerStudentAccount();
         public IEnumerable<Student> Get_Students(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
             return sqlServerStudent.Get_Students(page,pageSize,orderBy,searchBy);
@@ -27,14 +28,15 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerStudent.Count( whereClause);
         }
-        public StudentResponse Insert(Student Student)
+        public StudentResponse Insert(Student student)
         {
             var response = new StudentResponse { Acknowledge = AcknowledgeType.Success };
             try
             {
-                sqlServerStudent.Insert(Student);
+                student.StudentID = sqlServerStudent.GetId();
+                sqlServerStudent.Insert(student);
 
-                response.StudentID = Student.StudentID;
+                response.StudentID = student.StudentID;
             }
             catch (Exception ex)
             {
@@ -68,9 +70,24 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
             {
                 if (ids.Count > 0)
                 {
+                    var checkxoaall = true;
                     foreach (var item in ids)
                     {
-                        sqlServerStudent.Delete(item);
+                        var checkxoa = sqlServerStudentAccount.Get_StudentAccountByStudentID(item);
+                        if (checkxoa == null)
+                        {
+                            sqlServerStudent.Delete(item);
+
+                        }
+                        else
+                        {
+                            checkxoaall = false;
+                        }
+                       
+                    }
+                    if(checkxoaall==false)
+                    {
+                        throw new Exception("Sinh viên này đã được dùng ở chức năng khác.");
                     }
                 }
             }

@@ -61,15 +61,15 @@
         };
         valid();
         $('.btn-exit-popup').off('click').on('click', function (e) {
-            debugger
+             
             e.preventDefault();
             $('#popUp').modal('hide');
             return;
         })
         $('#btnSave').off('click').on('click', function (e) {
-            debugger
+             
             e.preventDefault();
-            debugger
+             
             var isValid = $('#TeacherForm').valid();
             if (!isValid) {
                 //$("select.error + span")
@@ -85,7 +85,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
-                    debugger
+                     
                     if (result.success) {
                         var data = result.message;
                         $.notify(data, {

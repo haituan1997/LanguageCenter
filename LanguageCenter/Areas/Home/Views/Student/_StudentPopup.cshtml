@@ -5,17 +5,17 @@
     <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
 </div>
-<div class="modal-body" style="height:100%">
+<div class="modal-body" style="overflow-y:auto" >
     <form method="post" id="StudentForm" action="@Url.Action("PostStudent")">
         @*@Html.AntiForgeryToken()*@
         @Html.HiddenFor(x => x.StudentID)
         @Html.HiddenFor(x => x.IsEdit)
         <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example1">Họ học sinh</label>
+            <label class="form-label" for="form1Example1">Họ sinh viên</label>
             <input type="text" name="FirtName" id="FirtName" value="@Model.FirtName" autofocus class="form-control" tabindex="1" />
         </div>
         <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example2">Tên học sinh</label>
+            <label class="form-label" for="form1Example2">Tên sinh viên</label>
             <input type="text" name="LastName" id="LastName" value="@Model.LastName" class="form-control" tabindex="2" />
         </div>
         <div class="form-outline mb-4">
@@ -38,14 +38,14 @@
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example2">Email</label>
             <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" tabindex="4" />
-        </div> 
+        </div>
     </form>
+    <div class="modal-footer">
+        <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="StudentForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+        <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+    </div>
+</div>
 
-</div>
-<div class="modal-footer">
-    <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="StudentForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
-    <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
-</div>
 <script src="~/javascript/notify.min.js"></script>
 <script src="~/javascript/jquery.validate.js"></script>
 <script>
@@ -55,6 +55,7 @@
             $("#StudentForm").validate({
                 rules: {
                     FirtName: { required: true, maxlength:255}, 
+                    LastName: { required: true, maxlength:255}, 
                     CurrentAddress: { required: true, maxlength: 255 },
                     PhoneNumber: { required: true, maxlength: 255, checkPhoneNumber: true },
                     DateOfBirthBackUp: { required: true, maxlength: 255, validDate: true }, 
@@ -62,8 +63,12 @@
                 },
                 messages: {
                     FirtName: {
-                        required: "Họ giáo viên không được để trống !", 
-                        maxlength: "Họ giáo viên không được quá 255 ký tự !", 
+                        required: "Họ sinh viên không được để trống !", 
+                        maxlength: "Họ sinh viên không được quá 255 ký tự !", 
+                    },
+                    LastName: {
+                        required: "tên sinh viên không được để trống !",
+                        maxlength: "tên sinh viên không được quá 255 ký tự !",
                     },
                     CurrentAddress: { 
                         required: "Địa chỉ không được để trống !", 
@@ -108,7 +113,7 @@
         }, ''); 
         // xử lý kiểm tra định dạng ngày tháng
         jQuery.validator.addMethod("validDate", function (value) {
-            debugger
+             
             var result = checkdate(value, true, true);
             if (result.rs) {
                 return result.rs
@@ -203,7 +208,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
-                    debugger
+                     
                     if (result.success) {
                         var data = result.message;
                         $.notify(data, {
@@ -217,7 +222,7 @@
                     else {
                         $.each(result,
                             function (index) {
-                                message = result[index].Message;
+                                message = result.message;
                             });
                         $.notify(result.message, {
                             globalPosition: "top center",
@@ -229,7 +234,7 @@
                 error: function (result) {
                     $.each(result,
                         function (index) {
-                            message = result[index].Message;
+                            message = result.message;
                         });
                     $.notify(result.message, {
                         globalPosition: "top center",
