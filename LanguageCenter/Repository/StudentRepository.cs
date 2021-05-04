@@ -39,6 +39,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<Student> GetAll_StudentsNotAccont()
+        {
+            try
+            {
+                return studentFacade.GetAll_StudentsNotAccont();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public Student Get_StudentByStudentID(long studentID)
         {
             try

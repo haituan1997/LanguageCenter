@@ -1,4 +1,5 @@
 ﻿using LanguageCenter.BusinessLayer.Facade;
+using LanguageCenter.DataLayer.Object;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Layer.DataLayer.SqlServer;
 using System;
@@ -19,6 +20,11 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerStudentAccount.Get_StudentAccountByStudentAccountID(studenIDl);
         }
+        public User Get_StudentAccountByUserName(string user)
+        {
+            return sqlServerStudentAccount.Get_StudentAccountByUserName(user);
+        }
+        
         public int Count( string whereClause)
         {
             return sqlServerStudentAccount.Count( whereClause);
@@ -28,6 +34,7 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
             var response = new StudentAccountResponse { Acknowledge = AcknowledgeType.Success };
             try
             {
+
                 sqlServerStudentAccount.Insert(StudentAccount);
 
                 response.StudentAccountID = StudentAccount.StudentAccountID;
@@ -45,6 +52,7 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
             var response = new StudentAccountResponse { Acknowledge = AcknowledgeType.Success };
             try
             {
+                
                 sqlServerStudentAccount.Update(StudentAccount);
 
                 response.StudentAccountID = StudentAccount.StudentAccountID;

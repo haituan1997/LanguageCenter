@@ -48,12 +48,12 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult StudentAccount(long? id)
         {
-            ViewBag.Students = _StudentRepository.GetAll_Students().ToList();
+            ViewBag.Students = _StudentRepository.GetAll_StudentsNotAccont().ToList();
             if (id == null)
             {
                 
                 var model = new StudentAccountModel();
-                model.Title = "Thêm mới tài khoản học sinh";
+                model.Title = "Thêm mới tài khoản sinh viên";
                 model.IsEdit = false;
                 return PartialView("_StudentAccountPopup", model);
             }
@@ -61,7 +61,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 var StudentAccount = _StudentAccountRepository.Get_StudentAccountByStudentAccountID((long)id);
                 var model = Mapper.Map<StudentAccount, StudentAccountModel>(StudentAccount);
-                model.Title = "Cập nhập tài khoản học sinh";
+                model.Title = "Cập nhập tài khoản sinh viên";
                 model.IsEdit = true;
                 return PartialView("_StudentAccountPopup", model);
             }
@@ -80,14 +80,21 @@ namespace LanguageCenter.Areas.Home.Controllers
                     var StudentAccount = Mapper.Map<StudentAccountModel, StudentAccount>(model);
                     _StudentAccountRepository.Update(StudentAccount);
 
-                    return Json(new { success = true, message = "Cập nhập tài khoản học sinh thành công!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Cập nhập tài khoản sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    var StudentAccount = Mapper.Map<StudentAccountModel, StudentAccount>(model);
-                    _StudentAccountRepository.Insert(StudentAccount);
+                    var checkUserName = _StudentAccountRepository.Get_StudentAccountByUserName(model.UserLogin);
+                    if(checkUserName== null)
+                    {
+                        var StudentAccount = Mapper.Map<StudentAccountModel, StudentAccount>(model);
+                        _StudentAccountRepository.Insert(StudentAccount);
 
-                    return Json(new { success = true, message = "Thêm mới tài khoản học sinh thành công!" }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, message = "Thêm mới tài khoản sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else
+                        return Json(new { success = false, Message="tên đăng nhập đã tồn tại" }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -105,7 +112,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             try
             {
                 _StudentAccountRepository.Delete(id);
-                var message = "Xóa tài khoản học sinh thành công!";
+                var message = "Xóa tài khoản sinh viên thành công!";
                 return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
