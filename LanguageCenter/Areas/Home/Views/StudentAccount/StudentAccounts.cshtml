@@ -8,7 +8,7 @@
 <div class="container-homeadmin">
     <div class="row">
         <div class="col-lg-12 col-md-12 title">
-            <span>Danh sách học sinh</span>
+            <span>Danh sách tài khoản sinh viên</span>
         </div>
     </div>
     <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
@@ -25,7 +25,7 @@
                         <th>ID tài khoản</th>
                         <th>Tài khoản đăng nhập</th>
                         <th>Mật Khẩu</th>
-                        <th>Họ và tên học sinh</th>
+                        <th>Họ và tên sinh viên</th>
                         <th>Địa chỉ</th>
                         <th>Ngày sinh</th>
                         <th>Được sử dụng</th>
@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-<div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
+<div class="modal right fade" style="overflow-y:hidden" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
     <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
         <div class="modal-content" style="height:100%">
         </div>
@@ -83,7 +83,7 @@
                 },
                 { "data": "IsActive", "name": "IsActive" },
                 {
-                    "data": "TeacherID", "render": function (data) {
+                    "data": "StudentAccountID", "render": function (data) {
                         return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                     },
                     "orderable": false,
@@ -264,7 +264,7 @@
                                 else {
                                     $.each(result,
                                         function (index) {
-                                            message = result[index].Message;
+                                            message = result.message;
                                         });
                                     $.notify(message, {
                                         globalPosition: "top center",
@@ -277,7 +277,7 @@
                             error: function (result) {
                                 $.each(result,
                                     function (index) {
-                                        message = result[index].Message;
+                                        message = result.message;
                                     });
                                 $.notify(message, {
                                     globalPosition: "top center",
@@ -337,7 +337,7 @@
                                     else {
                                         $.each(result,
                                             function (index) {
-                                                message = result[index].Message;
+                                                message = result.message;
                                             });
                                         $.notify(message, {
                                             globalPosition: "top center",
@@ -348,7 +348,7 @@
                                 error: function (result) {
                                     $.each(result,
                                         function (index) {
-                                            message = result[index].Message;
+                                            message = result.message;
                                         });
                                     $.notify(message, {
                                         globalPosition: "top center",

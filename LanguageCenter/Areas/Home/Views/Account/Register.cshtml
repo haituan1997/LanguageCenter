@@ -1,0 +1,211 @@
+﻿@model LanguageCenter.Areas.Home.Models.RegisterModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="~/css/Account.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Sign up</h2>
+                        <form method="POST" class="register-form" id="register-form">
+                            @Html.ValidationMessageFor(model => model.FirtName)
+                            <div class="form-group" id="FirtName-grp">
+                                <label for="FirtName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" value="@Model.FirtName" name="FirtName" id="FirtName" placeholder="Firt Name" />
+                            </div>
+                            @Html.ValidationMessageFor(model => model.LastName)
+                            <div class="form-group" id="LastName=grp">
+                                <label for="LastName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" value="@Model.LastName" name="LastName" id="LastName" placeholder="Last Name" />
+                            </div>
+                            @Html.ValidationMessageFor(model => model.UserLogin)
+                            <div class="form-group" id="UserLogin-grp">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" value="@Model.UserLogin" name="UserLogin" id="UserLogin" placeholder="User Name" />
+                            </div>
+                            @Html.ValidationMessageFor(model => model.CurrentAddress)
+                            <div class="form-group" id="CurrentAddress-grp">
+                                <label for="CurrentAddress"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="CurrentAddress" value="@Model.CurrentAddress" id="CurrentAddress" placeholder="Current Address" />
+                            </div>
+                            @Html.ValidationMessageFor(model => model.DateOfBirth)
+                            <div class="form-group" id="DateOfBirth-grp">
+                                <label for="DateOfBirth"><i class="zmdi zmdi-view-day"></i></label>
+                                <input type="date" name="DateOfBirth" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" id="DateOfBirth" placeholder="Your Date Of Birth" />
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.PhoneNumber)
+                            <div class="form-group" id="PhoneNumber-grp">
+                                <label for="PhoneNumber"><i class="zmdi zmdi-account-box-phone"></i></label>
+                                <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" id="PhoneNumber" placeholder="Phone Number" />
+                            </div>
+                            @Html.ValidationMessageFor(model => model.PassWordLogin)
+                            <div class="form-group" id="PassWordLogin-grp">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="PassWordLogin" value="@Model.PassWordLogin" id="password" placeholder="Password" />
+                            </div>
+                            @Html.ValidationMessageFor(model => model.re_pass)
+
+                            <div class="form-group" id="re-pass-grp">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="re_pass" value="@Model.re_pass" id="re_pass" placeholder="Repeat your password" />
+                            </div>
+
+                            @*<div class="form-group">
+            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+        </div>*@
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="~/images/signup-image.jpg" alt="sing up image"></figure>
+                        <a href="/Account/Login" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </div>
+
+    <!-- JS -->
+    <script src="~/Scripts/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/javascript/notify.min.js"></script>
+    <script src="~/javascript/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var valid = function () {
+                $("#register-form").validate({
+                    rules: {
+                        FirtName: { required: true, maxlength: 255 },
+                        LastName: { required: true, maxlength: 255 },
+                        UserLogin: { required: true, maxlength: 255 },
+                        CurrentAddress: { required: true, maxlength: 255 },
+                        PhoneNumber: { required: true, maxlength: 255, checkPhoneNumber: true },
+                        DateOfBirth: { required: true },
+                        password: { required: true },
+                        re_pass: { required: true, checkpass: true },
+                    },
+                    messages: {
+                        FirtName: {
+                            required: "Họ sinh viên không được để trống !",
+                            maxlength: "Họ sinh viên không được quá 255 ký tự !",
+                        },
+                        LastName: {
+                            required: "tên sinh viên không được để trống !",
+                            maxlength: "tên sinh viên không được quá 255 ký tự !",
+                        },
+                        CurrentAddress: {
+                            required: "Địa chỉ không được để trống !",
+                            maxlength: "Địa chỉ không được quá 255 ký tự !",
+                        },
+                        PhoneNumber: {
+                            required: "Số điện thoại không được để trống !",
+                            maxlength: "Số điện thoại không được quá 255 ký tự !",
+                            checkPhoneNumber: "Số điện thoại không đúng định dạng !",
+                        },
+                        DateOfBirth: {
+                            required: "Ngày sinh không được để trống !",
+                            maxlength: "Ngày sinh không được quá 255 ký tự !",
+                        },
+                        password: {
+                            required: "mật khẩu không được trống !",
+
+                        },
+                        re_pass: {
+                            required: "mật khẩu không được trống !",
+                            checkpass: "mật khẩu không khớp nhau !",
+
+                        },
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.attr("name") === "FirtName") {
+                            error.insertAfter("#FirtName-grp");
+                        } else
+                        if (element.attr("name") === "LastName") {
+                            error.insertAfter("#LastName-grp");
+                        } else
+                        if (element.attr("name") === "CurrentAddress") {
+                            error.insertAfter("#CurrentAddress-grp");
+                        } else
+                        if (element.attr("name") === "PhoneNumber") {
+                            error.insertAfter("#PhoneNumber-grp");
+                        } else
+                        if (element.attr("name") === "DateOfBirth") {
+                            error.insertAfter("#DateOfBirth-grp");
+                        } else
+                        if (element.attr("name") === "password") {
+                            error.insertAfter("#password-grp");
+                        } else
+                        if (element.attr("name") === "re_pass") {
+                            error.insertAfter("#re-pass-grp");
+                        } else
+                            error.insertAfter(element, "label-error");
+                    }
+                })
+            };
+            valid();
+            // xử lý kiểm tra định số điện thoại
+            jQuery.validator.addMethod("checkPhoneNumber", function (value) {
+                var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+                var rsdate_format = vnf_regex.test(value);
+                if (!rsdate_format) {
+                    return false
+                }
+
+                return true;
+
+            }, '');
+
+
+            // xử lý kiểm tra 2 pass trùng nhau không
+            jQuery.validator.addMethod("checkpass", function (value) {
+                var pass = $("#password").val();
+                if (value == pass) {
+                    return true
+                }
+                return false;
+
+            }, '');
+
+            var submitForm = function () {
+                $('.form-submit')
+                    .off('click')
+                    .on('click',
+                        function () {
+                            var isValid = $('#register-form').valid();
+
+                            if (!isValid) {
+                                $("select.error + span").find('span.select2-selection--single')
+                                    .css('cssText', 'border: 1px solid #f58a73 !important');
+                                return;
+                            }
+                        });
+            };
+            submitForm();
+
+
+        });
+    </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

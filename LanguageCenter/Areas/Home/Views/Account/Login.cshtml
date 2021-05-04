@@ -1,52 +1,75 @@
-﻿<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+﻿@model LanguageCenter.Areas.Home.Models.LoginViewModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Space Login Form Flat Responsive Widget Template :: w3layouts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
 
-    <!-- Meta tag Keywords -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Space Login Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
-    <script type="application/x-javascript">
-         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-        function hideURLbar(){ window.scrollTo(0,1); } </script>
-  
-    <link href="//fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext,vietnamese" rel="stylesheet">
-    <!-- //Online-fonts -->
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/fonts/material-icon/css/material-design-iconic-font.min.css">
     <link href="~/css/Account.css" rel="stylesheet" />
 </head>
 <body>
-    <!-- main -->
+
     <div class="main">
-        <div class="main-w3l">
-            <h1 class="logo-w3">Space Login Form</h1>
-            <div class="w3layouts-main">
-                <h2><span>Login now</span></h2>
-                <div class="social">
-                    <a href="#">Login With Facebook</a>
+
+
+
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="/images/signin-image.jpg" alt="sing up image"></figure>
+                        <a href="/Account/Register" class="signup-image-link">Create an account</a>
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">Sign up</h2>
+                        <form method="POST" asp-controller="Account" asp-action="Login" class="register-form" id="login-form">
+                            <div asp-validation-summary="All" style="color:red;">
+                                @Html.ValidationMessageFor(model => model.UserName)
+                            </div> 
+                           
+                            <div class="form-group">
+                                <label for="UserName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="UserName" value="@Model.UserName" id="UserName" placeholder="Your Name" />
+                              
+                            </div>
+                            <div class="form-group">
+                                <label for="Password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" value="@Model.Password" name="Password" id="Password" placeholder="Password" />
+                                 
+
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                            </div>
+                        </form>
+
+                        @*<div class="social-login">
+                                <span class="social-label">Or login with</span>
+                                <ul class="socials">
+                                    <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                    <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                    <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                                </ul>
+                            </div>*@
+                    </div>
                 </div>
-                <h3>(or)</h3>
-                <form action="#" method="post">
-                    <input placeholder="Username or Email" name="UserName" type="email" required="">
-                    <input placeholder="Password" name="Password" type="password" required="">
-                    <input type="submit" value="Get Started" name="login">
-                </form>
-                <h6><a href="#">Lost Your Password?</a></h6>
             </div>
-            <!-- //main -->
-            <!--footer-->
-            <div class="footer-w3l">
-                <p>&copy; 2017 Space Login Form. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
-            </div>
-            <!--//footer-->
-        </div>
+        </section>
+
     </div>
 
-</body>
+    <!-- JS -->
+    <script src="~/Scripts/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

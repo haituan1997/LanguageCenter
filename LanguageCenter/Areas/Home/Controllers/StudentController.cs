@@ -51,7 +51,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 
                 var model = new StudentModel();
                 model.DateOfBirth = DateTime.Now;
-                model.Title = "Thêm mới học sinh";
+                model.Title = "Thêm mới sinh viên";
                 model.IsEdit = false;
                 return PartialView("_StudentPopup", model);
             }
@@ -59,7 +59,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 var Student = _StudentRepository.Get_StudentByStudentID((long)id);
                 var model = Mapper.Map<Student, StudentModel>(Student);
-                model.Title = "Cập nhập học sinh";
+                model.Title = "Cập nhập sinh viên";
                 model.IsEdit = true;
                 return PartialView("_StudentPopup", model);
             }
@@ -76,18 +76,16 @@ namespace LanguageCenter.Areas.Home.Controllers
                 if (model.IsEdit == true)
                 {
                     var Student = Mapper.Map<StudentModel, Student>(model);
-                    Student.DateOfBirth = DateTime.ParseExact(model.DateOfBirthBackUp, "dd/MM/yyyy", null);
                     _StudentRepository.Update(Student);
 
-                    return Json(new { success = true, message = "Cập nhập học sinh thành công!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Cập nhập sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     var Student = Mapper.Map<StudentModel, Student>(model);
-                    Student.DateOfBirth = DateTime.ParseExact(model.DateOfBirthBackUp, "dd/MM/yyyy", null);
                     _StudentRepository.Insert(Student);
 
-                    return Json(new { success = true, message = "Thêm mới học sinh thành công!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Thêm mới sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -105,12 +103,12 @@ namespace LanguageCenter.Areas.Home.Controllers
             try
             {
                 _StudentRepository.Delete(id);
-                var message = "Xóa học sinh thành công!";
+                var message = "Xóa sinh viên thành công!";
                 return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "Sinh viên đã được dùng ở chức năng khác" }, JsonRequestBehavior.AllowGet);
             }
         }
     }

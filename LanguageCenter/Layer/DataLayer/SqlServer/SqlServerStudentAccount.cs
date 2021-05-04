@@ -1,4 +1,5 @@
-﻿using LanguageCenter.DataLayer;
+﻿using LanguageCenter.DataLayer.Object;
+using LanguageCenter.DataLayer;
 using LanguageCenter.DataLayer.Shared;
 using LanguageCenter.Layer.DataLayer.Object;
 using System;
@@ -11,6 +12,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
 {
     public class SqlServerStudentAccount
     {
+       
         public IEnumerable<StudentAccount> Get_StudentAccounts(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
             const string procedure = "uspGetPaged_StudentAccount";
@@ -23,6 +25,19 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@StudentAccountID", StudentAccountID };
             return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
         }
+        public StudentAccount Get_StudentAccountByStudentID(long StudentID)
+        {
+            const string procedure = "uspGet_StudentAccountByStudentID";
+            object[] parms = { "@StudentID", StudentID };
+            return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
+        }
+        public User Get_StudentAccountByUserName(string userName)
+        {
+            const string procedure = "uspGet_StudentAccountByStudentUserLogin";
+            object[] parms = { "@UserLogin", userName };
+            return ForeignLanguageCenterAdapter.Read(procedure, MakeRegister, parms);
+        }
+        
         public int Count( string whereClause = null, bool isCreated = true)
         {
             const string procedure = "uspCount_StudentAccount";
@@ -41,7 +56,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
         }
         public void Delete(long id)
         {
-            const string procedure = "uspDelete_StudentAccount";
+            const string procedure = "uspDelete_StudentAcount";
             object[] parms = { "@StudentAccountID", id };
             ForeignLanguageCenterAdapter.Update(procedure, parms);
         }
@@ -55,6 +70,16 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                IsActive = reader["IsActive"].AsBool(),
 
            };
+        private static readonly Func<IDataReader, User> MakeRegister = reader =>
+         new User
+         {
+             UserID = reader["UserID"].AsLong(),
+             Username = reader["Username"].AsString(),
+             Password = reader["Password"].AsString(),
+             FullName = reader["FullName"].AsString(),
+             TypeUser = reader["TypeUser"].AsShort(),
+
+         };
         private static readonly Func<IDataReader, StudentAccount> MakePage = reader =>
            new StudentAccount
            {

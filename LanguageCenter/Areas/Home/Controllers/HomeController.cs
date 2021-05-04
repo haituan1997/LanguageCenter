@@ -23,8 +23,12 @@ namespace LanguageCenter.Areas.Home.Controllers
         }
         public ActionResult Index()
         {  
-            ViewBag.User = User.Identity.Name;
-            ViewBag.UserID = long.Parse(((ClaimsIdentity)User.Identity).FindFirst("UserID").Value);
+            if(!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                ViewBag.User = User.Identity.Name;
+                ViewBag.UserID = ((ClaimsIdentity)User.Identity).FindFirst("UserID").Value;
+            }    
+            
             return View();
 
         }

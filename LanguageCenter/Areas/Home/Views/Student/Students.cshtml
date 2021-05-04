@@ -8,7 +8,7 @@
 <div class="container-homeadmin">
     <div class="row">
         <div class="col-lg-12 col-md-12 title">
-            <span>Danh sách học sinh</span>
+            <span>Danh sách sinh viên</span>
         </div>
     </div>
     <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
@@ -83,7 +83,7 @@
                 { "data": "CurrentAddress", "name": "CurrentAddress" },
                 { "data": "Email", "name": "Email" },
                 {
-                    "data": "TeacherID", "render": function (data) {
+                    "data": "StudentID", "render": function (data) {
                         return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                     },
                     "orderable": false,
@@ -263,7 +263,7 @@
                                 else {
                                     $.each(result,
                                         function (index) {
-                                            message = result[index].Message;
+                                            message = result.message;
                                         });
                                     $.notify(message, {
                                         globalPosition: "top center",
@@ -276,7 +276,7 @@
                             error: function (result) {
                                 $.each(result,
                                     function (index) {
-                                        message = result[index].Message;
+                                        message = result.message;
                                     });
                                 $.notify(message, {
                                     globalPosition: "top center",
@@ -335,7 +335,7 @@
                                     else {
                                         $.each(result,
                                             function (index) {
-                                                message = result[index].Message;
+                                                message = result.message;
                                             });
                                         $.notify(message, {
                                             globalPosition: "top center",
@@ -346,7 +346,7 @@
                                 error: function (result) {
                                     $.each(result,
                                         function (index) {
-                                            message = result[index].Message;
+                                            message = result.message;
                                         });
                                     $.notify(message, {
                                         globalPosition: "top center",

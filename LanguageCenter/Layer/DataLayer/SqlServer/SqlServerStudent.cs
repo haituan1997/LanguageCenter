@@ -11,6 +11,11 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
 {
     public class SqlServerStudent
     {
+        private const string SequenceUser = "[dbo].[Seq_Student_StudentID]";
+        public long GetId()
+        {
+            return (long)ForeignLanguageCenterAdapter.GetSequence(SequenceUser);
+        }
         public IEnumerable<Student> Get_Students(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
             const string procedure = "uspGetPaged_student";
@@ -22,6 +27,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspGetAll_student";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public IEnumerable<Student> GetAll_StudentsNotAccont()
+        {
+            const string procedure = "uspGetAll_studentNotAccont";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
+        
         public Student Get_StudentByStudentID(long studentID)
         {
             const string procedure = "uspGet_studentByStudentID";

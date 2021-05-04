@@ -13,15 +13,23 @@ using LanguageCenter.Models;
 using LanguageCenter.Repository;
 using AutoMapper;
 using LanguageCenter.DataLayer.Object;
+using LanguageCenter.Layer.DataLayer.Object;
 
 namespace LanguageCenter.Controllers
 {
     public class AccountController : Controller
     {
         private readonly UserRepository _UserRepository;
+        private readonly StudentAccountRepository _StudentAccountRepository;
+        private readonly StudentRepository _StudentRepository;
+         
         public AccountController()
         {
-            _UserRepository = new UserRepository(); 
+            _UserRepository = new UserRepository();
+            _StudentAccountRepository = new StudentAccountRepository();
+            _StudentRepository = new StudentRepository();
+            Mapper.CreateMap<RegisterModel, StudentAccount>();
+            Mapper.CreateMap<RegisterModel, Student>();
 
         }
         // GET: Account
@@ -40,6 +48,7 @@ namespace LanguageCenter.Controllers
                                                               .Select(c => c.Value).SingleOrDefault();
                     String pass = identity.Claims.Where(c => c.Type == ClaimTypes.Name)
                                                               .Select(c => c.Value).SingleOrDefault();
+
                     var loginUser = _UserRepository.Get_Users(userName,pass);
 
                     return this.RedirectToPage(loginUser, returnUrl);
@@ -52,7 +61,8 @@ namespace LanguageCenter.Controllers
             }
 
             // Info.
-            return this.View();
+            var model = new LoginViewModel();
+            return this.View(model);
         }
 
         [HttpPost]
@@ -82,7 +92,7 @@ namespace LanguageCenter.Controllers
                     else
                     {
                         // Setting.
-                        ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        ModelState.AddModelError("UserName", "Invalid username or password.");
                     }
                 }
             }
@@ -93,9 +103,48 @@ namespace LanguageCenter.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return this.View(model);
+            return View(model);
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Register(RegisterModel model)
+        {
+            try
+            {
+                // Verification.
+                if (ModelState.IsValid)
+                {
+                    var checkUserName = _StudentAccountRepository.Get_StudentAccountByUserName(model.UserLogin);
+                    if(checkUserName == null)
+                    {
+                        var data = Mapper.Map<RegisterModel, Student>(model);
 
+                        var studentID = _StudentRepository.Insert(data);
+
+                        var account = Mapper.Map<RegisterModel, StudentAccount>(model);
+                        account.StudentID = Convert.ToInt64(studentID);
+
+                        _StudentAccountRepository.Insert(account);
+
+                        // Verification.
+                        return this.RedirectToAction("Login", "Account");
+                    }    
+                    else
+                    {
+                        ModelState.AddModelError("UserLogin", "username đã tồn tại.");
+                    }    
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                // Info
+                Console.Write(ex);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
         private void SignInUser(User username, bool isPersistent)
         {
             // Initialization.
@@ -175,6 +224,14 @@ namespace LanguageCenter.Controllers
             var authenticationManager = ctx.Authentication;
             authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult Register()
+        {
+            var model = new RegisterModel();
+            model.DateOfBirth = DateTime.Now;
+            return View("Register", model);
         }
     }
 }
