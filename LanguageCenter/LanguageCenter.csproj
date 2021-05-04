@@ -185,7 +185,6 @@
     <Compile Include="Areas\Home\Models\Class\ClassModel.cs" />
     <Compile Include="Areas\Home\Models\Class\NewClassModel.cs" />
     <Compile Include="Areas\Home\Models\Course\CourseModel.cs" />
-    <Compile Include="Areas\Home\Models\LoginViewModel.cs" />
     <Compile Include="Areas\Home\Models\RegisterModel\RegisterModel.cs" />
     <Compile Include="Areas\Home\Models\RegisterModel\LoginViewModel.cs" />
     <Compile Include="Areas\Home\Models\StudentAcountModel\StudentAcountModel.cs" />
