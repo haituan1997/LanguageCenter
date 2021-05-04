@@ -10,6 +10,7 @@ namespace LanguageCenter.Layer.DataLayer.Object
         public long PaymentID { get; set; } 
 
         public string FirtName { get; set; }
+        public string FullName { get; set; }
 
         public string LastName { get; set; }
 

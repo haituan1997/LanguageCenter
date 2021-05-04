@@ -23,12 +23,10 @@
                 <thead class="Table-Thead">
                     <tr class="Table-Thead-tr">
                         <th>ID</th>
-                        <th>Họ</th>
-                        <th>Tên</th>
-                        <th>Ngày sinh</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Email</th>
+                        <th>Họ tên học sinh</th>
+                        <th>Lớp</th>
+                        <th>Số tiền học phí</th>
+                        <th>Phương thức thanh toán</th>
                         <th>Hoạt động</th>
                     </tr>
                 </thead>
@@ -51,10 +49,10 @@
     var popUpName = "popUp";
     var totalColum = 7;
     var dataJson;
-    var urlUpdatePopup = '/luu-hoc-sinh';
-    var urlDetailPopup = "/chi-tiet-hoc-sinh/";
-    var urlDataTable = "/danh-sach-hoc-sinh";
-    var urlDeleteDetail = "/xoa-hoc-sinh";
+    var urlUpdatePopup = '/luu-hoc-phi';
+    var urlDetailPopup = "/chi-tiet-hoc-phi/";
+    var urlDataTable = "/danh-sach-hoc-phi";
+    var urlDeleteDetail = "/xoa-hoc-phi";
     var idColum = "PaymentID";
     var buildTable
     $(document).ready(function () {
@@ -66,30 +64,13 @@
             },
             "columns": [
                 { "data": "PaymentID", "name": "PaymentID" },
-                { "data": "FirtName", "name": "FirtName" },
-                { "data": "LastName", "name": "LastName" }, 
-                {
-                    "data": "DateOfBirth", "name": "DateOfBirth", "render": function (data, type, full) {
-                        var date = data.replace("Date", "");
-                        date = date.replaceAll("/", "");
-                        date = date.replace("(", "");
-                        date = date.replace(")", "");
-                        date = parseInt(date);
-                        return moment(new Date(date)).locale('el').format('DD/MM/YYYY');
-                       
-                    } 
-                },
-                { "data": "PhoneNumber", "name": "PhoneNumber" },
-                { "data": "CurrentAddress", "name": "CurrentAddress" },
+                { "data": "FullName", "name": "FullName" },
+                { "data": "ClassName", "name": "ClassName" }, 
+                 
+                { "data": "Amount", "name": "Amount" },
+                { "data": "PaymentMethodID", "name": "PaymentMethodID" },
                 { "data": "Email", "name": "Email" },
-                {
-                    "data": "TeacherID", "render": function (data) {
-                        return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
-                    },
-                    "orderable": false,
-                    "searchable": false,
-                    "width": "80px"
-                }
+                
                 
             ],
             "processing": true,

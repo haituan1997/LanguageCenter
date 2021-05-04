@@ -48,7 +48,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult StudentAccount(long? id)
         {
-            ViewBag.Students = _StudentRepository.GetAll_Students().ToList();
+            ViewBag.Students = _StudentRepository.GetAll_StudentsNotAccont().ToList();
             if (id == null)
             {
                 

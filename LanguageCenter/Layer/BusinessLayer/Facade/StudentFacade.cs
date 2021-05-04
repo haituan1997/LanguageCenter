@@ -20,6 +20,11 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerStudent.GetAll_Students();
         }
+        public IEnumerable<Student> GetAll_StudentsNotAccont()
+        {
+            return sqlServerStudent.GetAll_StudentsNotAccont();
+        }
+        
         public Student Get_StudentByStudentID(long studenIDl)
         {
             return sqlServerStudent.Get_StudentByStudentID(studenIDl);

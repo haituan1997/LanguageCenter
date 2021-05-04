@@ -46,6 +46,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult Payment(long? id)
         {
+            ViewBag.Students = _StudentRepository.GetAll_Students().ToList();
             if (id == null)
             {
                 

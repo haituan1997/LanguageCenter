@@ -27,6 +27,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspGetAll_student";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public IEnumerable<Student> GetAll_StudentsNotAccont()
+        {
+            const string procedure = "uspGetAll_studentNotAccont";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
+        
         public Student Get_StudentByStudentID(long studentID)
         {
             const string procedure = "uspGet_studentByStudentID";

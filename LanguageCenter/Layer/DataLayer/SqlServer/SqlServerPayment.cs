@@ -20,7 +20,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
         {
             const string procedure = "uspGetPaged_Payment";
             object[] parms = {  "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy};
-            return ForeignLanguageCenterAdapter.ReadList(procedure, Make,parms);
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakePage, parms);
         }
         public Payment Get_PaymentByPaymentID(long PaymentID)
         {
@@ -62,8 +62,22 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                StudentID = reader["StudentID"].AsLong(),
                ClassID = reader["ClassID"].AsLong(),
                Status = reader["Status"].AsShort(),
+               ClassName = reader["ClassName"].AsString(), 
+           };
+        private static readonly Func<IDataReader, Payment> MakePage = reader =>
+           new Payment
+           {
+               PaymentID = reader["PaymentID"].AsLong(),
+               FirtName = reader["FirtName"].AsString(),
+               LastName = reader["LastName"].AsString(),
+               PaymentDate = reader["PaymentDate"].AsDateTime(),
+               Amount = reader["Amount"].AsDecimal(),
+               PaymentMethodID = reader["PaymentMethodID"].AsShort(),
+               StudentID = reader["StudentID"].AsLong(),
+               ClassID = reader["ClassID"].AsLong(),
+               Status = reader["Status"].AsShort(),
                ClassName = reader["ClassName"].AsString(),
-
+               FullName = reader["FirtName"].AsString() + reader["LastName"].AsString(),
            };
         private static object[] Take(Payment Payment)
         {
