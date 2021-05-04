@@ -23,6 +23,11 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakeCourse, parms);
         }
+        public IEnumerable<Course> Get_AllCourses()
+        {
+            const string procedure = "uspGet_AllCourses";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
         public Course GetCourseByCouresID(long id)
         {
             const string procedure = "uspGet_CourseByCourseID";
@@ -75,6 +80,18 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspInsert_Level";
             ForeignLanguageCenterAdapter.Insert(procedure, TakeLevel(level)).AsString();
         }
+        private static readonly Func<IDataReader, Course> Make = reader =>
+       new Course
+       {
+           CourseID = reader["CourseID"].AsLong(),
+           Code = reader["Code"].AsString(),
+           Name = reader["Name"].AsString(),
+           Description = reader["Description"].AsString(),
+           LanguageID = reader["LanguageID"].AsLong(),
+           LevelID = reader["LevelID"].AsLong(),
+           CategoryID = reader["CategoryID"].AsLong(),
+
+       };
         private static readonly Func<IDataReader, Course> MakeCourse = reader =>
        new Course
        {

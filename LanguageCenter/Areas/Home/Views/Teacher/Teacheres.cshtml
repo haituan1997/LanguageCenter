@@ -159,15 +159,15 @@
             dataJson = json.data;
             $("#" + tableName + " thead").append($("#" + tableName + " thead tr:first").clone());
             $("#" + tableName + " thead tr:eq(1) th").each(function (index) {
-                if (index != 3 && index != 6) {
+                if (index == totalColum) {
+                    $(this).replaceWith('<th></th>');
+                } else if (index != 3 ) {
                     $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
                     var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") input");
                     searchControl.on('keyup', function () {
                         buildTable.column(index).search(searchControl.val()).draw();
                     });
-                } else if (index == totalColum) {
-                    $(this).replaceWith('<th></th>');
-                }
+                } 
                 else {
                     var elementDropDown = $('<select class="table-sl-search" />');
                     elementDropDown.append($('<option/>').attr('value', '').text('Tất cả'));

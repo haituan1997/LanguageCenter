@@ -52,6 +52,13 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
             var response = new TeacherAccountResponse { Acknowledge = AcknowledgeType.Success };
             try
             {
+                var obj = sqlServerTeacherAccount.uspGet_TeacheresByUserLogin(teacherAccount.UserLogin);
+                if (obj != null)
+                {
+                    response.Acknowledge = AcknowledgeType.Failure;
+                    response.Message = "Tài khoản đã tồn tại trong hệ thống";
+                    return response;
+                }
                 sqlServerTeacherAccount.Update(teacherAccount);
 
                 response.TeacherAccounID = teacherAccount.TeacherAccountID;

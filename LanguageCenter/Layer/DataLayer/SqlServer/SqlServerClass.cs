@@ -10,62 +10,93 @@ namespace LanguageCenter.DataLayer.SqlServer
 {
     public class SqlServerClass
     {
-
-        private const string SequenceMajorSpecialMangerDetail = "[dbo].[Seq_MajorSpecialMangerDetail_MajorSpecialMangerDetailID]";
-        /// <summary>
-        /// Gets the training class identifier.
-        /// </summary>
-        /// <returns>System.Int64.</returns>
-        
-
-        public  IEnumerable< Class> Get_Classes()
+        private const string SequenceClassID = "Seq_Class_ClassID";
+        public long GetClassID()
         {
-            const string procedure = "uspGet_Classes";
-            return ForeignLanguageCenterAdapter.ReadList(procedure,Make);
+            return (long)ForeignLanguageCenterAdapter.GetSequence(SequenceClassID);
         }
-
-        public int Get_Count()
+        public IEnumerable<Class> Get_Classes(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
-            const string procedure = "uspGet_Count";
-            return ForeignLanguageCenterAdapter.GetCount(procedure);
+            const string procedure = "uspGetPaged_Class";
+            object[] parms = { "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy };
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakePaged, parms);
         }
-
-        //public int Count(DataTable majorSpecial, long? MajorSpecialMangerID = null, string whereClause = null)
-        //{
-        //    const string procedure = "uspCount_MajorSpecialMangerDetail";
-        //    object[] parms = {"@majorSpecial", majorSpecial };
-        //    return ForeignLanguageCenterAdapter.GetCount(procedure, parms);
-        //}
-
-
-
-        //public IEnumerable<Class> Paged(int pageIndex, int pageSize, string whereClause, string orderBy, DataTable majorSpecial, long? MajorSpecialMangerID = null)
-        //{
-        //    const string procedure = "uspGetPaged_MajorSpecialMangerDetail";
-        //    object[] parms = {
-        //        "@PageIndex", pageIndex,
-        //        "@PageSize", pageSize,
-        //        "@WhereClause", whereClause,
-        //        "@OrderBy", orderBy,
-        //        "@majorSpecial",majorSpecial,
-        //        "@MajorSpecialMangerID", MajorSpecialMangerID,
-        //    };
-        //    return ForeignLanguageCenterAdapter.ReadList(procedure, Make, parms);
-        //}
-
-
-
+        public Class Get_ClassByClassID(long id)
+        {
+            const string procedure = "uspGet_ClassByClassID";
+            object[] parms = { "@ClassID", id };
+            return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
+        }
+        public Class Get_ClassByClassName(string className)
+        {
+            const string procedure = "uspGet_ClassByClassName";
+            object[] parms = { "@ClassName", className };
+            return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
+        }
+        public int Count(string whereClause = null, bool isCreated = true)
+        {
+            const string procedure = "uspCount_Class";
+            object[] parms = { "@WhereClause", whereClause };
+            return ForeignLanguageCenterAdapter.GetCount(procedure, parms);
+        }
+        public void Insert(Class objclass)
+        {
+            const string procedure = "uspInsert_Class";
+            ForeignLanguageCenterAdapter.Insert(procedure, Take(objclass)).AsString();
+        }
+        public void Update(Class objclass)
+        {
+            const string procedure = "uspUpdate_Class";
+            ForeignLanguageCenterAdapter.Update(procedure, Take(objclass)).AsString();
+        }
+        public void Delete(long id)
+        {
+            const string procedure = "uspDelete_Class";
+            object[] parms = { "@ClassID", id };
+            ForeignLanguageCenterAdapter.Update(procedure, parms);
+        }
         private static readonly Func<IDataReader, Class> Make = reader =>
            new Class
            {
                ClassID = reader["ClassID"].AsLong(),
                ClassName = reader["ClassName"].AsString(),
-               StartDate = reader["StartDate"].AsDateTime(),
-               EndDate = reader["EndDate"].AsDateTime(),
+               StartDate = reader["StartDate"].AsDateTimeForNull(),
+               EndDate = reader["EndDate"].AsDateTimeForNull(),
                Price = reader["Price"].AsDecimal(),
                TeacherID = reader["TeacherID"].AsLong(),
                CourseID = reader["CourseID"].AsLong(),
-
+               IsCreated = reader["IsCreated"].AsBool(),
            };
+        private static readonly Func<IDataReader, Class> MakePaged = reader =>
+            new Class
+            {
+                ClassID = reader["ClassID"].AsLong(),
+                ClassName = reader["ClassName"].AsString(),
+                StartDate = reader["StartDate"].AsDateTime(),
+                EndDate = reader["EndDate"].AsDateTime(),
+                Price = reader["Price"].AsDecimal(),
+                TeacherID = reader["TeacherID"].AsLong(),
+                CourseID = reader["CourseID"].AsLong(),
+                FirtName = reader["FirtName"].AsString(),
+                LastName = reader["LastName"].AsString(),
+                FullName = reader["FirtName"].AsString() + " " + reader["LastName"].AsString(),
+                CourseName = reader["Name"].AsString(),
+            };
+        private static object[] Take(Class objclass) 
+        {
+	        return new object[]  
+	        {
+		        "@ClassID",objclass.ClassID,
+		        "@ClassName",objclass.ClassName,
+		        "@StartDate",objclass.StartDate,
+		        "@EndDate",objclass.EndDate,
+		        "@Price",objclass.Price,
+		        "@TeacherID",objclass.TeacherID,
+		        "@CourseID",objclass.CourseID,
+                "@IsCreated",objclass.IsCreated,
+            };
+        }
+
+
     }
 }

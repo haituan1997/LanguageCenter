@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace LanguageCenter.DataLayer.Object
+namespace LanguageCenter.Areas.Home.Models.Class
 {
-    public class Class
+    public class NewClassModel
     {
-        public long ClassID { get; set; }
+        public long? ClassID { get; set; }
 
         public string ClassName { get; set; }
 
@@ -17,10 +17,10 @@ namespace LanguageCenter.DataLayer.Object
 
         public decimal? Price { get; set; }
 
-        public long TeacherID { get; set; }
+        public long? TeacherID { get; set; }
 
-        public long CourseID { get; set; }
-
+        public long? CourseID { get; set; }
+        
         public string FirtName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
@@ -28,7 +28,5 @@ namespace LanguageCenter.DataLayer.Object
         public bool IsEdit { get; set; }
         public bool IsCreated { get; set; }
         public string Title { get; set; }
-
-
     }
 }

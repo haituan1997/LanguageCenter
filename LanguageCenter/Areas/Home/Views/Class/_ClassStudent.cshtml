@@ -1,0 +1,127 @@
+﻿
+@model LanguageCenter.Areas.Home.Models.ClassStudent.ClassStudentModel
+@using LanguageCenter.Layer.DataLayer.Object
+@{
+    var students = (IEnumerable<ClassStudent>)ViewBag.StudentNotIntClass;
+}
+
+<div class="modal-header" style=" background-color: #3ca4ab; color: white;">
+    <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <form method="post" id="ClassStudentForm" action="@Url.Action("PostCategory")">
+        @Html.HiddenFor(x=>x.ClassID)
+        <div class="form-outline mb-4">
+            <div id="StudentID-Grp">
+                <label class="form-label" for="form1Example1">Học sinh</label>
+                <select class="form-control js-select2-enable-search-form-search" name="StudentID" id="StudentID" data-placeholder="Chọn học sinh" tabindex="4">
+                    <option></option>
+                    @if (students != null)
+                    {
+                        foreach (var student in students)
+                        {
+                            var selected = Model.StudentID == student.StudentID ? "selected" : ""; ;
+                            <option @selected value="@student.StudentID">@student.StudentID - @student.FirtName @student.LastName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnSave-popup" name="submit" value="Save" class="btn-save-popup" form="TeacherAccountForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+    <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+</div>
+<!--<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>-->
+@*//validate*@
+<!--<script src="~/javascript/jquery-validate.js"></script>-->
+<script>
+    $(document).ready(function () {
+        var valid2 = function () {
+            $("#ClassStudentForm").validate({
+                rules: {
+                    StudentID: { required: true },
+                },
+                messages: {
+                    StudentID: {
+                        required: "Học sinh không được để trống !",
+                    },
+
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") === "StudentID") {
+                        error.insertAfter("#StudentID-Grp");
+                    } else
+                        error.insertAfter(element, "label-error");
+                }
+            })
+        };
+        valid2();
+        $('.js-select2-enable-search-form-search').select2({
+            language:
+            {
+                noResults: function () {
+                    return "Không có dữ liệu";
+                }
+            },
+        });
+        $('.btn-exit-popup,.btn-close').off('click').on('click', function (e) {
+            e.preventDefault();
+            $('#popUp').modal('hide');
+            return;
+        });
+        $('#btnSave-popup').off('click').on('click', function (e) {
+            e.preventDefault();
+            debugger
+            var isValid = $('#ClassStudentForm').valid();
+            if (!isValid) {
+                //$("select.error + span")
+                //    .find('span.select2-selection--single')
+                //    .css('cssText', 'border: 1px solid #f58a73 !important');
+                return false;
+            }
+            var data = $('#ClassStudentForm').serialize();
+            var message = "";
+            $.ajax({
+                url: "/luu-hoc-sinh-theo-lop",
+                data: data,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.success) {
+                        var data = result.message;
+                        $.notify(data, {
+                            globalPosition: "top center",
+                            className: "success"
+                        });
+                        $('#' + popUpName).modal('hide');
+                        buildTable.ajax.reload();
+                    }
+                    else {
+                        $.each(result,
+                            function (index) {
+                                message = result[index].Message;
+                            });
+                        $.notify(result.message, {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                    }
+                },
+                error: function (result) {
+                    $.each(result,
+                        function (index) {
+                            message = result[index].Message;
+                        });
+                    $.notify(result.message, {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                }
+            });
+        })
+    });
+</script>
