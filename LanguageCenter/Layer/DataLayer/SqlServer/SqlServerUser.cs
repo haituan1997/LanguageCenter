@@ -40,6 +40,9 @@ namespace LanguageCenter.DataLayer.SqlServer
                UserID = reader["UserID"].AsLong(),
                Username = reader["Username"].AsString(),
                Password = reader["Password"].AsString(),
+               Email = reader["Email"].AsString(),
+               Role = reader["Role"].AsInt(),
+               Phone = reader["Phone"].AsString(),
                FullName = reader["FullName"].AsString(),
                TypeUser = reader["TypeUser"].AsShort(),
 

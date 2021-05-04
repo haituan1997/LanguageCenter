@@ -15,7 +15,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerTeacher.Get_Teacheres();
         }
-
+        public IEnumerable<Teacher> Get_TeacheresNotInTeacherAccount()
+        {
+            return sqlServerTeacher.Get_TeacheresNotInTeacherAccount();
+        }
         public TeacherResponse InsertOrUpdate(Teacher teacher)
         {
             var response = new TeacherResponse { Acknowledge = AcknowledgeType.Success };

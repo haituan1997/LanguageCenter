@@ -8,59 +8,60 @@ using System.Web;
 
 namespace LanguageCenter.Repository
 {
-    public class TeacherRepository
+    public class ClassStudentRepository
     {
-        TeacherFacade teacherFacade= new TeacherFacade();
-        public TeacherRepository()
+        ClassStudentFacade classStudentFacade= new ClassStudentFacade();
+        public ClassStudentRepository()
         {
-            teacherFacade = new TeacherFacade();
+            classStudentFacade = new ClassStudentFacade();
         }
 
-        public IEnumerable<Teacher> Get_Teacheres()
+        public IEnumerable<ClassStudent> Get_ClassStudentByClassID(long? classID,out int total, int page, int pageSize, string orderBy = null, string searchBy = null)
         {
             try
             {
-                return teacherFacade.Get_Teacheres();
+                total = classStudentFacade.Count(searchBy, classID);
+                return classStudentFacade.Get_ClassStudentByClassID(classID,page, pageSize, orderBy, searchBy);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public IEnumerable<Teacher> Get_TeacheresNotInTeacherAccount()
+        public IEnumerable<ClassStudent> Get_StudentNotInClass(long classID)
         {
             try
             {
-                return teacherFacade.Get_TeacheresNotInTeacherAccount();
+                return classStudentFacade.Get_StudentNotInClass(classID);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public string InsertOrUpdate(Teacher teacher)
+        public long Insert(ClassStudent classStudent)
         {
             try
             {
-                var response = teacherFacade.InsertOrUpdate(teacher);
+                var response = classStudentFacade.Insert(classStudent);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
                 }
-                return response.TeacherID.ToString();
+                return classStudent.ClassStudentID;
 
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            
+
         }
         public void Delete(List<long> id)
         {
             try
             {
-                var response = teacherFacade.Delete(id);
+                var response = classStudentFacade.Delete(id);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);

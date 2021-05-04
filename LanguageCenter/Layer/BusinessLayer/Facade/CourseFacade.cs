@@ -15,6 +15,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerCourse.Get_Courses(page, pageSize, orderBy, searchBy);
         }
+        public IEnumerable<Course> Get_AllCourses()
+        {
+            return sqlServerCourse.Get_AllCourses();
+        }
         public Course Get_CourseByCourseID(long id)
         {
             return sqlServerCourse.GetCourseByCouresID(id);

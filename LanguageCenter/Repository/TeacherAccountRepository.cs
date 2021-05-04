@@ -1,6 +1,6 @@
 ﻿using LanguageCenter.BusinessLayer.Facade;
-using LanguageCenter.DataLayer.Object;
 using LanguageCenter.Layer.BusinessLayer.Facade;
+using LanguageCenter.Layer.DataLayer.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,47 +8,47 @@ using System.Web;
 
 namespace LanguageCenter.Repository
 {
-    public class ClassRepository
+    public class TeacherAccountRepository
     {
-        ClassFacade classFacade = new ClassFacade();
-        public ClassRepository()
+        TeacherAccountFacade teacherAccountFacade= new TeacherAccountFacade();
+        public TeacherAccountRepository()
         {
-            classFacade = new ClassFacade();
+            teacherAccountFacade = new TeacherAccountFacade();
         }
 
-        public IEnumerable<Class> Get_Classes(out int total, int page, int pageSize, string orderBy = null, string searchBy = null)
+        public IEnumerable<TeacherAccount> Get_TeacherAccounts(out int total, int page, int pageSize, string orderBy = null, string searchBy = null)
         {
             try
             {
-                total = classFacade.Count(searchBy);
-                return classFacade.Get_Classes(page, pageSize, orderBy, searchBy);
+                total = teacherAccountFacade.Count(searchBy);
+                return teacherAccountFacade.Get_TeacherAccounts(page, pageSize, orderBy, searchBy);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public Class Get_ClassByClassID(long id)
+        public TeacherAccount Get_StudentAccountByStudentAccountID(long id)
         {
             try
             {
-                return classFacade.Get_ClassByClassID(id);
+                return teacherAccountFacade.Get_StudentAccountByStudentAccountID(id);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public long Insert(Class objClass)
+        public string Insert(TeacherAccount teacherAccount)
         {
             try
             {
-                var response = classFacade.Insert(objClass);
+                var response = teacherAccountFacade.Insert(teacherAccount);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
                 }
-                return objClass.ClassID;
+                return response.TeacherAccounID.ToString();
 
             }
             catch (Exception ex)
@@ -57,16 +57,16 @@ namespace LanguageCenter.Repository
             }
 
         }
-        public string Update(Class objClass)
+        public string Update(TeacherAccount teacherAccount)
         {
             try
-            {
-                var response = classFacade.Update(objClass);
+            { 
+                var response = teacherAccountFacade.Update(teacherAccount);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
                 }
-                return response.ClassID.ToString();
+                return response.TeacherAccounID.ToString();
 
             }
             catch (Exception ex)
@@ -79,7 +79,7 @@ namespace LanguageCenter.Repository
         {
             try
             {
-                var response = classFacade.Delete(id);
+                var response = teacherAccountFacade.Delete(id);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);

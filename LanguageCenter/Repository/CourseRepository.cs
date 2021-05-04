@@ -28,6 +28,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<Course> Get_AllCourses()
+        {
+            try
+            {
+                return courseFacade.Get_AllCourses();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public Course Get_CourseByCourseID(long id)
         {
             try

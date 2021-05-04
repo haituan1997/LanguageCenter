@@ -11,18 +11,38 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
     public class ClassFacade
     {
         SqlServerClass sqlServerClass = new SqlServerClass();
-        public class ClassResponse : ResponseBase
+        private void BeforeInsert(ref Class objClass)
         {
-            public long ClassID { get; set; }
-            public string ResponseMessage { get; set; }
+            objClass.ClassID = sqlServerClass.GetClassID();
         }
-
-        public ClassResponse Insert_Class(Class cl)
+        public IEnumerable<Class> Get_Classes(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
+        {
+            return sqlServerClass.Get_Classes(page, pageSize, orderBy, searchBy);
+        }
+        public Class Get_ClassByClassID(long id)
+        {
+            return sqlServerClass.Get_ClassByClassID(id);
+        }
+        public int Count(string whereClause)
+        {
+            return sqlServerClass.Count(whereClause);
+        }
+        public ClassResponse Insert(Class objClass)
         {
             var response = new ClassResponse { Acknowledge = AcknowledgeType.Success };
-            try 
+            try
             {
-                return response;
+                var obj = sqlServerClass.Get_ClassByClassName(objClass.ClassName);
+                if (obj != null)
+                {
+                    response.Acknowledge = AcknowledgeType.Failure;
+                    response.Message = "Tên lơp đã tồn tại trong hệ thống";
+                    return response;
+                }
+                BeforeInsert(ref objClass);
+                sqlServerClass.Insert(objClass);
+
+                response.ClassID = objClass.ClassID;
             }
             catch (Exception ex)
             {
@@ -30,11 +50,57 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
                 response.Message = ex.Message;
                 return response;
             }
+            return response;
         }
-
-        public IEnumerable<Class> Get_Classes()
+        public ClassResponse Update(Class objClass)
         {
-            return sqlServerClass.Get_Classes();
+            var response = new ClassResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                var obj = sqlServerClass.Get_ClassByClassName(objClass.ClassName);
+                if (obj != null && obj.ClassID != objClass.ClassID)
+                {
+                    response.Acknowledge = AcknowledgeType.Failure;
+                    response.Message = "Tên lơp đã tồn tại trong hệ thống";
+                    return response;
+                }
+                sqlServerClass.Update(objClass);
+
+                response.ClassID = objClass.ClassID;
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public ClassResponse Delete(List<long> ids)
+        {
+            var response = new ClassResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                if (ids.Count > 0)
+                {
+                    foreach (var item in ids)
+                    {
+                        sqlServerClass.Delete(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
+        public class ClassResponse : ResponseBase
+        {
+            public long ClassID { get; set; }
+            public string ResponseMessage { get; set; }
         }
     }
 }

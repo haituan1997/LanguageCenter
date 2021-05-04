@@ -16,6 +16,11 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspGet_Tearcheres";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public IEnumerable<Teacher> Get_TeacheresNotInTeacherAccount()
+        {
+            const string procedure = "uspGet_TeacheresNotInTeacherAccount";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
         public void Insert(Teacher teacher )
         {
             const string procedure = "uspInsert_Teacher";

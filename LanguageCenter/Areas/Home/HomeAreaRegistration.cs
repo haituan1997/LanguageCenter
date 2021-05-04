@@ -56,7 +56,27 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "load-cap-do", defaults: new { controller = "Course", action = "GetLevels", area = "Home" });
             #endregion
 
+            #region tài khoản đăng nhập của giáo viên
+            context.MapRoute("", "tai-khoan-giao-vien", defaults: new { controller = "TeacherAccount", action = "TeacherAccounts", area = "Home" });
+            context.MapRoute("", "danh-sach-tai-khoan-giao-vien", defaults: new { controller = "TeacherAccount", action = "GetPage_TeacherAccounts", area = "Home" });
+            context.MapRoute("", "chi-tiet-tai-khoan-giao-vien/{id}", defaults: new { controller = "TeacherAccount", action = "TeacherAccount", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-tai-khoan-giao-vien", defaults: new { controller = "TeacherAccount", action = "PostTeacherAccount", area = "Home" });
+            context.MapRoute("", "xoa-tai-khoan-giao-vien", defaults: new { controller = "TeacherAccount", action = "DeleteTeacherAccount", area = "Home", id = UrlParameter.Optional });
+            #endregion
+            #region lớp
+            context.MapRoute("", "lop", defaults: new { controller = "Class", action = "Classes", area = "Home" });
+            context.MapRoute("", "danh-sach-lop", defaults: new { controller = "Class", action = "GetPage_Classes", area = "Home" });
+            context.MapRoute("", "chi-tiet-lop/{id}", defaults: new { controller = "Class", action = "Class", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-lop", defaults: new { controller = "Class", action = "Class", area = "Home" });
+            context.MapRoute("", "xoa-lop", defaults: new { controller = "Class", action = "DeleteClass", area = "Home", id = UrlParameter.Optional });
+            #endregion
 
+            #region học sinh thuộc lop
+            context.MapRoute("", "danh-sach-hoc-sinh-theo-lop/{classID}", defaults: new { controller = "Class", action = "GetPage_StudenByClassID", area = "Home", classID = UrlParameter.Optional });
+            context.MapRoute("", "chi-tiet-hoc-sinh-theo-lop/{id}", defaults: new { controller = "Class", action = "ClassStudent", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-hoc-sinh-theo-lop", defaults: new { controller = "Class", action = "ClassStudent", area = "Home" });
+            context.MapRoute("", "xoa-hoc-sinh-theo-lop", defaults: new { controller = "Class", action = "DeleteClassStudent", area = "Home", id = UrlParameter.Optional });
+            #endregion
         }
     }
 }

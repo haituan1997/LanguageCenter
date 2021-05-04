@@ -1,33 +1,33 @@
 ﻿
 @{
-    ViewBag.Title = "Teacheres";
+    ViewBag.Title = "Tài khoản giáo viên";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<style>
-</style>
+
+
 <div class="container-homeadmin">
     <div class="row">
         <div class="col-lg-12 col-md-12 title">
-            <span>Danh sách giáo viên</span>
+            <span>Danh sách tài khoản giáo viên</span>
         </div>
-    </div> 
+    </div>
     <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
         <div class="action-FormList">
             <button id="btnAddNew" class="btn-add-new"><span class="">Thêm mới</span></button>
-            <a id="btnDeleteAll"  class="btn-delete-all" ><span >Xóa tất cả</span></a>
+            <a id="btnDeleteAll" class="btn-delete-all"><span>Xóa tất cả</span></a>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 ">
-            <table style="width:100%;" id="TearcherTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+            <table style="width:100%;" id="TeacherAccountTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
                 <thead class="Table-Thead">
                     <tr class="Table-Thead-tr">
-                        <th>ID</th>
-                        <th>Họ</th>
-                        <th>Tên</th>
-                        <th>Email</th>
-                        <th>Số điện thoại</th>
+                        <th>ID tài khoản</th>
+                        <th>Tài khoản đăng nhập</th>
+                        <th>Mật Khẩu</th>
+                        <th>Họ và tên giáo viên</th>
                         <th>Mô tả</th>
+                        <th>Được sử dụng</th>
                         <th>Hoạt động</th>
                     </tr>
                 </thead>
@@ -36,96 +36,107 @@
     </div>
 </div>
 <div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
-    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right;">
-        <div class="modal-content">
+    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
+        <div class="modal-content" style="height:100%">
         </div>
     </div>
 </div>
-<link src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js" crossorigin="anonymous">
-@*<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet" />*@
-<link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
 <script href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
 <script>
-    var tableName = "TearcherTable";
+    var tableName = "TeacherAccountTable";
     var popUpName = "popUp";
     var totalColum = 6;
     var dataJson;
-    var urlUpdatePopup = '/luu-giao-vien';
-    var urlDetailPopup = "/chi-tiet-giao-vien/";
-    var urlDataTable = "/danh-sach-iao-vien";
-    var urlDeleteDetail = "/xoa-giao-vien";
-    var idColum = "TeacherID";
+    var urlUpdatePopup = '/luu-tai-khoan-giao-vien';
+    var urlDetailPopup = "/chi-tiet-tai-khoan-giao-vien/";
+    var urlDataTable = "/danh-sach-tai-khoan-giao-vien";
+    var urlDeleteDetail = "/xoa-tai-khoan-giao-vien";
+    var idColum = "TeacherAccountID";
     var buildTable
     $(document).ready(function () {
-        var createTable = function () {
-            buildTable = $('#' + tableName + '').DataTable({
-                "ajax": {
-                    "url": urlDataTable,
-                    "type": "Get",
-                    "datatype": "json"
-                },
-                "columns": [
-                    { "data": "TeacherID", "name": "TeacherID" },
-                    { "data": "FirtName", "name": "FirtName" },
-                    { "data": "LastName", "name": "LastName" },
-                    { "data": "Email", "name": "Email" },
-                    { "data": "NumberPhone", "name": "NumberPhone" },
-                    { "data": "Description", "name": "Description" },
-                    {
-                        "data": "TeacherID", "render": function (data) {
-                            return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
-                        },
-                        "orderable": false,
-                        "searchable": false,
-                        "width": "80px"
-                    }
-                ],
-                "processing": true,
-                //"scrollX": true,
-                //scrollY: true,
-                "language": {
-                    search: "",
-                    lengthMenu: "Hiển thị _MENU_",
-                    entries: "",
-                    processing: "<i class='fa fa-spinner fa-spin' style='font-size:50px;color: #3ca4ab'></i>",
-                    infoEmpty: "",
-                    infoFiltered: "",
-                    searchPlaceholder: "Tìm kiếm thông tin",
-                    //emptyTable: emptyselected,
-                    zeroRecords: "<class='text-danger' align='center'>Không có dữ liệu</>",
-                    info: "Bản ghi từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
-                    paginate:
-                    {
-                        previous: "<",
-                        next: ">",
-                        first: "",
-                        last: ""
-                    },
-                    select: {
-                        rows: {
-                            _: "",
-                            0: "",
-                            1: ""
+        buildTable = $('#' + tableName + '').DataTable({
+            "ajax": {
+                "url": urlDataTable,
+                "type": "Post",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "TeacherAccountID", "name": "TeacherAccountID", "width":"100px" },
+                { "data": "UserLogin", "name": "UserLogin" },
+                { "data": "PassWordLogin", "name": "PassWordLogin" },
+                { "data": "FullName", "name": "FullName" },
+                { "data": "Description", "name": "Description", "width": "200px"},
+                {
+                    "data": "IsActive", "width": "110px", "render": function (data) {
+                         
+                        if (data) {
+                            return "<span class='mode mode_on'>Active</span>";
                         }
-                    },
+                        else {
+                            return "<span class='mode mode_off'>Inactive</span>";
+                        }
+
+                    }
                 },
-                //"dom": '<"top"l>rt<"bottom"ip><"clear">',
-                "dom": '<"top">rt<"bottom"lirp><"clear">',
-                "fnInitComplete": function (oSettings, json, obj) {
-                    if (json.data.length > 0) {
-                        addSearchControl(oSettings, json);
-                        //eventDoubleClick();
-                        caculatorHeightTable();
-                    };
-                     
-                    selected();
-                    changeCss();
-                    actionControl();
+                {
+                    "data": "TeacherAccountID", "render": function (data) {
+                        return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                    },
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "80px"
                 }
-            });
-        }
+            ],
+            "processing": true,
+            "serverSide": true,
+            //"scrollX": true,
+            //scrollY: true,
+            "language": {
+                search: "",
+                lengthMenu: "Hiển thị _MENU_",
+                entries: "",
+                processing: "<i class='fa fa-spinner fa-spin' style='font-size:50px;color: #3ca4ab'></i>",
+                infoEmpty: "",
+                infoFiltered: "",
+                searchPlaceholder: "Tìm kiếm thông tin",
+                //emptyTable: emptyselected,
+                zeroRecords: "<class='text-danger' align='center'>Không có dữ liệu</>",
+                info: "Bản ghi từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
+                paginate:
+                {
+                    previous: "<",
+                    next: ">",
+                    first: "",
+                    last: ""
+                },
+                select: {
+                    rows: {
+                        _: "",
+                        0: "",
+                        1: ""
+                    }
+                },
+            },
+            //"dom": '<"top"l>rt<"bottom"ip><"clear">',
+            "dom": '<"top">rt<"bottom"lirp><"clear">',
+            "fnInitComplete": function (oSettings, json, obj) {
+
+                if (json.data.length > 0) {
+                    addSearchControl(oSettings, json);
+                    //eventDoubleClick();
+                    selected();
+                    caculatorHeightTable();
+
+                }
+
+                changeCss();
+                actionControl();
+                
+            }
+        });
         function hoverTbody() {
             $('#' + tableName + ' tbody')
                 .on('mouseenter', 'td', function () {
@@ -161,13 +172,13 @@
             $("#" + tableName + " thead tr:eq(1) th").each(function (index) {
                 if (index == totalColum) {
                     $(this).replaceWith('<th></th>');
-                } else if (index != 3 ) {
+                } else if (index != 7) {
                     $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
                     var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") input");
                     searchControl.on('keyup', function () {
                         buildTable.column(index).search(searchControl.val()).draw();
                     });
-                } 
+                }  
                 else {
                     var elementDropDown = $('<select class="table-sl-search" />');
                     elementDropDown.append($('<option/>').attr('value', '').text('Tất cả'));
@@ -207,15 +218,17 @@
             })
         };
         
-        var action = function () {
+        var actionControl = function () {
+            $('span.mode').each(function () {
+                var obj = $(this);
+                obj.parent().css("cssText", "text-align: center;");
+            });
             $('#btnAddNew').off('click').on('click', function () {
-                 
                 var url = urlDetailPopup;
                 $('#' + popUpName).modal('show');
                 $('#' + popUpName + ' .modal-content').load(url);
             });
             $('#btnDeleteAll').off('click').on('click', function () {
-                 
                 var listItemToDelete = [];
                 $("#" + tableName + "_wrapper .selected").each(function () {
                     var row = buildTable.row($(this));
@@ -279,10 +292,11 @@
                 }
 
             });
-        };
-        var actionControl = function (element) {
+            
+
+            
             $('#' + tableName).each(function () {
-                 
+
                 var obj = $(this);
                 var item = $("tbody", obj);
                 item.on("click",
@@ -352,12 +366,6 @@
                     })
             })
         };
-        async function asyncCall() {
-             
-            actionControl();
-            createTable();
-            action();
-        }
-        asyncCall();
+
     });
 </script>

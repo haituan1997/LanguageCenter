@@ -5,9 +5,6 @@
     var categories = (IEnumerable<Category>)ViewBag.Categories;
     var levels = (IEnumerable<Level>)ViewBag.Levels;
 }
-<style>
-    
-</style>
 <div style="display:flex">
     <div class="course-popup" style="width:500px">
         <div class="modal-header" style=" background-color: #3ca4ab; color: white;">
@@ -62,7 +59,7 @@
                 <div class="form-outline mb-4">
                     <div class="add-plus-in-row" >
                         <div id="LevelID-Grp">
-                            <label>Ngôn ngữ</label>
+                            <label>Cấp độ</label>
                             <select class="form-control js-select2-enable-search-form-search" name="LevelID" id="LevelID" data-placeholder="Chọn học sinh" tabindex="4">
                                 <option></option>
                                 @foreach (var level in levels)

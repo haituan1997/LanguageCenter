@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace LanguageCenter.DataLayer.Object
+namespace LanguageCenter.Areas.Home.Models.Class
 {
-    public class Class
+    public class ClassModel
     {
         public long ClassID { get; set; }
 
@@ -26,9 +26,6 @@ namespace LanguageCenter.DataLayer.Object
         public string FullName { get; set; }
         public string CourseName { get; set; }
         public bool IsEdit { get; set; }
-        public bool IsCreated { get; set; }
         public string Title { get; set; }
-
-
     }
 }
