@@ -23,6 +23,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@ClassID", classID};
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
         }
+        public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
+        {
+            const string procedure = "uspGet_StudentInClass";
+            object[] parms = { "@ClassID", classID };
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
+        }
         public int Count(long? classID,string whereClause = null, bool isCreated = true)
         {
             const string procedure = "uspCount_StudentByClassID";

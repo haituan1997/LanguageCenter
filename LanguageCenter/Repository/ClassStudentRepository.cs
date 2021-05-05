@@ -39,6 +39,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
+        {
+            try
+            {
+                return classStudentFacade.Get_StudentInClass(classID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public long Insert(ClassStudent classStudent)
         {
             try

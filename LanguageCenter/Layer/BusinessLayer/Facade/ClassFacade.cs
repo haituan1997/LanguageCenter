@@ -19,6 +19,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerClass.Get_Classes(page, pageSize, orderBy, searchBy);
         }
+        public IEnumerable<Class> GetAll_Classes( )
+        {
+            return sqlServerClass.GetAll_Classes();
+        }
         public Class Get_ClassByClassID(long id)
         {
             return sqlServerClass.Get_ClassByClassID(id);

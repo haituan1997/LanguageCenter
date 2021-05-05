@@ -77,6 +77,14 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "luu-hoc-sinh-theo-lop", defaults: new { controller = "Class", action = "ClassStudent", area = "Home" });
             context.MapRoute("", "xoa-hoc-sinh-theo-lop", defaults: new { controller = "Class", action = "DeleteClassStudent", area = "Home", id = UrlParameter.Optional });
             #endregion
+            #region sinh viên
+            context.MapRoute("", "hoc-phi", defaults: new { controller = "Payment", action = "Payments", area = "Home" });
+            context.MapRoute("", "danh-sach-hoc-phi", defaults: new { controller = "Payment", action = "GetPage_Payments", area = "Home" });
+            context.MapRoute("", "chi-tiet-hoc-phi/{id}", defaults: new { controller = "Payment", action = "Payment", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-hoc-phi", defaults: new { controller = "Payment", action = "PostPayment", area = "Home" });
+            context.MapRoute("", "xoa-hoc-phi", defaults: new { controller = "Payment", action = "DeletePayment", area = "Home", id = UrlParameter.Optional });
+
+            #endregion
         }
     }
 }

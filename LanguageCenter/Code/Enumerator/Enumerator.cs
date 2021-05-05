@@ -13,7 +13,13 @@ namespace Code.Enumerator
             [Description("Chuyển khoản")]
             Type2 = 2
         }
-
+        public enum StatusPaymentMethod
+        {
+            [Description("Đã hoàn tất")]
+            Type1 = 1,
+            [Description("Chưa hoàn tất")]
+            Type2 = 2
+        }
         /// <summary>
         /// Gets the enum description.
         /// </summary>

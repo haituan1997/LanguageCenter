@@ -194,6 +194,8 @@
     <Compile Include="Areas\Home\Models\TeacherModel\TeacherModel.cs" />
     <Compile Include="Areas\Home\Models\UserModel.cs" />
     <Compile Include="Code\Enumerator\Enumerator.cs" />
+    <Compile Include="Code\StaticData\StaticDataHelper.cs" />
+    <Compile Include="Code\StaticData\StaticModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

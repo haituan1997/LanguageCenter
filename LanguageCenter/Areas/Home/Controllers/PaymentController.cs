@@ -9,14 +9,18 @@ using System.Web.Mvc;
 using AutoMapper;
 using DataTables.Mvc;
 using LanguageCenter.Code.Helper.DatatableHelper;
-
+using Code.Helper.StaticData;
 namespace LanguageCenter.Areas.Home.Controllers
 {
     public class PaymentController : Controller
     {
         private readonly PaymentRepository _PaymentRepository;
+        private readonly ClassRepository _ClassRepository;
+        private readonly ClassStudentRepository _ClassStudentRepository;
         public PaymentController() {
             _PaymentRepository = new PaymentRepository();
+            _ClassRepository = new ClassRepository();
+            _ClassStudentRepository = new ClassStudentRepository();
             Mapper.CreateMap<Payment, PaymentModel>();
             Mapper.CreateMap<PaymentModel, Payment>();
         }
@@ -37,8 +41,12 @@ namespace LanguageCenter.Areas.Home.Controllers
             var pageSize = requestParams.PageSize;
             var orderBy = requestParams.OrderBy;
             var searchBy = requestParams.SearchBy;
-
+            searchBy = searchBy.Replace("PaymentMethodName", "PaymentMethodID");
             var data = _PaymentRepository.Get_Payments(out totalRows, pageIndex,pageSize,orderBy,searchBy);
+            foreach(var item in data)
+            {
+                item.PaymentMethodName = StaticDataHelper.PaymentMethod.FirstOrDefault(x => x.Key == item.PaymentMethodID)?.Value;
+            }    
             return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = data.ToArray() }, JsonRequestBehavior.AllowGet);
 
         }
@@ -46,7 +54,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult Payment(long? id)
         {
-           // ViewBag.Students = _StudentRepository.GetAll_Students().ToList();
+            ViewBag.Class = _ClassRepository.GetAll_Classes().ToList();
             if (id == null)
             {
                 
@@ -106,6 +114,18 @@ namespace LanguageCenter.Areas.Home.Controllers
                 _PaymentRepository.Delete(id);
                 var message = "Xóa sinh viên thành công!";
                 return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Sinh viên đã được dùng ở chức năng khác" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetStudent_ByClass(long id)
+        {
+            try
+            {
+                var students = _ClassStudentRepository.Get_StudentInClass(id).ToList();  
+                return Json(new { success = true, data = students }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

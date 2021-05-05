@@ -1,7 +1,9 @@
 ﻿@model LanguageCenter.Areas.Home.Models.PaymentModel.PaymentModel
+@using Code.Helper.StaticData
 @using LanguageCenter.Layer.DataLayer.Object
+@using LanguageCenter.DataLayer.Object
 @{
-    var Students = (IEnumerable<Student>)ViewBag.Students;
+    var Classes = (IEnumerable<Class>)ViewBag.Class;
 }
 
 <div class="modal-header" style=" background-color: #3ca4ab; color: white;">
@@ -18,14 +20,13 @@
                 <label>Lớp</label>
                 <select class="form-control js-select2-enable-search-form-search" name="ClassID" id="ClassID" data-placeholder="Chọn lớp" tabindex="4">
                     <option></option>
-                    @foreach (var Student in Students)
+                    @foreach (var Class in Classes)
                     {
-                        var selected = Model.StudentID == Student.StudentID ? "selected" : ""; ;
-                        <option @selected value="@Student.StudentID">@Student.LastName @Student.FirtName</option>
+                        var selected = Model.ClassID == Class.ClassID ? "selected" : ""; ;
+                        <option @selected value="@Class.ClassID">@Class.ClassName </option>
                     }
                 </select>
             </div>
-
         </div>
         <div class="form-outline mb-4">
             <div id="StudentID-grp">
@@ -36,13 +37,40 @@
             </div>
 
         </div>
-
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Số tiền học phí</label>
+            <input type="number" name="Amount" id="Amount" value="@Model.Amount" class="form-control" tabindex="3" />
+        </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example2">Ngày nộp</label>
-            <input type="date" name="PaymentDate" id="PaymentDate" value="@Model.PaymentDate.ToString("dd/MM/yyyy")" class="form-control" tabindex="3" />
+            <input type="date" name="PaymentDate" id="PaymentDate" value="@Model.PaymentDate.ToString("yyyy-MM-dd")" class="form-control" tabindex="3" />
         </div>
-
-
+        <div class="form-outline mb-4">
+            <div id="StudentID-grp">
+                <label>Phương thức thanh toán</label>
+                <select class="form-control js-select2-enable-search-form-search" name="PaymentMethodID" id="PaymentMethodID" data-placeholder="Chọn phương thức thanh toán" tabindex="4">
+                    <option></option>
+                    @foreach (var paymentMethod in StaticDataHelper.PaymentMethod)
+                    {
+                        var selected = Model.PaymentMethodID == paymentMethod.Key ? "selected" : "";
+                        <option value="@paymentMethod.Key" @selected>@paymentMethod.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+            <div id="StudentID-grp">
+                <label>Trạng thái</label>
+                <select class="form-control js-select2-enable-search-form-search" name="Status" id="Status" data-placeholder="Chọn trạng thái" tabindex="4">
+                    <option></option> 
+                    @foreach (var statusPaymentMethod in StaticDataHelper.StatusPaymentMethod)
+                    {
+                        var selected = Model.Status == statusPaymentMethod.Key ? "selected" : "";
+                        <option value="@statusPaymentMethod.Key" @selected>@statusPaymentMethod.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
     </form>
     <div class="modal-footer">
         <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="PaymentForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
@@ -58,37 +86,33 @@
         var valid = function () {
             $("#PaymentForm").validate({
                 rules: {
-                    FirtName: { required: true, maxlength: 255 },
-                    LastName: { required: true, maxlength: 255 },
-                    CurrentAddress: { required: true, maxlength: 255 },
-                    PhoneNumber: { required: true, maxlength: 255, checkPhoneNumber: true },
-                    DateOfBirthBackUp: { required: true, maxlength: 255, validDate: true },
-                    Email: { email: true },
+                    ClassID: { required: true },
+                    StudentID: { required: true },
+                    Amount: { required: true, maxlength:20},
+                    PaymentMethodID: { required: true },
+                    Status: { required: true },
+                    PaymentDate: { required: true },
                 },
                 messages: {
-                    FirtName: {
-                        required: "Họ sinh viên không được để trống !",
-                        maxlength: "Họ sinh viên không được quá 255 ký tự !",
+                    ClassID: {
+                        required: "Lớp không được để trống !", 
                     },
-                    LastName: {
-                        required: "tên sinh viên không được để trống !",
-                        maxlength: "tên sinh viên không được quá 255 ký tự !",
+                    StudentID: {
+                        required: " Sinh viên không được để trống !", 
+                    }, 
+                    Amount: {
+                        required: "Số tiền không được để trống !",
+                        maxlength: "Số tiền không được quá 20 ký tự !", 
                     },
-                    CurrentAddress: {
-                        required: "Địa chỉ không được để trống !",
-                        maxlength: "Địa chỉ không được quá 255 ký tự !",
+                    PaymentMethodID: {
+                        required: "Phương thức thanh toán không được để trống !", 
                     },
-                    PhoneNumber: {
-                        required: "Số điện thoại không được để trống !",
-                        maxlength: "Số điện thoại không được quá 255 ký tự !",
-                        checkPhoneNumber: "Số điện thoại không đúng định dạng !",
+                    Status: {
+                        required: "Trạng thái không được để trống !", 
+
                     },
-                    DateOfBirthBackUp: {
-                        required: "Ngày sinh không được để trống !",
-                        maxlength: "Ngày sinh không được quá 255 ký tự !",
-                    },
-                    Email: {
-                        email: "Email không đúng định dạng vui lòng xem lại !",
+                    PaymentDate: {
+                        required: "Ngày nộp học phí không được để trống !",
 
                     },
                 },
@@ -116,11 +140,21 @@
 
         });
         $('.js-select2-enable-search-form-search').on("select2:close", function () {
+            var classID = $('#ClassID').find(":selected").val();
+            if (classID > 0) {
+                $("#PaymentForm").validate().element("#ClassID");
+            }
             var studentID = $('#StudentID').find(":selected").val();
             if (studentID > 0) {
-                $("#StudentAccountForm").validate().element("#StudentID");
-                $("#StudentID-grp .select2-selection--single")
-                    .css('cssText', 'border: 1px solid #d2d6de !important');
+                $("#PaymentForm").validate().element("#StudentID"); 
+            }
+            var paymentMethodID = $('#PaymentMethodID').find(":selected").val();
+            if (paymentMethodID > 0) {
+                $("#PaymentForm").validate().element("#PaymentMethodID");
+            }
+            var status = $('#Status').find(":selected").val();
+            if (status > 0) {
+                $("#PaymentForm").validate().element("#Status");
             }
         });
         // xử lý kiểm tra định dạng ngày tháng
@@ -212,8 +246,46 @@
             }
         };
 
+        $('#ClassID').change(function () {
+            var classID = $('#ClassID').find(":selected").val();
+            if (classID != "" && classID !== 0) {
+                    $.ajax({
+                        method: "GET",
+                        url: "/Payment/GetStudent_ByClass",
+                        data: {
+                            id: classID
+                        }
+                    }).done(function(data) {
+                        var results = data.data;
+                        if (results.length > 0) {
+                            $("#StudentID").empty();
+                            $("#StudentID")
+                                .append('<option value="x" disabled>-- Chọn quận huyện --</option>');
+                            $("#StudentID").append('<option></option>');
 
-
+                            $.each(results,
+                                function (index) {
+                                    var selected = @Model.StudentID === results[index].studentID ? "selected" : "";
+                                    $("#StudentID")
+                                        .append('<option value=' +
+                                        results[index].StudentID +
+                                            ' ' +
+                                            selected +
+                                            '>' +
+                                            results[index].LastName+
+                                        results[index].FirtName +
+                                            '</option>');
+                                });
+                            loadWard();
+                        } else {
+                            $("#StudentID")
+                                .empty()
+                                .append('<option value=""></option>')
+                                .select2("val", "");
+                        }
+                    });
+                }
+        });
         $('#btnSave').off('click').on('click', function (e) {
             e.preventDefault();
             var isValid = $('#PaymentForm').valid();
