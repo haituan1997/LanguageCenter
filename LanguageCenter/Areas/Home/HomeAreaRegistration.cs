@@ -77,13 +77,19 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "luu-hoc-sinh-theo-lop", defaults: new { controller = "Class", action = "ClassStudent", area = "Home" });
             context.MapRoute("", "xoa-hoc-sinh-theo-lop", defaults: new { controller = "Class", action = "DeleteClassStudent", area = "Home", id = UrlParameter.Optional });
             #endregion
-            #region sinh viên
+            #region học phí
             context.MapRoute("", "hoc-phi", defaults: new { controller = "Payment", action = "Payments", area = "Home" });
             context.MapRoute("", "danh-sach-hoc-phi", defaults: new { controller = "Payment", action = "GetPage_Payments", area = "Home" });
             context.MapRoute("", "chi-tiet-hoc-phi/{id}", defaults: new { controller = "Payment", action = "Payment", area = "Home", id = UrlParameter.Optional });
             context.MapRoute("", "luu-hoc-phi", defaults: new { controller = "Payment", action = "PostPayment", area = "Home" });
             context.MapRoute("", "xoa-hoc-phi", defaults: new { controller = "Payment", action = "DeletePayment", area = "Home", id = UrlParameter.Optional });
-
+            #endregion
+            #region tin tức
+            context.MapRoute("", "tin-tuc", defaults: new { controller = "NewsFeed", action = "NewsFeeds", area = "Home" });
+            context.MapRoute("", "danh-sach-tin-tuc", defaults: new { controller = "NewsFeed", action = "GetPage_NewsFeeds", area = "Home" });
+            context.MapRoute("", "chi-tiet-tin-tuc/{id}", defaults: new { controller = "NewsFeed", action = "NewsFeed", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-tin-tuc", defaults: new { controller = "NewsFeed", action = "PostNewsFeed", area = "Home" });
+            context.MapRoute("", "xoa-tin-tuc", defaults: new { controller = "NewsFeed", action = "DeleteNewsFeed", area = "Home", id = UrlParameter.Optional });
             #endregion
         }
     }
