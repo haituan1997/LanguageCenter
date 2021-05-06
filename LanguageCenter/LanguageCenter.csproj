@@ -169,6 +169,7 @@
     <Compile Include="App_Start\StartUp.Auth.cs" />
     <Compile Include="App_Start\WFHContext.cs" />
     <Compile Include="Areas\Home\Controllers\ClassController.cs" />
+    <Compile Include="Areas\Home\Controllers\ClassWeekDayController.cs" />
     <Compile Include="Areas\Home\Controllers\CourseController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Areas\Home\DatatableHelper.cs" />
     <Compile Include="Areas\Home\HomeAreaRegistration.cs" />
     <Compile Include="Areas\Home\Models\ClassStudent\ClassStudentModel.cs" />
+    <Compile Include="Areas\Home\Models\ClassWeekDay\ClassWeekDayModel.cs" />
     <Compile Include="Areas\Home\Models\Class\ClassModel.cs" />
     <Compile Include="Areas\Home\Models\Class\NewClassModel.cs" />
     <Compile Include="Areas\Home\Models\Course\CourseModel.cs" />
@@ -198,6 +200,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Layer\BusinessLayer\Facade\ClassStudentFacade.cs" />
+    <Compile Include="Layer\BusinessLayer\Facade\ClassWeekDayFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\StudentAccountFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\CourseFacade.cs" />
     <Compile Include="Layer\BusinessLayer\Facade\PaymentFacade.cs" />
@@ -211,6 +214,7 @@
     <Compile Include="Layer\DataLayer\ForeignLanguageCenterAdapter.cs" />
     <Compile Include="Layer\DataLayer\Object\Category.cs" />
     <Compile Include="Layer\DataLayer\Object\ClassStudent.cs" />
+    <Compile Include="Layer\DataLayer\Object\ClassWeekDay.cs" />
     <Compile Include="Layer\DataLayer\Object\Course.cs" />
     <Compile Include="Layer\DataLayer\Object\Language.cs" />
     <Compile Include="Layer\DataLayer\Object\Level.cs" />
@@ -222,6 +226,7 @@
     <Compile Include="Layer\DataLayer\Object\User.cs" />
     <Compile Include="Layer\DataLayer\Object\Class.cs" />
     <Compile Include="Layer\DataLayer\Shared\Extentions.cs" />
+    <Compile Include="Layer\DataLayer\SqlServer\SqlServerClassWeekDay.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerPayment.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerClassStudent.cs" />
     <Compile Include="Layer\DataLayer\SqlServer\SqlServerStudentAccount.cs" />
@@ -314,6 +319,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ClassStudentRepository.cs" />
+    <Compile Include="Repository\ClassWeekDayRepository.cs" />
     <Compile Include="Repository\StudentAccountRepository.cs" />
     <Compile Include="Repository\CourseRepository.cs" />
     <Compile Include="Repository\PaymentRepository.cs" />
@@ -8607,6 +8613,8 @@
     <Content Include="Areas\Home\Views\Class\Classes.cshtml" />
     <Content Include="Areas\Home\Views\Class\Class.cshtml" />
     <Content Include="Areas\Home\Views\Class\_ClassStudent.cshtml" />
+    <Content Include="Areas\Home\Views\ClassWeekDay\_ClassWeekDay.cshtml" />
+    <Content Include="Areas\Home\Views\ClassWeekDay\ClassWeekDays.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

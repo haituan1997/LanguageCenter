@@ -1,0 +1,126 @@
+﻿<section>
+    <div class="panel-group" style="margin-bottom: 0;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#formlist">
+                        <span class="QuickSand">
+                            Danh sách lịch học
+                        </span>
+                    </a>
+                </h4>
+            </div>
+
+        </div>
+        <div class="" id="formlist">
+            <div class="panel-body tab-body">
+                <div class="row" style=" position: relative; margin: 10px 10px 10px 0px;">
+                    <div class="action-FormList">
+                        <button id="btnAddNew-ClassWeekDay" class="btn-add-new"><span class="">Thêm mới</span></button>
+                        <a id="btnDeleteAll-ClassWeekDay" class="btn-delete-all" style="padding-top: 5px;"><span>Xóa tất cả</span></a>
+                    </div>
+                </div>
+                <div class="row" style="padding-right: 0px;">
+                    <div class="col-lg-12 col-md-12 ">
+                        <table style="width:100%;" id="ClassWeekDayTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+                            <thead class="Table-Thead">
+                                <tr class="Table-Thead-tr">
+                                    <th>Ngày học</th>
+                                    <th>Thứ</th>
+                                    <th>Thời gian bắt đầu</th>
+                                    <th>Thời gian kết thúc</th>
+                                    <th>Hoạt động</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    
+    $(document).ready(function () {
+
+
+        buildTable1= function () {
+            buildTableClassWeekDay = $('#ClassWeekDayTable').DataTable({
+                //"ajax": {
+                //    "url": urlDataTableClassWeekDay,
+                //    "type": "Post",
+                //    "datatype": "json"
+                //},
+                //"columns": [
+                //    { "data": "ClassWeekDayID", "name": "ClassWeekDayID", "width": "130px" },
+                //    { "data": "ClassWeekDayName", "name": "ClassWeekDayName" },
+                //    {
+                //        "data": "ClassWeekDayTime", "name": "ClassWeekDayTime", "width": "130px", "render": function (data, type, full) {
+                //            var date = data.replace("Date", "");
+                //            date = date.replaceAll("/", "");
+                //            date = date.replace("(", "");
+                //            date = date.replace(")", "");
+                //            date = parseInt(date);
+                //            return moment(new Date(date)).locale('el').format('DD/MM/YYYY');
+                //        }
+                //    },
+                //    { "data": "StartTime", "name": "StartTime" },
+                //    { "data": "EndTime", "name": "EndTime" },
+                //    { "data": "EndTime", "name": "EndTime" },
+                    //{
+                    //    "data": "ClassWeekDayID", "width": "130px !Important", "render": function (data) {
+                    //        return "<a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                    //    },
+                    //    "orderable": false,
+                    //    "searchable": false,
+                    //    "width": "80px"
+                    //}
+
+                //],
+                //"processing": true,
+                //"serverSide": true,
+                //"language": {
+                //    search: "",
+                //    lengthMenu: "Hiển thị _MENU_",
+                //    entries: "",
+                //    processing: "<i class='fa fa-spinner fa-spin' style='font-size:50px;color: #3ca4ab'></i>",
+                //    infoEmpty: "",
+                //    infoFiltered: "",
+                //    searchPlaceholder: "Tìm kiếm thông tin",
+                //    //emptyTable: emptyselected,
+                //    zeroRecords: "<class='text-danger' align='center'>Không có dữ liệu</>",
+                //    info: "Bản ghi từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
+                //    paginate:
+                //    {
+                //        previous: "<",
+                //        next: ">",
+                //        first: "",
+                //        last: ""
+                //    },
+                //    select: {
+                //        rows: {
+                //            _: "",
+                //            0: "",
+                //            1: ""
+                //        }
+                //    },
+                //},
+                ////"scrollY": true,
+                ////"dom": '<"top"l>rt<"bottom"ip><"clear">',
+                //"dom": '<"top">rt<"bottom"lirp><"clear">',
+                //"fnInitComplete": function (oSettings, json, obj) {
+                //    //if (json.data.length > 0) {
+                //    //    addSearchControl1(oSettings, json);
+                //    //    selected1();
+                //    //    caculatorHeightTable1();
+                //    //}
+                //    //changeCss1();
+                //    //actionControl();
+                //}
+            });
+        };
+        //buildTable1();
+    });
+</script>
