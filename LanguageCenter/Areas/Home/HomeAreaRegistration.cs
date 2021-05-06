@@ -68,6 +68,8 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "chi-tiet-lop/{id}", defaults: new { controller = "Class", action = "Class", area = "Home", id = UrlParameter.Optional });
             context.MapRoute("", "luu-lop", defaults: new { controller = "Class", action = "Class", area = "Home" });
             context.MapRoute("", "xoa-lop", defaults: new { controller = "Class", action = "DeleteClass", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "chi-tiet-lich-hoc-cua-lop/{id}", defaults: new { controller = "ClassWeekDay", action = "Class", area = "Home", id = UrlParameter.Optional });
+
             #endregion
 
             #region học sinh thuộc lop
