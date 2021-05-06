@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using DataTables.Mvc;
+using LanguageCenter.Areas.Home.Models.Class;
 using LanguageCenter.Areas.Home.Models.ClassWeekDay;
 using LanguageCenter.Code.Helper.DatatableHelper;
+using LanguageCenter.DataLayer.Object;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
@@ -16,20 +18,33 @@ namespace LanguageCenter.Areas.Home.Controllers
     {
         private static ClassRepository _classRepository;
         private static ClassWeekDayRepository _classWeekDayRepository;
+        private readonly TeacherRepository _teacherRepository;
+        private readonly CourseRepository _courseRepository;
+        private readonly ClassStudentRepository _classStudentRepository;
         public ClassWeekDayController() 
         {
             _classRepository = new ClassRepository();
             _classWeekDayRepository = new ClassWeekDayRepository();
+            _teacherRepository = new TeacherRepository();
+            _courseRepository = new CourseRepository();
+            _classStudentRepository = new ClassStudentRepository();
             Mapper.CreateMap<ClassWeekDayModel, ClassWeekDay>();
+            Mapper.CreateMap<Class, NewClassModel>();
             
         }
         // GET: Home/ClassWeekDay
-        public ActionResult ClassWeekDays()
+        public ActionResult Class(long? id)
         {
-            return PartialView();
+            ViewBag.Courses = _courseRepository.Get_AllCourses().ToList();
+            ViewBag.Teachers = _teacherRepository.Get_Teacheres().ToList();
+            
+                var obj = _classRepository.Get_ClassByClassID((long)id);
+                var model = Mapper.Map<Class, NewClassModel>(obj);
+                model.Title = "Cập nhập lịch học của lớp";
+                model.IsEdit = true;
+                ViewBag.ClassID = model.ClassID;
+                return View("ClassWeekDays", model);
         }
-
-
         [HttpPost]
         public ActionResult Get_ClassWeekDayByClassID([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel, long? classID)
         {

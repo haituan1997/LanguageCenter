@@ -11,7 +11,7 @@ namespace LanguageCenter.Areas.Home.Models.ClassWeekDay
 
         public long? ClassID { get; set; }
 
-        public DateTime ClassWeekDayTime { get; set; }
+        public DateTime? ClassWeekDayTime { get; set; }
 
         public TimeSpan? StartTime { get; set; }
 

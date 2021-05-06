@@ -69,6 +69,7 @@
     var dataJson;
     var urlUpdatePopup = '/luu-lop';
     var urlDetailPopup = "/chi-tiet-lop/";
+    var urlDetailCalendar = "/chi-tiet-lich-hoc-cua-lop/";
     var urlDataTable = "/danh-sach-lop";
     var urlDeleteDetail = "/xoa-lop";
     var idColum = "ClassID";
@@ -112,11 +113,13 @@
                 { "data": "CourseName", "name": "CourseName" },
                 {
                     "data": "ClassID", "render": function (data) {
-                        return "<a class='btn btn-edit-table' id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                        return "<a class='btn btn-edit-table' id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a>" +
+                            "<a class='btn btn-edit-table-calendar' id=" + data + "><i class='fa fa-calendar-alt icon-edit-table'></i></a>" +
+                            "<a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                     },
                     "orderable": false,
                     "searchable": false,
-                    "width": "80px"
+                    "width": "100px"
                 }
             ],
             "processing": true,
@@ -253,6 +256,18 @@
                     function (e) {
                         let row = buildTable.row($(this).parents("tr"));
                         var url = urlDetailPopup + $(row.data()).attr(idColum);;
+                        window.location.href = url;
+                        e.stopPropagation();
+                    })
+            });
+            $('#' + tableName).each(function () {
+                var obj = $(this);
+                var item = $("tbody", obj);
+                item.on("click",
+                    ".btn-edit-table-calendar",
+                    function (e) {
+                        let row = buildTable.row($(this).parents("tr"));
+                        var url = urlDetailCalendar + $(row.data()).attr(idColum);;
                         window.location.href = url;
                         e.stopPropagation();
                     })
