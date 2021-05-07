@@ -1,0 +1,211 @@
+﻿@using LanguageCenter.Layer.DataLayer.Object
+@{ 
+    var datas = (IEnumerable<Teacher>)ViewBag.DataTeachers;
+}
+<div class="flat-title-section">
+    <h1 class="title">Đội ngũ giáo viên</h1>
+</div>
+
+<div class="flat-teacher-team button-right">
+    @if (datas != null)
+    {
+        foreach (var item in datas)
+        {
+            <div class="flat-teacher flat-hover-zoom">
+                <div class="entry-image">
+                    <img src="~/images/teacher/Team-05.jpg" />
+                </div>
+                <div class="content">
+                    <h4 class="name">@item.FirtName @item.LastName</h4>
+                    <ul class="flat-socials">
+                        <li class="facebook">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li class="twitter">
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li class="linkedin">
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                        <li class="youtube">
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        </li>
+                    </ul>
+                    <ul class="flat-information">
+                        <li class="position">
+                            <a href="#" title="position">Giáo viên</a>
+                        </li>
+                        <li class="phone">
+                            <a href="+61383766284" title="Phone number">@item.NumberPhone</a>
+                        </li>
+                        <li class="email">
+                            <a href="mailto:AlitStudios@gmail.com" title="Email address">@item.Email</a>
+                        </li>
+                        @*<li class="skype">
+                            <a href="skype:skype.educate?call" title="skype">skype.educate</a>
+                        </li>*@
+                    </ul>
+
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="flat-teacher flat-hover-zoom">
+            <div class="entry-image">
+                <img src="~/images/teacher/Team-05.jpg" />
+            </div>
+            <div class="content">
+                <h4 class="name">Leonardo Bonucci</h4>
+                <ul class="flat-socials">
+                    <li class="facebook">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="twitter">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="linkedin">
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                    <li class="youtube">
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                    </li>
+                </ul>
+                <ul class="flat-information">
+                    <li class="position">
+                        <a href="#" title="position">Graphic Designer</a>
+                    </li>
+                    <li class="phone">
+                        <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>
+                    </li>
+                    <li class="email">
+                        <a href="mailto:AlitStudios@gmail.com" title="Email address">contact@educate.com</a>
+                    </li>
+                    <li class="skype">
+                        <a href="skype:skype.educate?call" title="skype">skype.educate</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="flat-teacher flat-hover-zoom">
+            <div class="entry-image">
+                <img src="~/images/teacher/Team-05.jpg" />
+            </div>
+            <div class="content">
+                <h4 class="name">Leonardo Bonucci</h4>
+                <ul class="flat-socials">
+                    <li class="facebook">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="twitter">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="linkedin">
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                    <li class="youtube">
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                    </li>
+                </ul>
+                <ul class="flat-information">
+                    <li class="position">
+                        <a href="#" title="position">Graphic Designer</a>
+                    </li>
+                    <li class="phone">
+                        <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>
+                    </li>
+                    <li class="email">
+                        <a href="mailto:AlitStudios@gmail.com" title="Email address">contact@educate.com</a>
+                    </li>
+                    <li class="skype">
+                        <a href="skype:skype.educate?call" title="skype">skype.educate</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="flat-teacher flat-hover-zoom">
+            <div class="entry-image">
+                <img src="~/images/teacher/Team-05.jpg" />
+            </div>
+            <div class="content">
+                <h4 class="name">Leonardo Bonucci</h4>
+                <ul class="flat-socials">
+                    <li class="facebook">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="twitter">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="linkedin">
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                    <li class="youtube">
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                    </li>
+                </ul>
+                <ul class="flat-information">
+                    <li class="position">
+                        <a href="#" title="position">Graphic Designer</a>
+                    </li>
+                    <li class="phone">
+                        <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>
+                    </li>
+                    <li class="email">
+                        <a href="mailto:AlitStudios@gmail.com" title="Email address">contact@educate.com</a>
+                    </li>
+                    <li class="skype">
+                        <a href="skype:skype.educate?call" title="skype">skype.educate</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="flat-teacher flat-hover-zoom">
+            <div class="entry-image">
+                <img src="~/images/teacher/Team-05.jpg" />
+            </div>
+            <div class="content">
+                <h4 class="name">Leonardo Bonucci</h4>
+                <ul class="flat-socials">
+                    <li class="facebook">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="twitter">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="linkedin">
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                    <li class="youtube">
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                    </li>
+                </ul>
+                <ul class="flat-information">
+                    <li class="position">
+                        <a href="#" title="position">Graphic Designer</a>
+                    </li>
+                    <li class="phone">
+                        <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>
+                    </li>
+                    <li class="email">
+                        <a href="mailto:AlitStudios@gmail.com" title="Email address">contact@educate.com</a>
+                    </li>
+                    <li class="skype">
+                        <a href="skype:skype.educate?call" title="skype">skype.educate</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    }
+
+
+
+
+
+
+</div><!-- /.flat-teacher-team -->

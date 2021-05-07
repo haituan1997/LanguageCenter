@@ -5,3 +5,177 @@
 }
 
 
+
+
+<div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="title">Tin tức</h4>
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
+<section class="main-content blog-posts style-v1" style="main-content blog-posts style-v1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-title-single">
+                    <h1 class="bold">Why You Should Read Every Day</h1>
+                    <article class="entry clearfix">
+                        <div class="entry-border">
+                            <div class="main-post">
+                                <div class="wrap-img">
+                                    <img src="images/blog/4singlev1.png" alt="images">
+                                    <h6>NGUYEN TIEN HUY</h6>
+                                    <div class="entry-meta">
+                                        <span class="date"><a href="#">20 March, 2016</a></span>
+                                        <span class="comment"><a href="#">No comment</a></span>
+                                        <span class="tag"><a href="#">Web Design, Life Style</a></span>
+                                    </div>
+                                </div>
+
+                                <div class="feature-post">
+                                    <img src="images/blog/bs.jpg" alt="image">
+                                </div><!-- /.feature-post -->
+                                <div class="entry-content">
+                                    <h4>Descripttion</h4>
+                                    <p>
+                                        Descripttion
+                                    </p>
+                                </div><!-- /.entry-post -->
+
+                            </div><!-- /.main-post -->
+                        </div><!-- /.entry-border -->
+                    </article><!-- /entry clearfix -->
+                </div><!-- /blog-title-single -->
+            </div><!-- /col-md-8 -->
+            <div class="sidebar">
+                <div class="widget widget-popular-news">
+                    <h5 class="widget-title">Tin Tức</h5>
+                    <ul class="popular-news clearfix">
+                        <li>
+                            <div class="thumb">
+                                <img src="images/flickr/1.jpg" alt="image">
+                            </div>
+                            <div class="text">
+                                <a href="#">New Chicago school budget relies on state pension</a>
+                                <p>May 18, 2016</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb">
+                                <img src="images/flickr/2.jpg" alt="image">
+                            </div>
+                            <div class="text">
+                                <a href="#">New Chicago school budget relies on state pension</a>
+                                <p>May 18, 2016</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="thumb">
+                                <img src="images/flickr/3.jpg" alt="image">
+                            </div>
+                            <div class="text">
+                                <a href="#">New Chicago school budget relies on state pension</a>
+                                <p>May 18, 2016</p>
+                            </div>
+                        </li>
+                    </ul><!-- /popular-news clearfix -->
+                </div><!-- /widget widget-popular-news -->
+            </div><!-- /sidebar -->
+        </div><!-- /row -->
+    </div><!-- /container -->
+</section>
+
+
+
+
+
+<section class="flat-row about-us parallax parallax1">
+    <div class="overlay bg-222">
+        <div class="container">
+            <div class="row">
+                @{
+                    Html.RenderAction("AllData", "Home");
+                }
+            </div><!-- / .row -->
+        </div><!-- /.container -->
+    </div><!-- /.overlay -->
+</section>
+
+<section class="flat-row pad-bottom-100">
+    <div class="container">
+        @{
+            Html.RenderAction("Teachers", "Home");
+        }
+    </div>
+</section>
+
+
+<div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="title">Liên hệ</h4>
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
+<section class="flat-row contact-page pad-top-134" >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="contact-content">
+                    <div class="contact-address">
+                        <div class="style1">
+                            <img src="images/icon/c1.png" alt="image">
+                        </div>
+                        <div class="details">
+                            <h5>Địa chỉ</h5>
+                            <p>Tân Bình, Thành phố Thái Bình</p>
+                            @*<p>NY 10118-3299 USA</p>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="contact-content">
+                    <div class="contact-address">
+                        <div class="style1">
+                            <img src="images/icon/c2.png" alt="image">
+                        </div>
+                        <div class="details">
+                            <h5>Số điện thoại</h5>
+                            <p>0227.3633669</p>
+                            @*<p>Fax: (+1) 800 666 999</p>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="contact-content">
+                    <div class="contact-address">
+                        <div class="style1">
+                            <img src="images/icon/c3.png" alt="image">
+                        </div>
+                        <div class="details">
+                            <h5>Email</h5>
+                            <p>Email: support@ascvn.edu.vn</p>
+                            @*<p>Info@domain.com</p>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.row -->
+
+        <div class="row">
+            <div class="flat-spacer d74px"></div>
+        </div>
+        <div class="map" style="width: 100%; height: 559px; position: relative; overflow: hidden;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.8334619371035!2d106.31662361539686!3d20.472032211924876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135e4c44fa656c3%3A0x19028669f9f200e8!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBUaMOhaSBCw6xuaA!5e0!3m2!1svi!2s!4v1620365317402!5m2!1svi!2s" width="1366" height="559" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        
+    </div><!-- /.container -->
+</section>
+<script>
+
+</script>

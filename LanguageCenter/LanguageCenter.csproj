@@ -8613,6 +8613,8 @@
     <Content Include="Areas\Home\Views\Class\_ClassStudent.cshtml" />
     <Content Include="Areas\Home\Views\ClassWeekDay\_ClassWeekDay.cshtml" />
     <Content Include="Areas\Home\Views\ClassWeekDay\ClassWeekDays.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_AllData.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_Teachers.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
