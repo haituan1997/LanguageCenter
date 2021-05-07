@@ -6,10 +6,28 @@
     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form method="post" id="TeacherForm" action="@Url.Action("PostTeacher")">
+    <form method="post" id="TeacherForm" action="@Url.Action("PostTeacher")" enctype="multipart/form-data">
         @*@Html.AntiForgeryToken()*@
         @Html.HiddenFor(x => x.TeacherID)
         @Html.HiddenFor(x => x.IsEdit)
+        <div class="form-outline mb-4">
+            <div class="profile profile-logo-margin text-center">
+                @if (Model.AvatarUrl != null)
+                {
+                    <img class="profile-logo img-radius" id="imgVCAvatar" src="@Model.AvatarUrl" />
+                }
+                else
+                {
+                    <img class="profile-logo img-radius" id="imgVCAvatar" src="~/images/home-baner.png"/>
+                }
+                <input type="hidden" value="@Model.AvatarUrl" id="AvatarUrl" name="AvatarUrl" />
+                <div class="hover-logo" id="browser">
+                    <i class="fa fa-image-polaroid"></i>
+                </div>
+                <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png*" style="display: none" />
+                <span>Ảnh đại diện - <span style="color: #4b4e4d; font-weight: 300;margin-left:0;font-style:italic">Không bắt buộc</span></span>
+            </div>
+        </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Họ giáo viên</label>
             <input type="text" name="FirtName" id="FirtName" value="@Model.FirtName" autofocus class="form-control" tabindex="1" />
@@ -41,6 +59,71 @@
 <script src="~/javascript/jquery.validate.js"></script>
 <script>
     $(document).ready(function () {
+        $('#file').on('change', function (e) {
+            debugger
+            var files = e.target.files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: '/Teacher/UploadFile',
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            $('#imgVCAvatar').attr('src', '@Url.Content("~/images/Teachers/")' + result.fileName);
+                            $('#AvatarUrl').val('@Url.Content("~/images/Teachers/")' + result.fileName);
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                } else {
+                    $.notify("Đã có lỗi xảy ra", {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                }
+            }
+        });
+
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgVCAvatar').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        //$("#file").change(function () {
+        //    readURL(this);
+        //    $("#file").css("display", "none");
+        //});
+        $("#imgVCAvatar").hover(function () {
+            $("#browser").css("display", "block");
+        }, function () {
+            $("#browser").css("display", "none");
+        });
+
+        $("#browser").hover(function () {
+            $("#browser").css("display", "block");
+        }, function () {
+            $("#browser").css("display", "none");
+        });
+
+        $("#browser").click(function () {
+            $("#file").click();
+        });
         var valid = function () {
             $("#TeacherForm").validate({
                 rules: {
@@ -61,15 +144,14 @@
         };
         valid();
         $('.btn-exit-popup').off('click').on('click', function (e) {
-             
+
             e.preventDefault();
             $('#popUp').modal('hide');
             return;
         })
         $('#btnSave').off('click').on('click', function (e) {
-             
             e.preventDefault();
-             
+            debugger
             var isValid = $('#TeacherForm').valid();
             if (!isValid) {
                 //$("select.error + span")
@@ -85,7 +167,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
-                     
+
                     if (result.success) {
                         var data = result.message;
                         $.notify(data, {

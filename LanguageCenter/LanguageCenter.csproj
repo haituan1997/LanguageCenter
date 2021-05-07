@@ -8651,6 +8651,7 @@
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Home\Views\LoginView\" />
     <Folder Include="images\portfolio\" />
+    <Folder Include="images\Teachers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
