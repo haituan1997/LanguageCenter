@@ -947,12 +947,12 @@ ul.curriculum li ul.section-content li.course-lesson .question:before {
 }
 
 .flat-counter .numb-count.percent:after {
-    position: absolute;
+   /* position: absolute;
     right: 127px;
     top: -10px;
     content: "%";
     font-size: 40px;
-    color: #FFAA30;
+    color: #FFAA30;*/
 }
 
 .flat-counter .name-count {

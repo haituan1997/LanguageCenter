@@ -1,0 +1,44 @@
+﻿@{
+    var allData = (List<int>)ViewBag.AllData;
+}
+<div class="col-md-3 col-sm-6">
+    <div class="flat-counter">
+        <div class="counter-content">
+            <div class="numb-count" data-to="@allData[0]" data-speed="2000" data-waypoint-active="yes">@allData[0]</div>
+            <div class="name-count">Tổng số học viên</div>
+            @*<div class="desc-count">Lorem ipsum dolor sit amet consecte tur adipiscing elit, sed do eiusmod tempor incididunt labore</div>*@
+        </div>
+    </div><!-- /.flat-counter -->
+</div>
+
+<div class="col-md-3 col-sm-6">
+    <div class="flat-counter">
+        <div class="counter-content">
+            <div class="numb-counter">
+                <div class="numb-count" data-to="@allData[1]" data-speed="1000" data-waypoint-active="yes">@allData[1]</div>
+            </div>
+            <div class="name-count">Tổng số giáo viên</div>
+            @*<div class="desc-count">Lorem ipsum dolor sit amet consecte tur adipiscing elit, sed do eiusmod tempor incididunt labore</div>*@
+        </div>
+    </div><!-- /.flat-counter -->
+</div>
+
+<div class="col-md-3 col-sm-6">
+    <div class="flat-counter">
+        <div class="counter-content">
+            <div class="numb-count" data-to="@allData[2]" data-speed="2000" data-waypoint-active="yes">@allData[2]</div>
+            <div class="name-count">Tổng số khóa học</div>
+            @*<div class="desc-count">Lorem ipsum dolor sit amet consecte tur adipiscing elit, sed do eiusmod tempor incididunt labore</div>*@
+        </div>
+    </div><!-- /.flat-counter -->
+</div>
+
+<div class="col-md-3 col-sm-6">
+    <div class="flat-counter">
+        <div class="counter-content">
+            <div class="numb-count percent" data-to="@allData[3]" data-speed="2000" data-waypoint-active="yes">@allData[3]</div>
+            <div class="name-count">Tổng số lớp học</div>
+            @*<div class="desc-count">Lorem ipsum dolor sit amet consecte tur adipiscing elit, sed do eiusmod tempor incididunt labore</div>*@
+        </div>
+    </div><!-- /.flat-counter -->
+</div>

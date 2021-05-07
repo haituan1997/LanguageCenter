@@ -28,6 +28,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<Class> Get_AllClasses()
+        {
+            try
+            {
+                return classFacade.Get_AllClasses();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public Class Get_ClassByClassID(long id)
         {
             try
