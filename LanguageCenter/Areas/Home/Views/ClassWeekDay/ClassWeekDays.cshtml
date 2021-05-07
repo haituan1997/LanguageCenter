@@ -162,8 +162,8 @@
                                         <thead class="Table-Thead">
                                             <tr class="Table-Thead-tr">
                                                 <th></th>
-                                                <th>Ngày học</th>
                                                 <th>Thứ</th>
+                                                <th>Ngày học</th>
                                                 <th>Thời gian bắt đầu</th>
                                                 <th>Thời gian kết thúc</th>
                                                 <th>Hoạt động</th>
@@ -216,10 +216,11 @@
                     "datatype": "json"
                 },
             "columns": [
-                { "data": "ClassWeekDayID", "name": "ClassWeekDayID", "width": "130px", "visible": "true" },
-                    { "data": "ClassWeekDayName", "name": "ClassWeekDayName", "orderable": "false" },
+                {
+                    "data": "ClassWeekDayID", "name": "ClassWeekDayID","visible": false, "targets": -1 },
+                    { "data": "ClassWeekDayName", "name": "ClassWeekDayName",  },
                     {
-                        "data": "ClassWeekDayTime", "name": "ClassWeekDayTime", "width": "130px", "render": function (data, type, full) {
+                        "data": "ClassWeekDayTime", "name": "ClassWeekDayTime", "render": function (data, type, full) {
                             var date = data.replace("Date", "");
                             date = date.replaceAll("/", "");
                             date = date.replace("(", "");
@@ -231,12 +232,12 @@
                     { "data": "StartTime", "name": "StartTime" },
                     { "data": "EndTime", "name": "EndTime" },
                     {
-                        "data": "ClassWeekDayID", "width": "130px !Important", "render": function (data) {
-                            return "<a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                        "data": "ClassWeekDayID", "render": function (data) {
+                            return "<a class='btn btn-edit-table' id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                         },
                         "orderable": false,
                         "searchable": false,
-                        "width": "80px"
+                        "width": "120px"
                     }
 
                 ],

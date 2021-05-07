@@ -30,7 +30,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             _classStudentRepository = new ClassStudentRepository();
             Mapper.CreateMap<ClassWeekDayModel, ClassWeekDay>();
             Mapper.CreateMap<Class, NewClassModel>();
-            
+            Mapper.CreateMap<ClassWeekDay, ClassWeekDayModel>();
         }
         // GET: Home/ClassWeekDay
         public ActionResult Class(long? id)
@@ -63,8 +63,14 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 orderBy = orderBy.Replace("FullName", "LastName");
             }
-            var data = _classWeekDayRepository.Get_ClassWeekDayByClassID(classID, out totalRows, pageIndex, pageSize, orderBy, searchBy);
-            return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = data.ToArray() }, JsonRequestBehavior.AllowGet);
+            var datas = _classWeekDayRepository.Get_ClassWeekDayByClassID(classID, out totalRows, pageIndex, pageSize, orderBy, searchBy);
+            
+            var culture = new System.Globalization.CultureInfo("vi-vn");
+            foreach (var item in datas)
+            {
+                item.ClassWeekDayName = culture.DateTimeFormat.GetDayName(item.ClassWeekDayTime.DayOfWeek);
+            }
+            return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = datas.ToArray() }, JsonRequestBehavior.AllowGet);
 
         }
         [HttpGet]
@@ -102,7 +108,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 {
                     var obj = Mapper.Map<ClassWeekDayModel, ClassWeekDay>(model);
                     _classWeekDayRepository.Updaet(obj);
-                    return Json(new { success = true, message = "Thêm mới lịch học cho lớp thành công!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Cập nhập lịch học cho lớp thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

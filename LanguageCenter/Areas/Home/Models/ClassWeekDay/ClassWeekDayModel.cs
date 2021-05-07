@@ -13,9 +13,9 @@ namespace LanguageCenter.Areas.Home.Models.ClassWeekDay
 
         public DateTime? ClassWeekDayTime { get; set; }
 
-        public TimeSpan? StartTime { get; set; }
+        public string StartTime { get; set; }
 
-        public TimeSpan? EndTime { get; set; }
+        public string EndTime { get; set; }
         public string Title { get; set; }
         public bool IsEdit { get; set; }
     }
