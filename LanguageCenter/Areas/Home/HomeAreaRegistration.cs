@@ -55,7 +55,6 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "load-danh-muc", defaults: new { controller = "Course", action = "GetCategories", area = "Home" });
             context.MapRoute("", "load-cap-do", defaults: new { controller = "Course", action = "GetLevels", area = "Home" });
             #endregion
-
             #region tài khoản đăng nhập của giáo viên
             context.MapRoute("", "tai-khoan-giao-vien", defaults: new { controller = "TeacherAccount", action = "TeacherAccounts", area = "Home" });
             context.MapRoute("", "danh-sach-tai-khoan-giao-vien", defaults: new { controller = "TeacherAccount", action = "GetPage_TeacherAccounts", area = "Home" });
@@ -69,6 +68,8 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "chi-tiet-lop/{id}", defaults: new { controller = "Class", action = "Class", area = "Home", id = UrlParameter.Optional });
             context.MapRoute("", "luu-lop", defaults: new { controller = "Class", action = "Class", area = "Home" });
             context.MapRoute("", "xoa-lop", defaults: new { controller = "Class", action = "DeleteClass", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "chi-tiet-lich-hoc-cua-lop/{id}", defaults: new { controller = "ClassWeekDay", action = "Class", area = "Home", id = UrlParameter.Optional });
+
             #endregion
 
             #region học sinh thuộc lop
@@ -91,6 +92,13 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "luu-tin-tuc", defaults: new { controller = "NewsFeed", action = "PostNewsFeed", area = "Home" });
             context.MapRoute("", "xoa-tin-tuc", defaults: new { controller = "NewsFeed", action = "DeleteNewsFeed", area = "Home", id = UrlParameter.Optional });
             #endregion
+            #region lịch học theo lớp
+            context.MapRoute("", "danh-lich-hoc-theo-lop/{classID}", defaults: new { controller = "ClassWeekDay", action = "Get_ClassWeekDayByClassID", area = "Home", classID = UrlParameter.Optional });
+            context.MapRoute("", "chi-tiet-lich-hoc-theo-lop/{id}", defaults: new { controller = "ClassWeekDay", action = "ClassWeekDay", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-hoc-lich-hoc-lop", defaults: new { controller = "ClassWeekDay", action = "ClassWeekDay", area = "Home" });
+            context.MapRoute("", "xoa-hoc-lich-hoc-lop", defaults: new { controller = "ClassWeekDay", action = "DeleteClassClassWeekDay", area = "Home", id = UrlParameter.Optional });
+            #endregion
+
         }
     }
 }

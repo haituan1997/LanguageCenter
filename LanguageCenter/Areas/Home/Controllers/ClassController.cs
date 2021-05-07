@@ -88,7 +88,8 @@ namespace LanguageCenter.Areas.Home.Controllers
                     Title = model.Title,
                     IsCreated = model.IsCreated,
                 };
-            return View("Class", newModel);
+                ViewBag.ClassID = newModel.ClassID;
+                return View("Class", newModel);
             }
             else
             {
@@ -96,6 +97,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 var model = Mapper.Map<Class,NewClassModel>(obj);
                 model.Title = "Cập nhập lớp học";
                 model.IsEdit = true;
+                ViewBag.ClassID = model.ClassID;
                 return View("Class", model);
             }
         }

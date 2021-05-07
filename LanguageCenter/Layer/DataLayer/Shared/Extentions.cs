@@ -295,7 +295,28 @@ namespace LanguageCenter.DataLayer.Shared
 
             return result;
         }
+        public static TimeSpan AsTimSpan(this object item, TimeSpan defaultTimeSpan = default(TimeSpan))
+        {
+            if (item == null || string.IsNullOrEmpty(item.ToString()))
+                return defaultTimeSpan;
 
+            TimeSpan result;
+            if (!TimeSpan.TryParse(item.ToString(), out result))
+                return defaultTimeSpan;
+
+            return result;
+        }
+        public static TimeSpan? AsTimSpanForNull(this object item, TimeSpan? defaultTimeSpan = null)
+        {
+            if (item == null || string.IsNullOrEmpty(item.ToString()))
+                return defaultTimeSpan;
+
+            TimeSpan result;
+            if (!TimeSpan.TryParse(item.ToString(), out result))
+                return defaultTimeSpan;
+
+            return result;
+        }
         public static DateTimeOffset AsDateTimeOffset(this object item, DateTimeOffset defaultDateTime = default(DateTimeOffset))
         {
             if (item == null || string.IsNullOrEmpty(item.ToString()))

@@ -1,6 +1,6 @@
 ﻿using LanguageCenter.BusinessLayer.Facade;
-using LanguageCenter.DataLayer.Object;
 using LanguageCenter.Layer.BusinessLayer.Facade;
+using LanguageCenter.Layer.DataLayer.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,58 +8,47 @@ using System.Web;
 
 namespace LanguageCenter.Repository
 {
-    public class ClassRepository
+    public class ClassWeekDayRepository
     {
-        ClassFacade classFacade = new ClassFacade();
-        public ClassRepository()
+        ClassWeekDayFacade classWeekDayFacade = new ClassWeekDayFacade();
+        public ClassWeekDayRepository()
         {
-            classFacade = new ClassFacade();
+            classWeekDayFacade = new ClassWeekDayFacade();
         }
 
-        public IEnumerable<Class> Get_Classes(out int total, int page, int pageSize, string orderBy = null, string searchBy = null)
+        public IEnumerable<ClassWeekDay> Get_ClassWeekDayByClassID(long? classID, out int total, int page, int pageSize, string orderBy = null, string searchBy = null)
         {
             try
             {
-                total = classFacade.Count(searchBy);
-                return classFacade.Get_Classes(page, pageSize, orderBy, searchBy);
+                total = classWeekDayFacade.Count(searchBy, classID);
+                return classWeekDayFacade.Get_ClassWeekDayByClassID(classID, page, pageSize, orderBy, searchBy);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public IEnumerable<Class> Get_AllClasses()
+        public ClassWeekDay Get_ClassWeekDayByID(long id)
         {
             try
             {
-                return classFacade.Get_AllClasses();
+                return classWeekDayFacade.Get_ClassWeekDayByID(id);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public Class Get_ClassByClassID(long id)
+        public long Insert(ClassWeekDay classWeekDay)
         {
             try
             {
-                return classFacade.Get_ClassByClassID(id);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public long Insert(Class objClass)
-        {
-            try
-            {
-                var response = classFacade.Insert(objClass);
+                var response = classWeekDayFacade.Insert(classWeekDay);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
                 }
-                return objClass.ClassID;
+                return classWeekDay.ClassWeekDayID;
 
             }
             catch (Exception ex)
@@ -68,16 +57,16 @@ namespace LanguageCenter.Repository
             }
 
         }
-        public string Update(Class objClass)
+        public string Updaet(ClassWeekDay classWeekDay)
         {
             try
             {
-                var response = classFacade.Update(objClass);
+                var response = classWeekDayFacade.Update(classWeekDay);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
                 }
-                return response.ClassID.ToString();
+                return classWeekDay.ClassWeekDayID.ToString();
 
             }
             catch (Exception ex)
@@ -90,7 +79,7 @@ namespace LanguageCenter.Repository
         {
             try
             {
-                var response = classFacade.Delete(id);
+                var response = classWeekDayFacade.Delete(id);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);

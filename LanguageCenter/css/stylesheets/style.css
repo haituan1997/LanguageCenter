@@ -1514,17 +1514,17 @@ div#header-sticky-wrapper {
     position: relative;
 }
 
-.page-title .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-    opacity: 0.7;
-    filter: alpha(opacity=70);
-}
+	.page-title .overlay {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #1d89f8;
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+		opacity: 0.7;
+		filter: alpha(opacity=70);
+	}
 
 .page-title .page-title-heading h2 {
 	font-family: "Montserrat", sans-serif;
@@ -2345,9 +2345,10 @@ article.post .entry-meta p {
 /* Footer
 -------------------------------------------------------------- */
 .footer {
-    background: #222;
-    color: #9c9c9c;
-    padding: 65px 15px 0;
+	color: #f6f6f6;
+	padding: 65px 15px 0;
+	background-color: #1d89f8;
+	opacity: 0.7;
 }
 
 .footer .footer-widgets {
@@ -2376,10 +2377,10 @@ article.post .entry-meta p {
 	color: #ffaa30;
 }
 
-.footer .footer-widgets .flat-contact-form .flat-button {
-	background: #428bdc;
-	border-color: #428bdc;
-}
+	.footer .footer-widgets .flat-contact-form .flat-button {
+		background: #1d89f8;
+		border-color: #1d89f8;
+	}
 
 .footer .footer-widgets .flat-contact-form .flat-button:hover {
 	background: #ffaa30;
@@ -2405,12 +2406,12 @@ article.post .entry-meta p {
 	padding-left: 22px;
 }
 
-.footer .widget-text li,
-.footer .widget-text li a {
-	font-size: 12px;
-	color: #9c9c9c;
-	line-height: 29px;
-}
+	.footer .widget-text li,
+	.footer .widget-text li a {
+		font-size: 12px;
+		color: #f6f6f6;
+		line-height: 29px;
+	}
 
 .footer .widget-text li a:hover {
 	color: #ffaa30;
@@ -2444,7 +2445,7 @@ footer .widget.widget_tweets .widget-title {
 }
 
 .footer .widget .widget-title:before {
-	background-color: #4e4e4e;
+	background-color: #f6f6f6;
 	bottom: -17px;
 }
 
@@ -2452,7 +2453,7 @@ footer .widget.widget_tweets .widget-title {
 footer .widget_tweets ul li a {
 	font-size: 12px;
 	line-height: 32px;
-	color: #9c9c9c;
+	color: #f6f6f6;
 	font-weight: 600;
 }
 
@@ -2514,7 +2515,7 @@ footer .widget_recent-courses ul li .review-rating .flat-reviews {
 }
 
 .footer .widget .recent-courses-news li .text a {
-	color: #9c9c9c;
+	color: #f6f6f6;
 }
 
 .footer .widget .recent-courses-news li .text a:hover {
@@ -2522,8 +2523,8 @@ footer .widget_recent-courses ul li .review-rating .flat-reviews {
 }
 
 .footer .widget.widget_recent-courses li {
-    border-bottom: 1px solid #323232;
-    padding: 19px 0 8px;
+	border-bottom: 1px solid #f6f6f6;
+	padding: 19px 0 8px;
 }
 
 .footer .widget.widget_recent-courses li:first-child {
@@ -2542,21 +2543,22 @@ footer .widget_recent-courses ul li .review-rating .flat-reviews {
 
 .widget-quick-contact input[type="email"] {
 	margin-bottom: 10px;
-	background: #222;
+	background: #f6f6f6;
 	width: 100%;
 }
 
 .widget-quick-contact textarea,
 .widget-quick-contact input[type="email"] {
+	background-color: #f6f6f6;
 	color: #fff;
 	border-radius: 4px;
-	border: 1px solid #393939;
+	border: 1px solid #f6f6f6;
 	padding: 15px 19px;
 	-webkit-transition: all 0.3s ease-in-out;
-	   -moz-transition: all 0.3s ease-in-out;
-	    -ms-transition: all 0.3s ease-in-out;
-	     -o-transition: all 0.3s ease-in-out;
-	        transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 
 .widget-quick-contact textarea:focus,
@@ -2588,16 +2590,17 @@ footer .widget_recent-courses ul li .review-rating .flat-reviews {
 /* Bottom
 -------------------------------------------------------------- */
 .bottom {
-	background: #222;
 	color: #9c9c9c;
 	text-align: center;
+	background-color: #1d89f8;
+	opacity: 0.7;
 }
 
-.bottom .container-bottom {
-	position: relative;
-	overflow: hidden;
-	border-top: 2px solid #393939;
-}
+	.bottom .container-bottom {
+		position: relative;
+		overflow: hidden;
+		border-top: 2px solid #f6f6f6;
+	}
 
 .bottom .flat-socials-v1 {
 	margin-left: 40px;
@@ -2612,17 +2615,17 @@ footer .widget_recent-courses ul li .review-rating .flat-reviews {
 	z-index: 9999;
 }
 
-.bottom .flat-socials-v1 li:before {
-	position: absolute;
-	top: -10px;
-	left: -15px;
-	content:"";
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	background-color: #222;
-	z-index: -1;
-}
+	.bottom .flat-socials-v1 li:before {
+		position: absolute;
+		top: -10px;
+		left: -15px;
+		content: "";
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background-color: #f6f6f6;
+		z-index: -1;
+	}
 
 .bottom .flat-socials-v1 li a:hover {
 	color: #ffaa30;
@@ -2640,10 +2643,11 @@ footer .widget_recent-courses ul li .review-rating .flat-reviews {
 	padding: 45px 0 27px;
 }
 
-.bottom .flat-socials-v1 li a,
-.container-bottom .copyright p {
-	color: #9c9c9c;
-}
+	.bottom .flat-socials-v1 li a,
+	.container-bottom .copyright p {
+		color: #424242;
+	}
+	
 
 
 /* Parallax
@@ -2820,10 +2824,11 @@ footer .widget_recent-courses ul li .review-rating .flat-reviews {
     padding: 0 30px;
 }
 
-.flat-row.join-us .overlay.bg-222, .flat-row.about-us .overlay.bg-222{
-	background-color: rgba(34,34,34,0.9);	
-	padding: 93px 0 85px;
-}
+	.flat-row.join-us .overlay.bg-222, .flat-row.about-us .overlay.bg-222 {
+		background-color: #1d89f8;
+		opacity: 0.7;
+		padding: 93px 0 85px;
+	}
 
 .flat-row.lastest-new {
 	padding: 92px 0 72px;

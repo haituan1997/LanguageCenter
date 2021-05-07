@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </section>
-            <section>
+            <section style="margin-bottom: 25px;">
                 <div class="panel-group" style="margin-bottom: 0;">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -147,7 +147,7 @@
 
                     </div>
                     <div class="" id="formlist">
-                        <div class="panel-body tab-body" style="border-bottom: none !important;">
+                        <div class="panel-body tab-body">
                             <div class="row" style=" position: relative; margin: 10px 10px 10px 0px;">
                                 <div class="action-FormList">
                                     <button id="btnAddNew" class="btn-add-new"><span class="">Thêm mới</span></button>
@@ -165,7 +165,7 @@
                                                 <th>Địa chỉ</th>
                                                 <th>Email</th>
                                                 <th>Số điện thoại</th>
-                                                <th style="width:100px !important">Hoạt động</th>
+                                                <th>Hoạt động</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -175,12 +175,14 @@
                     </div>
                 </div>
             </section>
+            
+
             <section class="row line-control step-action-button">
                 <div class="col-lg-12 col-md-12">
                     <a id="btn-exit" name="submit" value="Save" class="btn-exit" tabindex="36" style="margin-right: 47px;"><span class="OpenSans">Thoát</span></a>
                     @*<button id="btnSaveAndCreate" name="submit" value="SaveAndCreate" class="btn btn-flat btn-solid-custom pull-right saveForm border-radius-class" form="VeteranForm" tabindex="35">
-                            <span class="OpenSans">Lưu và tạo mới</span>
-                        </button>*@
+                    <span class="OpenSans">Lưu và tạo mới</span>
+                </button>*@
                     <button id="btnSave" name="submit" value="Save" class="btn-save" form="ClassForm" tabindex="34"><span class="OpenSans">Lưu</span></button>
                 </div>
             </section>
@@ -188,6 +190,12 @@
     </div>
 </div>
 <div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
+    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div class="modal right fade" id="popUpClassWeekDay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
     <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
         <div class="modal-content">
         </div>
@@ -205,6 +213,16 @@
     var urlDeleteDetail = "/xoa-hoc-sinh-theo-lop";
     var idColum = "ClassStudentID";
     var buildTable;
+
+    var classID = '@ViewBag.ClassID';
+    //ClassWeekDay
+    var urlUpdatePopupClassWeekDay = '/luu-hoc-lich-hoc-lop';
+    var urlDetailPopupClassWeekDay = "/chi-tiet-lich-hoc-theo-lop/" +"@Model.ClassID";
+    var urlDataTableClassWeekDay = "/danh-lich-hoc-theo-lop/" +"@Model.ClassID";
+    var urlDeleteDetailClassWeekDay = "/xoa-hoc-lich-hoc-lop";
+    var idColumClassWeekDay = "ClassWeekDayID";
+    var buildTableClassWeekDay;
+    var buildTable1;
     $(document).ready(function () {
         var actionControlMaster = function () {
             $('#btn-exit,.fa-arrow-left').off('click').on('click', function () {
@@ -213,7 +231,6 @@
         }
         var submit = function () {
             $('#btnSave').off('click').on('click', function () {
-                debugger
                 var valid = $('#ClassForm').valid();
                 if (!valid) {
                     return false;
@@ -262,237 +279,179 @@
             })
         };
         valid();
-        buildTable = $('#' + tableName + '').DataTable({
-            "ajax": {
-                "url": urlDataTable,
-                "type": "Post",
-                "datatype": "json"
-            },
-            "columns": [
-                { "data": "StudentID", "name": "StudentID", "width":"130px" },
-                { "data": "FullName", "name": "FullName" },
-                {
-                    "data": "DateOfBirth", "name": "DateOfBirth", "width": "130px", "render": function (data, type, full) {
-                        var date = data.replace("Date", "");
-                        date = date.replaceAll("/", "");
-                        date = date.replace("(", "");
-                        date = date.replace(")", "");
-                        date = parseInt(date);
-                        return moment(new Date(date)).locale('el').format('DD/MM/YYYY');
+        var buildTableStudent = function () {
+            buildTable = $('#' + tableName + '').DataTable({
+                "ajax": {
+                    "url": urlDataTable,
+                    "type": "Post",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "StudentID", "name": "StudentID", "width": "130px" },
+                    { "data": "FullName", "name": "FullName" },
+                    {
+                        "data": "DateOfBirth", "name": "DateOfBirth", "width": "130px", "render": function (data, type, full) {
+                            var date = data.replace("Date", "");
+                            date = date.replaceAll("/", "");
+                            date = date.replace("(", "");
+                            date = date.replace(")", "");
+                            date = parseInt(date);
+                            return moment(new Date(date)).locale('el').format('DD/MM/YYYY');
 
-                    }
-                },
-                { "data": "CurrentAddress", "name": "CurrentAddress" },
-                { "data": "Email", "name": "Email" },
-                { "data": "PhoneNumber", "name": "PhoneNumber", "width": "130px" },
-                {
-                    "data": "ClassStudentID", "width": "130px !Important", "render": function (data) {
-                        return "<a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
-                    },
-                    "orderable": false,
-                    "searchable": false,
-                    "width": "80px"
-                }
-
-            ],
-            "processing": true,
-            "serverSide": true,
-            //"scrollX": true,
-            //scrollY: true,
-            "language": {
-                search: "",
-                lengthMenu: "Hiển thị _MENU_",
-                entries: "",
-                processing: "<i class='fa fa-spinner fa-spin' style='font-size:50px;color: #3ca4ab'></i>",
-                infoEmpty: "",
-                infoFiltered: "",
-                searchPlaceholder: "Tìm kiếm thông tin",
-                //emptyTable: emptyselected,
-                zeroRecords: "<class='text-danger' align='center'>Không có dữ liệu</>",
-                info: "Bản ghi từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
-                paginate:
-                {
-                    previous: "<",
-                    next: ">",
-                    first: "",
-                    last: ""
-                },
-                select: {
-                    rows: {
-                        _: "",
-                        0: "",
-                        1: ""
-                    }
-                },
-            },
-            //"scrollY": true,
-            //"dom": '<"top"l>rt<"bottom"ip><"clear">',
-            "dom": '<"top">rt<"bottom"lirp><"clear">',
-            "fnInitComplete": function (oSettings, json, obj) {
-                if (json.data.length > 0) {
-                    addSearchControl(oSettings, json);
-                    selected();
-                    caculatorHeightTable();
-                }
-                changeCss();
-                actionControl();
-            }
-        });
-        var selected = function () {
-            $('#' + tableName + ' tbody').on('click', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                }
-                else {
-                    //table.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
-                }
-            })
-        };
-        function changeCss() {
-            $('.table-striped tbody tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
-            $('.table-striped tbody tr td:last-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
-            $('.table-striped tbody tr td:first-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
-            $('#' + tableName + '_wrapper .dataTables_scrollBody').css("cssText", "border-bottom: 1px solid #dee2e6 1px solid #dee2e6 !important");
-            $('.table-striped thead tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
-            $('#' + tableName + '_length select').css("cssText", " width: 70%;");
-            $('.page-item.active .page-link').css("cssText", "color: white; border: 1px solid rgb(222, 226, 230);background-color: #3ca4ab;");
-        }
-        var caculatorHeightTable = function () {
-            var windowHeight = $(window).height();
-            var nav = $('.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark').height();
-            var title = $('.container-homeadmin .title').height();
-            var dataTablesscrollHead = $('.dataTables_scrollHead').height();
-            var dataTableslength = $('.dataTables_length').height();
-            $('.dataTables_scrollBody').height(windowHeight - nav - title - dataTablesscrollHead - dataTableslength * 2 - 100);
-            //$('.table-striped tbody tr').css("cssText", "height:10px !important");
-        }
-        function addSearchControl(oSettings, json) {
-            dataJson = json.data;
-            $("#" + tableName + " thead").append($("#" + tableName + " thead tr:first").clone());
-            $("#" + tableName + " thead tr:eq(1) th").each(function (index) {
-                if (index != 6) {
-                    $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
-                    var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") input");
-                    searchControl.on('keyup', function () {
-                        buildTable.column(index).search(searchControl.val()).draw();
-                    });
-                } else if (index == 6) {
-                    debugger
-                    $(this).replaceWith('<th></th>');
-                }
-                else {
-                    var elementDropDown = $('<select class="table-sl-search" />');
-                    elementDropDown.append($('<option/>').attr('value', '').text('Tất cả'));
-                    var email = [];
-                    var nameElement = oSettings.aoColumns[index].data;
-                    $(json.data).each(function (index, element) {
-                        if ($.inArray(element.Email, email) == -1) {
-                            email.push(element.Email);
-                            elementDropDown.append($('<option/>').attr('value', element.Email).text(element.Email));
                         }
-                    });
-                    $(this).replaceWith('<th>' + $(elementDropDown).prop('outerHTML') + '</th>');
-                    var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") select");
-                    searchControl.on('change', function () {
-                        buildTable.column(index).search(searchControl.val() == "" ? "" : '^' + searchControl.val() + '$', true, false).draw();
-                    });
-                }
-            });
-        }
-
-        var actionControl = function () {
-            $('#btnAddNew').off('click').on('click', function (e) {
-                e.preventDefault();
-                var url = urlDetailPopup;
-                $('#' + popUpName).modal('show');
-                $('#' + popUpName + ' .modal-content').load(url);
-            });
-            $('#btnDeleteAll').off('click').on('click', function () {
-                debugger
-                var listItemToDelete = [];
-                $("#" + tableName + "_wrapper .selected").each(function () {
-                    var row = buildTable.row($(this));
-                    var itemId = $(row.data()).attr(idColum);
-                    if (listItemToDelete.indexOf(itemId) < 0) {
-                        listItemToDelete.push(itemId);
+                    },
+                    { "data": "CurrentAddress", "name": "CurrentAddress" },
+                    { "data": "Email", "name": "Email" },
+                    { "data": "PhoneNumber", "name": "PhoneNumber", "width": "130px" },
+                    {
+                        "data": "ClassStudentID", "width": "130px !Important", "render": function (data) {
+                            return "<a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "80px"
                     }
-                });
-                if (!confirm("Bạn có đồng ý xóa???")) {
 
-                    return false;
+                ],
+                "processing": true,
+                "serverSide": true,
+                //"scrollX": true,
+                //scrollY: true,
+                "language": {
+                    search: "",
+                    lengthMenu: "Hiển thị _MENU_",
+                    entries: "",
+                    processing: "<i class='fa fa-spinner fa-spin' style='font-size:50px;color: #3ca4ab'></i>",
+                    infoEmpty: "",
+                    infoFiltered: "",
+                    searchPlaceholder: "Tìm kiếm thông tin",
+                    //emptyTable: emptyselected,
+                    zeroRecords: "<class='text-danger' align='center'>Không có dữ liệu</>",
+                    info: "Bản ghi từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
+                    paginate:
+                    {
+                        previous: "<",
+                        next: ">",
+                        first: "",
+                        last: ""
+                    },
+                    select: {
+                        rows: {
+                            _: "",
+                            0: "",
+                            1: ""
+                        }
+                    },
+                },
+                //"scrollY": true,
+                //"dom": '<"top"l>rt<"bottom"ip><"clear">',
+                "dom": '<"top">rt<"bottom"lirp><"clear">',
+                "fnInitComplete": function (oSettings, json, obj) {
+                    if (json.data.length > 0) {
+                        addSearchControl(oSettings, json);
+                        selected();
+                        caculatorHeightTable();
+                    }
+                    changeCss();
+                    actionControl();
                 }
-                else {
-                    if (listItemToDelete.length <= 0) {
-                        $.notify("Bạn phải chọn bản ghi", {
-                            globalPosition: "top center",
-                            className: "error"
-                        });
-                        return;
+            });
+            var selected = function () {
+                $('#' + tableName + ' tbody').on('click', 'tr', function () {
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
                     }
                     else {
-                        $.ajax({
-                            url: urlDeleteDetail,
-                            data: { id: listItemToDelete },
-                            type: 'POST',
-                            dataType: 'json',
-                            success: function (result) {
-                                if (result.success) {
-                                    var data = result.message;
-                                    $.notify(data, {
-                                        globalPosition: "top center",
-                                        className: "success"
-                                    });
-                                    listItemToDelete = [];
-                                }
-                                else {
-                                    $.each(result,
-                                        function (index) {
-                                            message = result[index].Message;
-                                        });
-                                    $.notify(message, {
-                                        globalPosition: "top center",
-                                        className: "error"
-                                    });
-                                }
-                                buildTable.ajax.reload();
+                        //table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                })
+            };
+            function changeCss() {
+                $('.table-striped tbody tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
+                $('.table-striped tbody tr td:last-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
+                $('.table-striped tbody tr td:first-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
+                $('#' + tableName + '_wrapper .dataTables_scrollBody').css("cssText", "border-bottom: 1px solid #dee2e6 1px solid #dee2e6 !important");
+                $('.table-striped thead tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
+                $('#' + tableName + '_length select').css("cssText", " width: 70%;");
+                $('.page-item.active .page-link').css("cssText", "color: white; border: 1px solid rgb(222, 226, 230);background-color: #3ca4ab;");
+            }
+            var caculatorHeightTable = function () {
+                var windowHeight = $(window).height();
+                var nav = $('.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark').height();
+                var title = $('.container-homeadmin .title').height();
+                var dataTablesscrollHead = $('.dataTables_scrollHead').height();
+                var dataTableslength = $('.dataTables_length').height();
+                $('.dataTables_scrollBody').height(windowHeight - nav - title - dataTablesscrollHead - dataTableslength * 2 - 100);
+                //$('.table-striped tbody tr').css("cssText", "height:10px !important");
+            }
+            function addSearchControl(oSettings, json) {
+                dataJson = json.data;
+                $("#" + tableName + " thead").append($("#" + tableName + " thead tr:first").clone());
+                $("#" + tableName + " thead tr:eq(1) th").each(function (index) {
+                    if (index != 6) {
+                        $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
+                        var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") input");
+                        searchControl.on('keyup', function () {
+                            buildTable.column(index).search(searchControl.val()).draw();
+                        });
+                    } else if (index == 6) {
 
-                            },
-                            error: function (result) {
-                                $.each(result,
-                                    function (index) {
-                                        message = result[index].Message;
-                                    });
-                                $.notify(message, {
-                                    globalPosition: "top center",
-                                    className: "error"
-                                });
+                        $(this).replaceWith('<th></th>');
+                    }
+                    else {
+                        var elementDropDown = $('<select class="table-sl-search" />');
+                        elementDropDown.append($('<option/>').attr('value', '').text('Tất cả'));
+                        var email = [];
+                        var nameElement = oSettings.aoColumns[index].data;
+                        $(json.data).each(function (index, element) {
+                            if ($.inArray(element.Email, email) == -1) {
+                                email.push(element.Email);
+                                elementDropDown.append($('<option/>').attr('value', element.Email).text(element.Email));
                             }
                         });
+                        $(this).replaceWith('<th>' + $(elementDropDown).prop('outerHTML') + '</th>');
+                        var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") select");
+                        searchControl.on('change', function () {
+                            buildTable.column(index).search(searchControl.val() == "" ? "" : '^' + searchControl.val() + '$', true, false).draw();
+                        });
                     }
-                }
+                });
+            }
 
-            });
+            var actionControl = function () {
+                $('#btnAddNew').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var url = urlDetailPopup;
+                    $('#' + popUpName).modal('show');
+                    $('#' + popUpName + ' .modal-content').load(url);
+                });
+                $('#btnDeleteAll').off('click').on('click', function () {
 
-            
-            $('#' + tableName).each(function () {
-                var obj = $(this);
-                var item = $("tbody", obj);
-                item.on("click",
-                    ".btn-delele-table",
-                    function (e) {
-                        debugger
-                        let row = buildTable.row($(this).parents("tr"));
-                        var id = [];
-                        var itemDeleteID = $(row.data()).attr(idColum);;
-                        id.push(itemDeleteID);
-                        if (!confirm("Bạn có đồng ý xóa???")) {
-                            return false;
+                    var listItemToDelete = [];
+                    $("#" + tableName + "_wrapper .selected").each(function () {
+                        var row = buildTable.row($(this));
+                        var itemId = $(row.data()).attr(idColum);
+                        if (listItemToDelete.indexOf(itemId) < 0) {
+                            listItemToDelete.push(itemId);
+                        }
+                    });
+                    if (!confirm("Bạn có đồng ý xóa???")) {
+
+                        return false;
+                    }
+                    else {
+                        if (listItemToDelete.length <= 0) {
+                            $.notify("Bạn phải chọn bản ghi", {
+                                globalPosition: "top center",
+                                className: "error"
+                            });
+                            return;
                         }
                         else {
                             $.ajax({
                                 url: urlDeleteDetail,
-                                data: { id },
+                                data: { id: listItemToDelete },
                                 type: 'POST',
                                 dataType: 'json',
                                 success: function (result) {
@@ -502,8 +461,7 @@
                                             globalPosition: "top center",
                                             className: "success"
                                         });
-                                        id = [];
-                                        buildTable.ajax.reload();
+                                        listItemToDelete = [];
                                     }
                                     else {
                                         $.each(result,
@@ -515,6 +473,8 @@
                                             className: "error"
                                         });
                                     }
+                                    buildTable.ajax.reload();
+
                                 },
                                 error: function (result) {
                                     $.each(result,
@@ -528,11 +488,67 @@
                                 }
                             });
                         }
-                        e.stopPropagation();
-                    })
-            });
+                    }
 
-        }
+                });
+                $('#' + tableName).each(function () {
+                    var obj = $(this);
+                    var item = $("tbody", obj);
+                    item.on("click",
+                        ".btn-delele-table",
+                        function (e) {
 
+                            let row = buildTable.row($(this).parents("tr"));
+                            var id = [];
+                            var itemDeleteID = $(row.data()).attr(idColum);;
+                            id.push(itemDeleteID);
+                            if (!confirm("Bạn có đồng ý xóa???")) {
+                                return false;
+                            }
+                            else {
+                                $.ajax({
+                                    url: urlDeleteDetail,
+                                    data: { id },
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    success: function (result) {
+                                        if (result.success) {
+                                            var data = result.message;
+                                            $.notify(data, {
+                                                globalPosition: "top center",
+                                                className: "success"
+                                            });
+                                            id = [];
+                                            buildTable.ajax.reload();
+                                        }
+                                        else {
+                                            $.each(result,
+                                                function (index) {
+                                                    message = result[index].Message;
+                                                });
+                                            $.notify(message, {
+                                                globalPosition: "top center",
+                                                className: "error"
+                                            });
+                                        }
+                                    },
+                                    error: function (result) {
+                                        $.each(result,
+                                            function (index) {
+                                                message = result[index].Message;
+                                            });
+                                        $.notify(message, {
+                                            globalPosition: "top center",
+                                            className: "error"
+                                        });
+                                    }
+                                });
+                            }
+                            e.stopPropagation();
+                        })
+                });
+            }
+        };
+        buildTableStudent();
     })
 </script>

@@ -8,11 +8,65 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css");
 @import url('https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic');
 
+.ui-timepicker-container.ui-timepicker-standard {
+z-index:1050 !important;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+    display: block;
+    padding-left: 13px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 3px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 5px !important;
+}
+
+.select2-container {
+    width: 100% !important;
+    display: block;
+}
+
+body, .form-control {
+    color: #414142 !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #d2d6de !important;
+    background-position: right 6px top 8px;
+    background-repeat: no-repeat;
+}
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        color: #4b4e4d;
+    }
+
+.fixed-body .select2-selection--multiple .select2-search__field {
+    background-image: none !important;
+    height: 22px;
+    border: none !important;
+    padding-left: 5px !important;
+}
+
+.fixed-body .select2-search__field {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    line-height: 25px;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da !important;
+}
 
 table.dataTable tbody tr.selected {
     background-color: rgba(0, 0, 0, 0.05) !important;
 }
-
+.select2-container .select2-selection--single {
+    height: 37px !important;
+    font-size: 1rem;
+}
 .btn-exit {
     padding-left: 15px;
     padding-right: 15px;
@@ -429,7 +483,18 @@ button.btn-save-popup:hover, btn-save:hover{
     width: 25px;
     border-radius: 0;
     background-color: #3ca4ab;
-    padding: 5.5px 11px 5px 12px;
+    padding: 7.5px 11px 5px 12px;
+    margin-right: 8px;
+}
+.btn-edit-table-calendar {
+    display: inline-block;
+    border: solid 1px #a8a8a8;
+    margin: 2px 3px 2px 3px;
+    height: 25px;
+    width: 25px;
+    border-radius: 0;
+    background-color: #3ca4ab;
+    padding: 9px 11px 5px 12px;
     margin-right: 8px;
 }
 
