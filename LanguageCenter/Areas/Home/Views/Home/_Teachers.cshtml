@@ -13,7 +13,14 @@
         {
             <div class="flat-teacher flat-hover-zoom">
                 <div class="entry-image">
-                    <img src="~/images/teacher/Team-05.jpg" />
+                    @if (item.AvatarUrl != null)
+                    {
+                        <img style="height:263px;width:263px;" src="@item.AvatarUrl" />
+                    }
+                    else
+                    {
+                        <img src="~/images/teacher/Team-05.jpg" />
+                    }
                 </div>
                 <div class="content">
                     <h4 class="name">@item.FirtName @item.LastName</h4>
