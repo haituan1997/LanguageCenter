@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Models.NewsFeedModel
 {
@@ -15,7 +16,8 @@ namespace LanguageCenter.Areas.Home.Models.NewsFeedModel
         public string Code { get; set; }
 
         public string Title1 { get; set; }
-
+      
+        [AllowHtml]
         public string Description { get; set; }
     }
 }

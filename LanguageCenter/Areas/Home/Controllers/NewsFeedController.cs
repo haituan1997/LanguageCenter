@@ -49,24 +49,22 @@ namespace LanguageCenter.Areas.Home.Controllers
             if (id == null)
             {
                 
-                var model = new NewsFeedModel();
-                model.Title = "Thêm mới sinh viên";
+                var model = new NewsFeedModel(); 
                 model.IsEdit = false;
                 return View("_NewsFeedPopup", model);
             }
             else
             {
                 var NewsFeed = _NewsFeedRepository.Get_NewsFeedByNewFeedID((long)id);
-                var model = Mapper.Map<NewsFeed, NewsFeedModel>(NewsFeed);
-                model.Title = "Cập nhập sinh viên";
+                var model = Mapper.Map<NewsFeed, NewsFeedModel>(NewsFeed); 
                 model.IsEdit = true;
                 return View("_NewsFeedPopup", model);
             }
         }
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        [ActionName("PostNewsFeed")]
-        public ActionResult PostNewsFeed(NewsFeedModel model)
+        [ActionName("NewsFeed")]
+        public ActionResult NewsFeed(NewsFeedModel model)
         {
             if (!ModelState.IsValid)
                 throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
@@ -77,14 +75,14 @@ namespace LanguageCenter.Areas.Home.Controllers
                     var NewsFeed = Mapper.Map<NewsFeedModel, NewsFeed>(model);
                     _NewsFeedRepository.Update(NewsFeed);
 
-                    return Json(new { success = true, message = "Cập nhập sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
+                    return this.RedirectToAction("NewsFeeds", "NewsFeed");
                 }
                 else
                 {
                     var NewsFeed = Mapper.Map<NewsFeedModel, NewsFeed>(model);
                     _NewsFeedRepository.Insert(NewsFeed);
 
-                    return Json(new { success = true, message = "Thêm mới sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
+                   return this.RedirectToAction("NewsFeeds", "NewsFeed");
                 }
             }
             catch (Exception ex)
