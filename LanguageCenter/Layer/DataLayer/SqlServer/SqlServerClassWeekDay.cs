@@ -51,8 +51,8 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                ClassWeekDayID = reader["ClassWeekDayID"].AsLong(),
                ClassID = reader["ClassID"].AsLong(),
                ClassWeekDayTime = reader["ClassWeekDayTime"].AsDateTime(),
-               StartTime = reader["StartTime"].AsTimSpanForNull(),
-               EndTime = reader["EndTime"].AsTimSpanForNull(),
+               StartTime = reader["StartTime"].AsString(),
+               EndTime = reader["EndTime"].AsString(),
 
            };
         private static object[] Take(ClassWeekDay classWeekDay)

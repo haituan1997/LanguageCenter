@@ -1,19 +1,25 @@
 ﻿
 @model LanguageCenter.Areas.Home.Models.ClassWeekDay.ClassWeekDayModel
-
+@{ 
+    var classWeekDayTime = @Model.ClassWeekDayTime != null ? Model.ClassWeekDayTime.Value.ToShortDateString() : "";
+}
 <div class="modal-header" style=" background-color: #3ca4ab; color: white;">
     <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
     <form method="post" id="ClassWeekDayForm" action="@Url.Action("PostClassStudent")">
-        @Html.HiddenFor(x => x.ClassID)
+        @Html.HiddenFor(x=>x.ClassWeekDayID)
+        @Html.HiddenFor(x=>x.IsEdit)
+        <input type="hidden" name="ClassID" id="ClassIDPopup" value="@Model.ClassID"  class="form-control" tabindex="1" />
+
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Ngày học</label>
-            <input type="text" name="ClassWeekDayTime" id="ClassWeekDayTime" value="@Model.ClassWeekDayTime" autofocus class="form-control" tabindex="1" />
+            <input type="text" name="ClassWeekDayTime" id="ClassWeekDayTime" value="@classWeekDayTime" autofocus class="form-control" tabindex="1" />
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Thời gian bắt đầu</label>
+            
             <input type="text" name="StartTime" id="StartTime" value="@Model.StartTime" autofocus class="form-control" tabindex="1" />
         </div>
         <div class="form-outline mb-4">
@@ -32,9 +38,9 @@
         var valid2 = function () {
             $("#ClassWeekDayForm").validate({
                 rules: {
-                    ClassWeekDayTime: { required: true, validDate: true },
-                    StartTime: { required: true, checkHour: true },
-                    EndTime: { required: true,checkHour: true},
+                    ClassWeekDayTime: { required: true,/* validDate: true*/ },
+                    StartTime: { required: true/*, checkHour: true */},
+                    EndTime: { required: true/*,checkHour: true*/},
                 },
                 messages: {
                     ClassWeekDayTime: {
@@ -43,7 +49,7 @@
                     StartTime: {
                         required: "Thời gian bắt đầu không được để trống !",
                     },
-                    StartTime: {
+                    EndTime: {
                         required: "Thời gian kết thúc không được để trống !",
                     },
                 },
@@ -56,9 +62,49 @@
             })
         };
         valid2();
+        $("#ClassWeekDayTime").datepicker({ format: 'mm/dd/yyyy', language: 'vi' });
+        $("ClassWeekDayTime").click(function () {
+            $("#ClassWeekDayTime").datepicker("show");
+        });
+        $('#StartTime').timepicker({
+            timeFormat: 'H:mm',
+            interval: 60,
+            //defaultTime: '07',
+            startTime: '07:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
 
+            });
+        
+        $('#EndTime').timepicker({
+            timeFormat: 'H:mm',
+            interval: 60,
+            //defaultTime: '11',
+            
+            startTime: '11:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+
+        });
+        $('#StartTime').on('click', function () {
+            //$('#EndTime').timepicker({
+            //    timeFormat: 'h:mm',
+            //    interval: 60,
+            //    defaultTime: '11',
+            //    startTime: '00:00',
+            //    dynamic: false,
+            //    dropdown: true,
+            //    scrollbar: true
+
+            //});
+            //$('.ui-timepicker-container.ui-timepicker-standard').css("cssText","z-index: 1050;")
+        });
+        $('#EndTime').on('click', function () {
+            //$('.ui-timepicker-container.ui-timepicker-standard').css("cssText", "z-index: 1050;")
+        });
         function validateHhMm(inputField) {
-            debugger
             var isValid = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$/.test(inputField);
             return isValid;
         }
@@ -167,7 +213,7 @@
                 //    .css('cssText', 'border: 1px solid #f58a73 !important');
                 return false;
             }
-            $('#ClassID').val(classID);
+            $('#ClassIDPopup').val(classID);
             var data = $('#ClassWeekDayForm').serialize();
             var message = "";
             $.ajax({

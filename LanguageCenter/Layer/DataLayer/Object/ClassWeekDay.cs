@@ -12,10 +12,11 @@ namespace LanguageCenter.Layer.DataLayer.Object
         public long? ClassID { get; set; }
 
         public DateTime ClassWeekDayTime { get; set; }
+        public string ClassWeekDayName { get; set; }
 
-        public TimeSpan? StartTime { get; set; }
+        public string StartTime { get; set; }
 
-        public TimeSpan? EndTime { get; set; }
+        public string EndTime { get; set; }
 
     }
 }

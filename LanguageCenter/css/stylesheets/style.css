@@ -1514,17 +1514,17 @@ div#header-sticky-wrapper {
     position: relative;
 }
 
-.page-title .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-    opacity: 0.7;
-    filter: alpha(opacity=70);
-}
+	.page-title .overlay {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #1d89f8;
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+		opacity: 0.7;
+		filter: alpha(opacity=70);
+	}
 
 .page-title .page-title-heading h2 {
 	font-family: "Montserrat", sans-serif;
