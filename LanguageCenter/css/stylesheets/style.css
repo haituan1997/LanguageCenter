@@ -1250,7 +1250,7 @@ div#header-sticky-wrapper {
    left: 0;
    top: 150%;
    width: 345px;
-   background-color: #222;
+   background-color: #5da9f6;
    z-index: 9999;
    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
    	  filter: alpha(opacity=0);
@@ -1307,8 +1307,9 @@ div#header-sticky-wrapper {
 
 }
 
-#mainnav ul.submenu li:first-child {
-   border-top: none;
+#mainnav ul.submenu li {
+	border:none;
+   border-bottom: 1px solid white;
 }
 
 #mainnav ul.submenu > li > a {
@@ -1316,7 +1317,7 @@ div#header-sticky-wrapper {
     font-family: "Montserrat", sans-serif;
     letter-spacing: 1px;
     font-size: 14px;
-    color: #999;
+    color: white;
     text-decoration: none;
     padding: 0 0 0 26px;
     line-height: 50px;

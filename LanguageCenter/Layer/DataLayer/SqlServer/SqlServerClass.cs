@@ -26,6 +26,12 @@ namespace LanguageCenter.DataLayer.SqlServer
             const string procedure = "uspGet_AllData";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public IEnumerable<Class> Get_Class_ByCourseID(long id, int indexNumber)
+        {
+            const string procedure = "uspGet_ClassByCourseID";
+            object[] parms = { "@CourseID", id, "@IndexNumber", indexNumber };
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakeClassByCourseID, parms);
+        }
         public Class Get_ClassByClassID(long id)
         {
             const string procedure = "uspGet_ClassByClassID";
@@ -71,6 +77,19 @@ namespace LanguageCenter.DataLayer.SqlServer
                TeacherID = reader["TeacherID"].AsLong(),
                CourseID = reader["CourseID"].AsLong(),
                IsCreated = reader["IsCreated"].AsBool(),
+           };
+        private static readonly Func<IDataReader, Class> MakeClassByCourseID = reader =>
+           new Class
+           {
+               ClassID = reader["ClassID"].AsLong(),
+               ClassName = reader["ClassName"].AsString(),
+               StartDate = reader["StartDate"].AsDateTimeForNull(),
+               EndDate = reader["EndDate"].AsDateTimeForNull(),
+               Price = reader["Price"].AsDecimal(),
+               TeacherID = reader["TeacherID"].AsLong(),
+               CourseID = reader["CourseID"].AsLong(),
+               IsCreated = reader["IsCreated"].AsBool(),
+               NumberClass = reader["NumberClass"].AsInt(),
            };
         private static readonly Func<IDataReader, Class> MakePaged = reader =>
             new Class

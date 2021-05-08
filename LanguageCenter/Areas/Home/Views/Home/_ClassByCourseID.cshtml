@@ -1,0 +1,44 @@
+﻿@using LanguageCenter.Areas.Home.Models.Class
+
+@{
+    var classes = (IEnumerable<ClassModel>)ViewBag.Class;
+    var totalCount = ViewBag.ToTalCount != null ? (int)ViewBag.ToTalCount : 0;
+}
+
+@if (classes != null)
+{
+    foreach (var item in classes)
+    {
+        <div class="flat-course flat-hover-zoom">
+            <div class="featured-post">
+                <div class="overlay">
+                    <div class="link"></div>
+                </div>
+
+                <div class="entry-image">
+                    <a><img src="images/services/v1/5.jpg" alt="Course1"></a>
+                </div>
+            </div><!-- /.featured-post -->
+
+            <div class="course-content">
+                <h4><a>@item.ClassName</a> </h4>
+
+                <div class="price">@item.Price</div>
+                <p>Giáo viên: @item.FirtName @item.LastName</p>
+                <ul class="course-meta desc" style="position:unset">
+                    <li>
+                        <h6>@( @item.StartDate != null? @item.StartDate.Value.ToShortDateString() : "" ) </h6>
+                        <span>Thời gian bắt đầu</span>
+                    </li>
+
+                    <li>
+                        <h6>@( @item.EndDate != null? @item.EndDate.Value.ToShortDateString() : "" ) </h6>
+                        <span>Dự kiến kết thúc</span>
+                    </li>
+                </ul>
+                <a class="flat-button orange">Đăng ký</a>
+            </div><!-- /.course-content -->
+        </div>
+
+    }
+}

@@ -8615,6 +8615,10 @@
     <Content Include="Areas\Home\Views\ClassWeekDay\ClassWeekDays.cshtml" />
     <Content Include="Areas\Home\Views\Home\_AllData.cshtml" />
     <Content Include="Areas\Home\Views\Home\_Teachers.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_Courses.cshtml" />
+    <Content Include="Areas\Home\Views\Home\Course.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_CourseMenuRight.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_ClassByCourseID.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

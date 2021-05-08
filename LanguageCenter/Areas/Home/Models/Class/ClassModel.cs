@@ -27,5 +27,7 @@ namespace LanguageCenter.Areas.Home.Models.Class
         public string CourseName { get; set; }
         public bool IsEdit { get; set; }
         public string Title { get; set; }
+        public int NumberClass { get; set; }
+
     }
 }

@@ -16,7 +16,11 @@ namespace LanguageCenter.Areas
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+            #region home
             context.MapRoute("", "trang-chu", defaults: new { controller = "Home", action = "Index", area = "Home" });
+            context.MapRoute("", "khoa-hoc/{id}", defaults: new { controller = "Home", action = "Course", area = "Home" ,id = UrlParameter.Optional});
+
+            #endregion
 
 
             #region giáo viên
@@ -85,6 +89,9 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "xoa-hoc-lich-hoc-lop", defaults: new { controller = "ClassWeekDay", action = "DeleteClassClassWeekDay", area = "Home", id = UrlParameter.Optional });
             #endregion
 
+
+
+            
         }
     }
 }
