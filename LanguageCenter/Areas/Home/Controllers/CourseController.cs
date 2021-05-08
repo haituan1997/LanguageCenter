@@ -217,5 +217,10 @@ namespace LanguageCenter.Areas.Home.Controllers
             }
         }
         #endregion
+
+        #region home
+
+
+        #endregion
     }
 }

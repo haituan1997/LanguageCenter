@@ -1,0 +1,12 @@
+﻿@using LanguageCenter.Layer.DataLayer.Object
+@{
+    var datas = (IEnumerable<Course>)ViewBag.DataTeachers;
+}
+
+    @if (datas != null)
+    {
+        foreach (var item in datas)
+        {
+            <li><a href="courses-grid.html" id="@item.CourseID">@item.Name</a></li>
+        }
+    }

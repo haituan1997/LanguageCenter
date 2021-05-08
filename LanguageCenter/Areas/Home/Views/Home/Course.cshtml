@@ -1,0 +1,91 @@
+﻿@using LanguageCenter.Layer.DataLayer.Object
+@using LanguageCenter.Areas.Home.Models.Class
+@using LanguageCenter.Areas.Home.Models.Course
+@{
+    var datas = (IEnumerable<CourseModel>)ViewBag.Course;
+    var classes = (IEnumerable<ClassModel>)ViewBag.Class;
+    var totalCount = ViewBag.ToTalCount != null ? (int)ViewBag.ToTalCount : 0 ;
+}
+
+@{  
+    ViewBag.Title = "Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="title">Danh sách lớp học theo khóa</h4>
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
+<section class="main-content blog-posts flat-row have-sidebar course-grid container" style="padding: 35px 15px 30px 0px; background-color: white;">
+    <div class="container">
+        <div class="blog-title clearfix">
+            <h1 class="bold">Lớp học</h1>
+        </div>
+        <div class="row_course">
+            <div class="post-content">
+                <div class="flat-post-ordering clearfix">
+                    <div class="sort-views">
+                        <label class="modern-select">
+                            <select name="select_category" id="SelectCourseID" class="orderby js-select2-enable-search-form-search" data-placeholder="Chọn khóa học">
+                                <option value="">Chọn khóa học</option>
+                                @if (datas != null)
+                                {
+                                    foreach (var item in datas)
+                                    {
+                                        <option value="@item.CourseID">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                        </label>
+                        <div class="list-grid">
+                            <a data-layout="course-grid" class="course-grid-view active" ><i class="fa fa-th" aria-hidden="true"></i></a>
+                            <a data-layout="course-list" class="course-list-view" href="#" ><i class="fa fa-list" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-warp clearfix">
+                    @{
+                        Html.RenderAction("ClassByCourseID", "Home");
+                    }
+                </div>
+                <div class="blog-pagination">
+                    <ul class="flat-pagination">
+                        <li><a id="a-1" class="active">1</a></li>
+                    </ul><!-- /.flat-pagination -->
+                </div>
+            </div>
+
+            @{
+                Html.RenderAction("CourseMenuRight", "Home");
+            }
+        </div><!-- /row -->
+    </div><!-- /container -->
+</section>
+<script>
+    $(document).ready(function () {
+        var indexNumber = @totalCount != 0 ? parseInt(parseInt(@totalCount)/parseInt(15)) : 0;
+        if (indexNumber> 1) {
+            for (var i = 2; i < indexNumber+2; i++) {
+                $('.flat-pagination').append('<li><a id="a-' +i+'" >'+ i +'</a></li>');
+            }
+            $('.flat-pagination').append('<li class="next"> < a href = "#" > Next</a ></li >');
+        }
+
+        $('.flat-pagination').each(function () {
+            $('.flat-button.orange').off('click').on('click', function () {
+                debugger
+            })
+        })
+        $('#SelectCourseID').change(function (e) {
+            e.preventDefault();
+            debugger
+            var id = $(this).find(':selected').val();
+            var url = "/Home/ClassByCourseID/" + id;
+            if (id != "" || id != undefined) {
+                $('.post-warp.clearfix').load(url);
+            }
+        })
+    })
+</script>

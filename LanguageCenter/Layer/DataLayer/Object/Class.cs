@@ -28,7 +28,8 @@ namespace LanguageCenter.DataLayer.Object
         public bool IsEdit { get; set; }
         public bool IsCreated { get; set; }
         public string Title { get; set; }
-
+        public int NumberClass { get; set; }
+        
 
     }
 }

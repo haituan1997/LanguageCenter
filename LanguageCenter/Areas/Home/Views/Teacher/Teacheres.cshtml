@@ -243,6 +243,7 @@
                             type: 'POST',
                             dataType: 'json',
                             success: function (result) {
+                                var message = "";
                                 if (result.success) {
                                     var data = result.message;
                                     $.notify(data, {
@@ -252,11 +253,8 @@
                                     listItemToDelete = [];
                                 }
                                 else {
-                                    $.each(result,
-                                        function (index) {
-                                            message = result[index].Message;
-                                        });
-                                    $.notify(message, {
+                                    var data = result.message;
+                                    $.notify(data, {
                                         globalPosition: "top center",
                                         className: "error"
                                     });
@@ -265,11 +263,8 @@
 
                             },
                             error: function (result) {
-                                $.each(result,
-                                    function (index) {
-                                        message = result[index].Message;
-                                    });
-                                $.notify(message, {
+                                var data = result.message;
+                                $.notify(data, {
                                     globalPosition: "top center",
                                     className: "error"
                                 });

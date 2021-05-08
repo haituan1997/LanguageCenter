@@ -29,6 +29,8 @@ namespace LanguageCenter.Layer.DataLayer.Object
 
         public string LevelCode { get; set; }
 
+        public int CountClass { get; set; }
+
 
     }
 }

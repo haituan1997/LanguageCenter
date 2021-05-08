@@ -471,7 +471,8 @@
         }); // accordion
     }; 
 
-    var selectLayout = function () {
+    var selectLayout = function (e) {
+        debugger
         $(".list-grid a").on("click", function() {
             $(this).parent().find("a").removeClass("active");
             $(this).addClass("active");
