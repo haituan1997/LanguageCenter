@@ -170,6 +170,7 @@
     <Compile Include="Areas\Home\Controllers\ClassWeekDayController.cs" />
     <Compile Include="Areas\Home\Controllers\CourseController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\Home\Controllers\HomeClassWeekDayController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
     <Compile Include="Areas\Home\Controllers\AccountController.cs" />
     <Compile Include="Areas\Home\Controllers\StudentAccountController.cs" />
@@ -8619,6 +8620,8 @@
     <Content Include="Areas\Home\Views\Home\Course.cshtml" />
     <Content Include="Areas\Home\Views\Home\_CourseMenuRight.cshtml" />
     <Content Include="Areas\Home\Views\Home\_ClassByCourseID.cshtml" />
+    <Content Include="Areas\Home\Views\HomeClassWeekDay\ClassWeekDay.cshtml" />
+    <Content Include="Areas\Home\Views\HomeClassWeekDay\FullCalendar.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

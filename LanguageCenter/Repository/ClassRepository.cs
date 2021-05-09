@@ -39,6 +39,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<Class> Get_AllClassesByIndex(int? index)
+        {
+            try
+            {
+                return classFacade.Get_AllClassesByIndex(index);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public IEnumerable<Class> Get_Class_ByCourseID(long id,int indexNumber)
         {
             try

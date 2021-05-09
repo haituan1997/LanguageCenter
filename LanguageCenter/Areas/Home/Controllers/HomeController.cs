@@ -85,23 +85,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         {
             var courses = _courseRepository.Get_AllCourses().ToList();
             ViewBag.Course = Mapper.Map<IEnumerable<Course>, IEnumerable<CourseModel>>(courses);
-            ViewBag.Class = null;
-            ViewBag.ToTalCount = null;
-            if (id != null)
-            {
-                indexNumber = indexNumber != null ? indexNumber : 1;
-                ViewBag.Class = Mapper.Map<IEnumerable<Class>,IEnumerable< ClassModel>>(_ClassRepository.Get_Class_ByCourseID((long)id, (int)indexNumber));
-                ViewBag.ToTalCount = _ClassRepository.Get_Class_ByCourseID((long)id, (int)indexNumber).Count();
-            }
-            else
-            {
-                indexNumber = 1;
-                ViewBag.Class = courses != null ? Mapper.Map<IEnumerable<Class>, IEnumerable<ClassModel>>(_ClassRepository.Get_Class_ByCourseID(courses.FirstOrDefault().CourseID, (int)indexNumber)) : null ;
-                if (courses != null)
-                {
-                    ViewBag.ToTalCount = _ClassRepository.Get_Class_ByCourseID(courses.FirstOrDefault().CourseID, (int)indexNumber).Count();
-                }
-            }
+            ViewBag.CourseID = id;
             return View("Course");
         }
 
@@ -135,6 +119,16 @@ namespace LanguageCenter.Areas.Home.Controllers
             }
             return PartialView("_ClassByCourseID");
         }
+
+
+
+        #region lịch học
+
+        public ActionResult ClassWeekDay()
+        {
+            return View();
+        }
+        #endregion
 
     }
 }

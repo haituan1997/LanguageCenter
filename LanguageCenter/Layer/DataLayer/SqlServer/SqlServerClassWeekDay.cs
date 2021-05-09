@@ -17,6 +17,11 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy, "@ClassID", classID };
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make, parms);
         }
+        public IEnumerable<ClassWeekDay> Get_ClassWeekDayForHome()
+        {
+            const string procedure = "uspGetPaged_ClassWeekDay";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
         public  ClassWeekDay Get_ClassWeekDayByID(long? id)
         {
             const string procedure = "uspGet_ClassWeekDayByID";

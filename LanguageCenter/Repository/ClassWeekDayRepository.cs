@@ -28,6 +28,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<ClassWeekDay> Get_ClassWeekDayForHome()
+        {
+            try
+            {
+                return classWeekDayFacade.Get_ClassWeekDayForHome();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public ClassWeekDay Get_ClassWeekDayByID(long id)
         {
             try

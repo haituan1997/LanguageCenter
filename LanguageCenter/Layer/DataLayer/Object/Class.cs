@@ -24,6 +24,7 @@ namespace LanguageCenter.DataLayer.Object
         public string FirtName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
+        public string AvatarUrl { get; set; }
         public string CourseName { get; set; }
         public bool IsEdit { get; set; }
         public bool IsCreated { get; set; }

@@ -7,6 +7,26 @@
     {
         foreach (var item in datas)
         {
-            <li><a href="courses-grid.html" id="@item.CourseID">@item.Name</a></li>
+            <li><a class="submenu-course-a" id="@item.CourseID">@item.Name</a></li>
         }
     }
+<script>
+    $(document).ready(function () {
+        $('.submenu.course').each(function () {
+            var obj = $(this);
+            var item = $("li", obj);
+            item.on("click",
+                ".submenu-course-a",
+                function (e) {
+                    debugger
+                    e.preventDefault();
+                    var id = $(this).attr('id');
+                    var url = "/khoa-hoc/" + id;
+                    if (id != "" && id != undefined) {
+                        window.location.href = url;
+                    }
+                })
+
+        })
+    })
+</script>

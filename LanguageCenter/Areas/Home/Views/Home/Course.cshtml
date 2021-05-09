@@ -3,8 +3,8 @@
 @using LanguageCenter.Areas.Home.Models.Course
 @{
     var datas = (IEnumerable<CourseModel>)ViewBag.Course;
-    var classes = (IEnumerable<ClassModel>)ViewBag.Class;
-    var totalCount = ViewBag.ToTalCount != null ? (int)ViewBag.ToTalCount : 0 ;
+    var courseID = ViewBag.CourseID != null ? (int)ViewBag.CourseID : 0;
+    var totalCount = ViewBag.ToTalCount != null ? (int)ViewBag.ToTalCount : 0;
 }
 
 @{  
@@ -47,7 +47,14 @@
                 </div>
                 <div class="post-warp clearfix">
                     @{
-                        Html.RenderAction("ClassByCourseID", "Home");
+                        if (courseID != 0)
+                        {
+                            Html.RenderAction("ClassByCourseID", "Home", new { id = courseID }); 
+                        } 
+                        else
+                        { 
+                            Html.RenderAction("ClassByCourseID", "Home");
+                        } 
                     }
                 </div>
                 <div class="blog-pagination">
@@ -65,6 +72,8 @@
 </section>
 <script>
     $(document).ready(function () {
+        $('ul.menu a.menu-li-a').removeClass('selected');
+        $('ul.menu a.menu-li-a.course').addClass('selected');
         var indexNumber = @totalCount != 0 ? parseInt(parseInt(@totalCount)/parseInt(15)) : 0;
         if (indexNumber> 1) {
             for (var i = 2; i < indexNumber+2; i++) {
@@ -83,7 +92,7 @@
             debugger
             var id = $(this).find(':selected').val();
             var url = "/Home/ClassByCourseID/" + id;
-            if (id != "" || id != undefined) {
+            if (id != "" && id != undefined) {
                 $('.post-warp.clearfix').load(url);
             }
         })

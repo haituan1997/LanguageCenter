@@ -35,7 +35,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" />
-
+    @*<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.min.js"></script>*@
 </head>
 <body class="header-sticky">
     <div class="boxed">
@@ -127,7 +127,7 @@
             <div class="container">
                 <div class="header-wrap clearfix">
                     <div id="logo" class="logo">
-                        <a href="/trang-chu" rel="home" id="Test">
+                        <a href="/trang-chu" rel="home" >
                             <img src="images/logo.png" alt="image">
                         </a>
                     </div><!-- /.logo -->
@@ -138,33 +138,44 @@
                         <nav id="mainnav" class="mainnav">
                             <ul class="menu">
                                 <li class="home">
-                                    <a href="/trang-chu">Trang chủ</a>
+                                    <a class="menu-li-a home selected" href="/trang-chu">Trang chủ</a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html">Giới thiệu</a>
+                                    <a  class="menu-li-a ">Giới thiệu</a>
                                 </li>
                                 <li class="has-sub">
-                                    <a href="/khoa-hoc">Khóa học</a>
-                                    <ul class="submenu">
+                                    <a class="menu-li-a course" href="/khoa-hoc">Khóa học</a>
+                                    @*<ul class="submenu course">
                                         @{
                                             Html.RenderAction("Courses", "Home");
                                         }
-
-                                    </ul>
+                                    </ul>*@
                                 </li>
 
 
                                 <li>
-                                    <a href="blog.html">Lớp học</a>
+                                    <a class="menu-li-a class">Lớp học</a>
                                     <ul class="submenu">
-                                        <li><a href="blog.html">Lịch học</a></li>
-                                        <li><a href="blog-single.html">Lịch thi</a></li>
+                                        <li><a href="/lich-hoc">Lịch học</a></li>
+                                        <li><a>Lịch thi</a></li>
                                     </ul><!-- /.submenu -->
                                 </li>
                                 <li>
-                                    <a href="team.html">Liên hệ</a>
+                                    <a class="menu-li-a contact">Liên hệ</a>
                                 </li>
+
                             </ul><!-- /.menu -->
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('ul.menu').each(function () {
+                                        $('a.menu-li-a').off('click').on('click', function () {
+                                            $('ul.menu a.menu-li-a').removeClass('selected');
+                                            $(this).addClass('selected');
+                                        })
+                                    });
+                                    
+                                })
+                            </script>
                         </nav><!-- /.mainnav -->
                     </div><!-- /.nav-wrap -->
                     <div id="s" class="show-search">
