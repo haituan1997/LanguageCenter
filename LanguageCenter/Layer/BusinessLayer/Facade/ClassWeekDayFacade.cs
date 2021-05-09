@@ -15,6 +15,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerClassWeekDay.Get_ClassWeekDayByClassID(classID, page, pageSize, orderBy, searchBy);
         }
+        public IEnumerable<ClassWeekDay> Get_ClassWeekDayForHome()
+        {
+            return sqlServerClassWeekDay.Get_ClassWeekDayForHome();
+        }
         public ClassWeekDay Get_ClassWeekDayByID(long id)
         {
             return sqlServerClassWeekDay.Get_ClassWeekDayByID(id);
