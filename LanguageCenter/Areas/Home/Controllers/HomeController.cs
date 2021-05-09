@@ -24,12 +24,14 @@ namespace LanguageCenter.Areas.Home.Controllers
         private readonly StudentRepository _studentRepository;
         private readonly TeacherRepository _teacherRepository;
         private readonly CourseRepository _courseRepository;
+        private readonly NewsFeedRepository _NewsFeedRepository;
         public HomeController()
         {
             _ClassRepository = new ClassRepository();
             _teacherRepository = new TeacherRepository();
             _courseRepository = new CourseRepository();
             _studentRepository = new StudentRepository();
+            _NewsFeedRepository = new NewsFeedRepository();
             Mapper.CreateMap<Teacher, TeacherModel>();
             Mapper.CreateMap<Class, ClassModel>();
             Mapper.CreateMap<Course, CourseModel>();
@@ -40,11 +42,36 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 ViewBag.User = User.Identity.Name;
                 ViewBag.UserID = ((ClaimsIdentity)User.Identity).FindFirst("UserID").Value;
-            }    
-            
+            }
+            int total = 0;
+            var newsfed = _NewsFeedRepository.Get_NewsFeeds(out total, 1, 10, null, null).ToList();
+            foreach(var item in newsfed)
+            {
+                item.Thumb = Getthum(item.Description);
+            }
+            var fisrtNews = new NewsFeed();
+            if (newsfed.Count()>0)
+            {
+                fisrtNews = newsfed[0];
+            }
+            var listNews = new List<NewsFeed>();
+            newsfed.RemoveAt(0);
+           
+            ViewBag.newFeds = newsfed;
+            ViewBag.firstNewFeds = fisrtNews;
+            ViewBag.Total = total;
             return View();
         }
-
+        public string Getthum(string value)
+        {
+            if(value.IndexOf("<img") >=0)
+            {
+                value=value.Substring(value.IndexOf("<img"), value.Length - value.IndexOf("<img"));
+                value=value.Substring(value.IndexOf("src=")+5, value.Length - value.IndexOf("src=")-5);
+                value = value.Substring(0, value.IndexOf('"'));
+            }    
+            return value;
+        }
         [ChildActionOnly]
         public ActionResult AllData()
         {

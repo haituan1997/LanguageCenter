@@ -32,7 +32,18 @@ namespace LanguageCenter.Repository
         {
             try
             {
-                return classFacade.Get_AllClasses();
+                return classFacade.GetAll_Classes();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public IEnumerable<Class> Get_AllClassesNotTrainingResult()
+        {
+            try
+            {
+                return classFacade.Get_AllClassesNotTrainingResult();
             }
             catch (Exception ex)
             {

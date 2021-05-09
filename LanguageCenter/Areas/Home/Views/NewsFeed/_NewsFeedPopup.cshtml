@@ -1,0 +1,103 @@
+﻿@model LanguageCenter.Areas.Home.Models.NewsFeedModel.NewsFeedModel
+
+
+@{
+    ViewData["Title"] = "Tạo mới sản phẩm";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+
+<div class="modal-body" style="overflow-y:auto">
+    <form method="post" id="NewsFeedForm" action="@Url.Action("NewsFeed")">
+        @*@Html.AntiForgeryToken()*@
+        @Html.HiddenFor(x => x.NewFeedID)
+        @Html.HiddenFor(x => x.IsEdit)
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example1">Tiêu đề tin tức</label>
+            <input type="text" name="Title" id="Title" value="@Model.Title" autofocus class="form-control" tabindex="1" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Mã tin tức</label>
+            <input type="text" name="Code1" disabled="disabled" id="Code1" value="@Model.Code" class="form-control" tabindex="2" />
+        </div>
+        <input type="text" name="Code" hidden id="Code" value="@Model.Code" class="form-control" tabindex="2" />
+        <div id="Description-grp">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form1Example2">Nội dụng</label>
+                <textarea class="ckeditor" id="Description" value="@Model.Description" name="Description"></textarea>
+            </div>
+        </div>
+
+    </form>
+    <div class="modal-footer">
+        <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="NewsFeedForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+        <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+    </div>
+</div>
+
+
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/ckfinder/ckfinder.js"></script>
+<script>
+    $(document).ready(function () {
+        var valid = function () {
+            $("#NewsFeedForm").validate({
+                rules: {
+                    Title: { required: true, maxlength: 255 },
+                    Code: { required: true, maxlength: 255 },
+                    Description: { required: true, maxlength: 4000 },
+                },
+                messages: {
+                    Title: {
+                        required: "Tiêu đề không được để trống !",
+                        maxlength: "Tiêu đề không được quá 255 ký tự !",
+                    },
+                    Code: {
+                        required: "Mã không được để trống !",
+                        maxlength: "Mã không được quá 255 ký tự !",
+                    },
+                    Description: {
+                        required: "Nội dung không được để trống !",
+                        maxlength: "Nội dung không được quá 4000 ký tự !",
+                    },
+
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") === "Description") {
+                        error.insertAfter("#Description-grp");
+                    } else
+                    error.insertAfter(element, "label-error");
+                }
+            })
+        };
+        valid();
+        setTimeout(function () {
+            debugger
+            var test = "@Model.Description";
+            CKEDITOR.instances.Description.insertHtml(test);
+        }, 100)
+        $("#Title").change(function () {
+            var text_create = $("#Title").val().replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a").replace(/\ /g, '-').replace(/đ/g, "d").replace(/đ/g, "d").replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y").replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u").replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ.+/g, "o").replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ.+/g, "e").replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            $("#Code").val(text_create);
+            $("#Code1").val(text_create);
+        });
+
+
+        $(".btn-exit-popup").off('click').on('click', function (e) {
+            window.location = "/tin-tuc";
+        });
+
+
+        $('#btnSave').off('click').on('click', function (e) {
+            //e.preventDefault();
+            $("#Description").val(CKEDITOR.instances.Description.getData());
+            var isValid = $('#NewsFeedForm').valid();
+            if (!isValid) {
+                //$("select.error + span")
+                //    .find('span.select2-selection--single')
+                //    .css('cssText', 'border: 1px solid #f58a73 !important');
+                return false;
+            }
+            });
+    });
+</script>

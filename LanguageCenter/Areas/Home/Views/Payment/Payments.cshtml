@@ -8,7 +8,7 @@
 <div class="container-homeadmin">
     <div class="row">
         <div class="col-lg-12 col-md-12 title">
-            <span>Danh sách sinh viên</span>
+            <span>Danh sách học phí sinh viên</span>
         </div>
     </div>
     <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
@@ -47,7 +47,7 @@
 <script>
     var tableName = "PaymentTable";
     var popUpName = "popUp";
-    var totalColum = 7;
+    var totalColum = 5;
     var dataJson;
     var urlUpdatePopup = '/luu-hoc-phi';
     var urlDetailPopup = "/chi-tiet-hoc-phi/";
@@ -68,9 +68,15 @@
                 { "data": "ClassName", "name": "ClassName" }, 
                  
                 { "data": "Amount", "name": "Amount" },
-                { "data": "PaymentMethodID", "name": "PaymentMethodID" },
-                { "data": "Email", "name": "Email" },
-                
+                { "data": "PaymentMethodName", "name": "PaymentMethodID" }, 
+                {
+                    "data": "PaymentID", "render": function (data) {
+                        return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
+                    },
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "80px"
+                }
                 
             ],
             "processing": true,
@@ -151,7 +157,8 @@
             dataJson = json.data;
             $("#" + tableName + " thead").append($("#" + tableName + " thead tr:first").clone());
             $("#" + tableName + " thead tr:eq(1) th").each(function (index) {
-                if (index != 7) { 
+               
+                if (index != 4) { 
                     $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
                     var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") input");
                     searchControl.on('keyup', function () {
@@ -163,18 +170,18 @@
                 else {
                     var elementDropDown = $('<select class="table-sl-search" />');
                     elementDropDown.append($('<option/>').attr('value', '').text('Tất cả'));
-                    var email = [];
+                    var paymentMethodID = [];
                     var nameElement = oSettings.aoColumns[index].data;
                     $(json.data).each(function (index, element) {
-                        if ($.inArray(element.Email, email) == -1) {
-                            email.push(element.Email);
-                            elementDropDown.append($('<option/>').attr('value', element.Email).text(element.Email));
+                        if ($.inArray(element.PaymentMethodID, paymentMethodID) == -1) {
+                            paymentMethodID.push(element.PaymentMethodID);
+                            elementDropDown.append($('<option/>').attr('value', element.PaymentMethodID).text(element.PaymentMethodName));
                         }
                     });
                     $(this).replaceWith('<th>' + $(elementDropDown).prop('outerHTML') + '</th>');
                     var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") select");
                     searchControl.on('change', function () {
-                        buildTable.column(index).search(searchControl.val() == "" ? "" : '^' + searchControl.val() + '$', true, false).draw();
+                        buildTable.column(index).search(searchControl.val() == "" ? "" :  parseInt(searchControl.val()) ).draw();
                     });
                 }
             });
