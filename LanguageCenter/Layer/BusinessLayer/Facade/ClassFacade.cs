@@ -23,6 +23,11 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerClass.Get_AllClasses();
         }
+        public IEnumerable<Class> Get_AllClassesByIndex(int? index)
+        {
+            return sqlServerClass.Get_AllClassesByIndex( index);
+        }
+        
         public IEnumerable<Class> Get_Class_ByCourseID(long id, int indexNumber)
         {
             return sqlServerClass.Get_Class_ByCourseID(  id,   indexNumber);

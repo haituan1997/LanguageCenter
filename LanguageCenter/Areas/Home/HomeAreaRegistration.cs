@@ -20,6 +20,10 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "trang-chu", defaults: new { controller = "Home", action = "Index", area = "Home" });
             context.MapRoute("", "khoa-hoc/{id}", defaults: new { controller = "Home", action = "Course", area = "Home" ,id = UrlParameter.Optional});
 
+            context.MapRoute("", "lich-hoc", defaults: new { controller = "HomeClassWeekDay", action = "ClassWeekDay", area = "Home" });
+            context.MapRoute("", "lich-hoc-theo-lop/{classID}", defaults: new { controller = "HomeClassWeekDay", action = "FullCalendar", area = "Home" ,classID = UrlParameter.Optional });
+
+
             #endregion
 
 
