@@ -8658,6 +8658,10 @@
     <Content Include="Areas\Home\Views\ClassWeekDay\ClassWeekDays.cshtml" />
     <Content Include="Areas\Home\Views\Home\_AllData.cshtml" />
     <Content Include="Areas\Home\Views\Home\_Teachers.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_Courses.cshtml" />
+    <Content Include="Areas\Home\Views\Home\Course.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_CourseMenuRight.cshtml" />
+    <Content Include="Areas\Home\Views\Home\_ClassByCourseID.cshtml" />
     <Content Include="Areas\Home\Views\TrainingResult\_TrainingResult.cshtml" />
     <Content Include="Areas\Home\Views\TrainingResult\TrainingResults.cshtml" />
     <Content Include="Areas\Home\Views\TrainingResult\_trainingResultPopup.cshtml" />
@@ -9672,6 +9676,7 @@
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Home\Views\LoginView\" />
     <Folder Include="images\portfolio\" />
+    <Folder Include="images\Teachers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

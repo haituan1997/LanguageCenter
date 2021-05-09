@@ -28,6 +28,11 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspGet_AllCourses";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public IEnumerable<Course> Get_CoursesAndCountClass()
+        {
+            const string procedure = "uspGet_CoursesAndCountClass";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakeCountClass);
+        }
         public Course GetCourseByCouresID(long id)
         {
             const string procedure = "uspGet_CourseByCourseID";
@@ -92,6 +97,19 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
            CategoryID = reader["CategoryID"].AsLong(),
 
        };
+        private static readonly Func<IDataReader, Course> MakeCountClass = reader =>
+      new Course
+      {
+          CourseID = reader["CourseID"].AsLong(),
+          Code = reader["Code"].AsString(),
+          Name = reader["Name"].AsString(),
+          Description = reader["Description"].AsString(),
+          LanguageID = reader["LanguageID"].AsLong(),
+          LevelID = reader["LevelID"].AsLong(),
+          CategoryID = reader["CategoryID"].AsLong(),
+          CountClass = reader["CountClass"].AsInt(),
+
+      };
         private static readonly Func<IDataReader, Course> MakeCourse = reader =>
        new Course
        {

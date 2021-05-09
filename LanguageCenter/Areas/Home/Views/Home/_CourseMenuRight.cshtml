@@ -1,0 +1,41 @@
+﻿@using LanguageCenter.Layer.DataLayer.Object
+@{
+    var datas = (IEnumerable<Course>)ViewBag.CoursesMenuRught;
+}
+
+<div class="sidebar">
+    <div class="widget widget-categories">
+        <h5 class="widget-title">Khóa học</h5>
+        <ul class="widget-title-ul">
+            @if (datas != null)
+            {
+                foreach (var item in datas)
+                {
+                    <li style="cursor: pointer;">
+                        <a class="widget-title-ul-a" data-CourseID="@item.CourseID">@item.Name</a><span class="numb-right"> (@item.CountClass)</span>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div><!-- /sidebar -->
+<script>
+    $(document).ready(function () {
+        $('.widget-title-ul').each(function () {
+            var obj = $(this);
+            var item = $("li", obj);
+            item.on("click",
+                ".widget-title-ul-a",
+                function (e) {
+                    debugger
+                    e.preventDefault();
+                    var id = $(this).attr('data-courseid');
+                    var url = "/Home/ClassByCourseID/" + id;
+                    if (id != "" || id != undefined) {
+                        $('.post-warp.clearfix').load(url);
+                    }
+                })
+            
+        })
+    })
+</script>

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using System.IO;
+using System.Configuration;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
@@ -62,6 +64,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             try
             {
                 var teacher = Mapper.Map<TeacherModel, Teacher>(model);
+                
                 _teacherRepository.InsertOrUpdate(teacher);
                 var message = model.IsEdit == true ? "Cập nhập giáo viên thành công!" : "Thêm mới giáo viên thành công!";
                 return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
@@ -71,6 +74,71 @@ namespace LanguageCenter.Areas.Home.Controllers
                 return Json(new { success = false, message = ex.Message}, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public JsonResult UploadFile()
+        {
+            var fileName = "";
+            if (Request.Files.Count > 0)
+            {
+                HttpPostedFileBase file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    fileName = Path.GetFileName(file.FileName);
+                    string startupPath = System.IO.Directory.GetCurrentDirectory();
+                    string startupPath1 = Environment.CurrentDirectory;
+                    string[] files;
+                    var requiredPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)));
+                    requiredPath += "\\LanguageCenter\\images\\Teachers";
+                    string saveUrl = requiredPath;
+                    saveUrl = saveUrl.Remove(0, 6);
+                    var check = true;
+                    var avatarUrl = "~/images/Teachers/" + fileName;
+                    try
+                    {
+                        files = Directory.GetFiles(saveUrl, "*.*", SearchOption.AllDirectories);
+                        if (files.Length > 0)
+                        {
+                            foreach (string item in files)
+                            {
+                                if (item.Contains(fileName))
+                                {
+                                    check = false;
+                                    break;
+                                } 
+                            }
+                        }
+                        if (check)
+                        {
+                            file.SaveAs(Server.MapPath(avatarUrl));
+                        }
+                    }
+                    catch
+                    {
+                        var url = ConfigurationManager.AppSettings.Get("UrlImages");
+                        files = Directory.GetFiles(url, "*.*", SearchOption.AllDirectories);
+                        if (files.Length > 0)
+                        {
+                            foreach (string item in files)
+                            {
+                                if (item.Contains(fileName))
+                                {
+                                    check = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (check)
+                        {
+                            file.SaveAs(Server.MapPath(avatarUrl));
+                        }
+                    }
+                }
+            }
+            return Json(new { fileName = fileName });
+        }
+
 
         [HttpPost]
         //[ValidateAntiForgeryToken]

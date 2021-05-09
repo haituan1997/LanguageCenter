@@ -1,13 +1,68 @@
-﻿
-@import url("font-awesome.css");
+﻿/*@import url("font-awesome.css");
 @import url("flexslider.css");
 @import url("owl.carousel.css");
 @import url("shortcodes.css");
-@import url("revolution-slider.css");
+@import url("revolution-slider.css");*/
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700' rel='stylesheet' type='text/css");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css");
 @import url('https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic');
 
+.text-center {
+    text-align: center;
+}
+
+.profile-logo-margin {
+    margin-bottom: 0px !important;
+}
+
+.portal-css .profile .profile-logo {
+    margin-top: 25px;
+    height: 150px;
+    width: 150px;
+    display: block;
+    border-radius: 100% !important;
+    margin-bottom: 25px;
+}
+
+.profile .profile-logo {
+    margin: 50px auto 10px auto;
+    height: 150px;
+    width: 300px;
+    display: block;
+}
+
+.portal-css .profile .hover-logo {
+    width: 150px;
+    border-radius: 100% !important;
+}
+
+.profile .hover-logo {
+    opacity: 0.6;
+    position: absolute;
+    height: 150px;
+    width: 300px;
+    background-color: #414142;
+    top: 66px;
+    left: 99px;
+    display: none;
+    cursor: pointer;
+}
+
+.portal-css .profile .i-logo {
+    left: 35%;
+}
+
+.profile .i-logo {
+    left: 43%;
+}
+
+.profile i {
+    font-size: 55px;
+    position: absolute;
+    top: 26%;
+    left: 37%;
+    color: whitesmoke;
+}
 .ui-timepicker-container.ui-timepicker-standard {
 z-index:1050 !important;
 }
