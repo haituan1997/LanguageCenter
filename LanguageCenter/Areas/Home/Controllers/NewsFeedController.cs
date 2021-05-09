@@ -100,12 +100,12 @@ namespace LanguageCenter.Areas.Home.Controllers
             try
             {
                 _NewsFeedRepository.Delete(id);
-                var message = "Xóa sinh viên thành công!";
+                var message = "Xóa Bản tin  thành công!";
                 return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Sinh viên đã được dùng ở chức năng khác" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "bản tin đã được dùng ở chức năng khác" }, JsonRequestBehavior.AllowGet);
             }
         }
     }

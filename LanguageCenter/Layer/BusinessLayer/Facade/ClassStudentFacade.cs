@@ -23,6 +23,11 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerClassStudent.Get_StudentInClass(classID);
         }
+        public IEnumerable<ClassStudent> Get_StudentInClassNotInTrainingResult(long trainingResultID,long classID, long? TrainingResult = null)
+        {
+            return sqlServerClassStudent.Get_StudentInClassNotInTrainingResult(trainingResultID,classID, TrainingResult);
+        }
+        
         public int Count(string whereClause,long? classID)
         {
             return sqlServerClassStudent.Count(classID,whereClause );

@@ -1,6 +1,6 @@
 ﻿using LanguageCenter.BusinessLayer.Facade;
-using LanguageCenter.DataLayer.Object;
 using LanguageCenter.Layer.BusinessLayer.Facade;
+using LanguageCenter.Layer.DataLayer.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,87 +8,66 @@ using System.Web;
 
 namespace LanguageCenter.Repository
 {
-    public class ClassRepository
+    public class TrainingResultDetailRepository
     {
-        ClassFacade classFacade = new ClassFacade();
-        public ClassRepository()
+        TrainingResultDetailFacade TrainingResultDetailFacade= new TrainingResultDetailFacade();
+        public TrainingResultDetailRepository()
         {
-            classFacade = new ClassFacade();
+            TrainingResultDetailFacade = new TrainingResultDetailFacade();
         }
 
-        public IEnumerable<Class> Get_Classes(out int total, int page, int pageSize, string orderBy = null, string searchBy = null)
+        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetails(out int total,long trainingResultID,int page , int pageSize , string orderBy = null, string searchBy = null)
         {
             try
             {
-                total = classFacade.Count(searchBy);
-                return classFacade.Get_Classes(page, pageSize, orderBy, searchBy);
+                total = TrainingResultDetailFacade.Count(searchBy, trainingResultID);
+                return TrainingResultDetailFacade.Get_TrainingResultDetails(trainingResultID, page, pageSize, orderBy, searchBy); 
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public IEnumerable<Class> Get_AllClasses()
+       
+        public TrainingResultDetail Get_TrainingResultDetailByTrainingResultDetailID(long TrainingResultDetailID)
         {
             try
-            {
-                return classFacade.GetAll_Classes();
+            { 
+                return TrainingResultDetailFacade.Get_TrainingResultDetailByTrainingResultDetailID(TrainingResultDetailID);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public IEnumerable<Class> Get_AllClassesNotTrainingResult()
+        public string Insert(TrainingResultDetail TrainingResultDetail)
         {
             try
             {
-                return classFacade.Get_AllClassesNotTrainingResult();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public Class Get_ClassByClassID(long id)
-        {
-            try
-            {
-                return classFacade.Get_ClassByClassID(id);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public long Insert(Class objClass)
-        {
-            try
-            {
-                var response = classFacade.Insert(objClass);
+                var response = TrainingResultDetailFacade.Insert(TrainingResultDetail);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
                 }
-                return objClass.ClassID;
+                return response.TrainingResultDetailID.ToString();
 
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
+            
         }
-        public string Update(Class objClass)
+        public string Update(TrainingResultDetail TrainingResultDetail)
         {
             try
             {
-                var response = classFacade.Update(objClass);
+                var response = TrainingResultDetailFacade.Update(TrainingResultDetail);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);
                 }
-                return response.ClassID.ToString();
+                return response.TrainingResultDetailID.ToString();
 
             }
             catch (Exception ex)
@@ -101,7 +80,7 @@ namespace LanguageCenter.Repository
         {
             try
             {
-                var response = classFacade.Delete(id);
+                var response = TrainingResultDetailFacade.Delete(id);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);

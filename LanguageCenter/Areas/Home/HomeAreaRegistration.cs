@@ -92,6 +92,23 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "luu-tin-tuc", defaults: new { controller = "NewsFeed", action = "PostNewsFeed", area = "Home" });
             context.MapRoute("", "xoa-tin-tuc", defaults: new { controller = "NewsFeed", action = "DeleteNewsFeed", area = "Home", id = UrlParameter.Optional });
             #endregion
+            #region điểm của lớp
+            context.MapRoute("", "diem-lop", defaults: new { controller = "TrainingResult", action = "TrainingResults", area = "Home" });
+            context.MapRoute("", "danh-sach-diem-lop", defaults: new { controller = "TrainingResult", action = "GetPage_TrainingResults", area = "Home" });
+            context.MapRoute("", "danh-sach-chi-tiet-diem-lop/{id}", defaults: new { controller = "TrainingResult", action = "GetPage_TrainingResultDetails", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "chi-tiet-diem-lop/{id}", defaults: new { controller = "TrainingResult", action = "TrainingResult", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-diem-lop", defaults: new { controller = "TrainingResult", action = "PostTrainingResult", area = "Home" });
+            context.MapRoute("", "xoa-diem-lop", defaults: new { controller = "TrainingResult", action = "DeleteTrainingResult", area = "Home", id = UrlParameter.Optional });
+            #endregion
+            #region chi tiết  điểm của lớp
+            context.MapRoute("", "chi-tiet-diem-lop", defaults: new { controller = "TrainingResultDetail", action = "TrainingResultDetails", area = "Home" });
+            context.MapRoute("", "danh-sach-chi-tiet-diem-lop/{id}", defaults: new { controller = "TrainingResultDetail", action = "GetPage_TrainingResultDetails", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "chi-tiet-diem-hoc-sinh/{id}", defaults: new { controller = "TrainingResult", action = "TrainingResultDetail", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "them-moi-chi-tiet-diem-hoc-sinh/{id}", defaults: new { controller = "TrainingResult", action = "InsertTrainingResultDetail", area = "Home", id = UrlParameter.Optional });
+            context.MapRoute("", "luu-diem-hoc-sinh", defaults: new { controller = "TrainingResultDetail", action = "PostTrainingResultDetail", area = "Home" });
+            context.MapRoute("", "xoa-diem-hoc-sinh", defaults: new { controller = "TrainingResultDetail", action = "DeleteTrainingResultDetail", area = "Home", id = UrlParameter.Optional });
+            #endregion
+
             #region lịch học theo lớp
             context.MapRoute("", "danh-lich-hoc-theo-lop/{classID}", defaults: new { controller = "ClassWeekDay", action = "Get_ClassWeekDayByClassID", area = "Home", classID = UrlParameter.Optional });
             context.MapRoute("", "chi-tiet-lich-hoc-theo-lop/{id}", defaults: new { controller = "ClassWeekDay", action = "ClassWeekDay", area = "Home", id = UrlParameter.Optional });

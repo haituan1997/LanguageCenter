@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "NewsFeedes";
+    ViewBag.Title = "TrainingResultes";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <style>
@@ -8,7 +8,7 @@
 <div class="container-homeadmin">
     <div class="row">
         <div class="col-lg-12 col-md-12 title">
-            <span>Danh sách tin tức</span>
+            <span>Danh sách các lớp đã nhập điểm</span>
         </div>
     </div>
     <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
@@ -19,12 +19,11 @@
     </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 ">
-            <table style="width:100%;" id="NewsFeedTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+            <table style="width:100%;" id="TrainingResultTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
                 <thead class="Table-Thead">
                     <tr class="Table-Thead-tr">
                         <th>ID</th>
-                        <th>tiêu đề</th>
-                        <th>mã tin tức</th>
+                        <th>Lớp</th>
                         <th>Hoạt động</th>
                     </tr>
                 </thead>
@@ -44,18 +43,18 @@
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
 <script>
+  
 
 
-
-    var tableName = "NewsFeedTable";
+    var tableName = "TrainingResultTable";
     var popUpName = "popUp";
     var totalColum = 3;
     var dataJson;
-    var urlUpdatePopup = '/luu-tin-tuc';
-    var urlDetailPopup = "/chi-tiet-tin-tuc/";
-    var urlDataTable = "/danh-sach-tin-tuc";
-    var urlDeleteDetail = "/xoa-tin-tuc";
-    var idColum = "NewFeedID";
+    var urlUpdatePopup = '/luu-diem-lop';
+    var urlDetailPopup = "/chi-tiet-diem-lop/";
+    var urlDataTable = "/danh-sach-diem-lop";
+    var urlDeleteDetail = "/xoa-diem-lop";
+    var idColum = "TrainingResultID";
     var buildTable
     $(document).ready(function () {
         buildTable = $('#' + tableName + '').DataTable({
@@ -65,19 +64,19 @@
                 "datatype": "json"
             },
             "columns": [
-                { "data": "NewFeedID", "name": "NewFeedID" },
-                { "data": "Title", "name": "Title" },
-                { "data": "Code", "name": "Code" },
-
+                { "data": "TrainingResultID", "name": "TrainingResultID" },
+                { "data": "ClassName", "name": "ClassName" }, 
+                
+                
                 {
-                    "data": "NewFeedID", "render": function (data) {
+                    "data": "TrainingResultID", "render": function (data) {
                         return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                     },
                     "orderable": false,
                     "searchable": false,
                     "width": "80px"
                 }
-
+                
             ],
             "processing": true,
             "serverSide": true,
@@ -118,7 +117,7 @@
                     //eventDoubleClick();
                     selected();
                     caculatorHeightTable();
-
+                    
                 }
                 changeCss();
                 actionControl();
@@ -157,7 +156,7 @@
             dataJson = json.data;
             $("#" + tableName + " thead").append($("#" + tableName + " thead tr:first").clone());
             $("#" + tableName + " thead tr:eq(1) th").each(function (index) {
-                if (index != 7) {
+                if (index != 7) { 
                     $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
                     var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") input");
                     searchControl.on('keyup', function () {
@@ -285,9 +284,7 @@
                     function (e) {
                         let row = buildTable.row($(this).parents("tr"));
                         var url = urlDetailPopup + $(row.data()).attr(idColum);;
-
                         window.location = url;
-                        e.stopPropagation();
                     })
             });
             $('#' + tableName).each(function () {

@@ -26,6 +26,13 @@ namespace LanguageCenter.DataLayer.SqlServer
             const string procedure = "uspGet_AllData";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public IEnumerable<Class> Get_AllClassesNotTrainingResult()
+        {
+            const string procedure = "Get_AllClassesNotTrainingResult";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
+        
+
         public Class Get_ClassByClassID(long id)
         {
             const string procedure = "uspGet_ClassByClassID";

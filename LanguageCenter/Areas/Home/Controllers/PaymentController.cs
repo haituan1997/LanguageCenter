@@ -54,13 +54,13 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult Payment(long? id)
         {
-            ViewBag.Class = _ClassRepository.GetAll_Classes().ToList();
+            ViewBag.Class = _ClassRepository.Get_AllClasses().ToList();
             if (id == null)
             {
                 
                 var model = new PaymentModel();
                 model.PaymentDate = DateTime.Now;
-                model.Title = "Thêm mới sinh viên";
+                model.Title = "Thêm mới học phí sinh viên";
                 model.IsEdit = false;
                 return PartialView("_PaymentPopup", model);
             }
@@ -68,7 +68,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 var Payment = _PaymentRepository.Get_PaymentByPaymentID((long)id);
                 var model = Mapper.Map<Payment, PaymentModel>(Payment);
-                model.Title = "Cập nhập sinh viên";
+                model.Title = "Cập nhập học phí sinh viên ";
                 model.IsEdit = true;
                 return PartialView("_PaymentPopup", model);
             }
@@ -87,14 +87,14 @@ namespace LanguageCenter.Areas.Home.Controllers
                     var Payment = Mapper.Map<PaymentModel, Payment>(model); 
                     _PaymentRepository.Update(Payment);
 
-                    return Json(new { success = true, message = "Cập nhập sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Cập nhập học phi sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     var Payment = Mapper.Map<PaymentModel, Payment>(model); 
                     _PaymentRepository.Insert(Payment);
 
-                    return Json(new { success = true, message = "Thêm mới sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Thêm mới học sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             try
             {
                 _PaymentRepository.Delete(id);
-                var message = "Xóa sinh viên thành công!";
+                var message = "Xóa bản ghi học phí sinh viên thành công!";
                 return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

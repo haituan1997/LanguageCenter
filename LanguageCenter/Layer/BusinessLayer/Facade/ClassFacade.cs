@@ -21,7 +21,13 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         }
         public IEnumerable<Class> GetAll_Classes( )
         {
-            return sqlServerClass.GetAll_Classes();
+            return sqlServerClass.Get_AllClasses();
+        }
+        public IEnumerable<Class> Get_AllClassesNotTrainingResult
+()
+        {
+            return sqlServerClass.Get_AllClassesNotTrainingResult
+();
         }
         public Class Get_ClassByClassID(long id)
         {

@@ -1,0 +1,178 @@
+﻿@model LanguageCenter.Areas.Home.Models.TrainingResultDetailModel.TrainingResultDetailModel
+@using Code.Helper.StaticData
+@using LanguageCenter.Layer.DataLayer.Object
+@using LanguageCenter.DataLayer.Object
+@{
+    var ClassStudents = (IEnumerable<ClassStudent>)ViewBag.ClassStudent;
+}
+
+<div class="modal-header" style=" background-color: #3ca4ab; color: white;">
+    <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body" style="overflow-y:auto">
+    <form method="post" id="TrainingResultDetailForm" action="@Url.Action("PostTrainingResultDetail")">
+        @*@Html.AntiForgeryToken()*@
+        @Html.HiddenFor(x => x.TrainingResultID)
+        @Html.HiddenFor(x => x.TrainingResultDetailID)
+        @Html.HiddenFor(x => x.IsEdit)
+
+        
+        <div class="form-outline mb-4">
+            <div id="StudentID-grp">
+                <label>Lớp</label>
+                <select class="form-control js-select2-enable-search-form-search" name="StudentID" id="StudentID" data-placeholder="Chọn sinh viên" tabindex="4">
+                    <option></option>
+                    @foreach (var ClassStudent in ClassStudents)
+                    {
+                        var selected = Model.StudentID == ClassStudent.StudentID ? "selected" : ""; ;
+                <option @selected value="@ClassStudent.StudentID">@ClassStudent.FirtName @ClassStudent.LastName </option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Số tiền học phí</label>
+            <input type="text" name="ScoreFirt" id="ScoreFirt" value="@Model.ScoreFirt" class="form-control" tabindex="3" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Số tiền học phí</label>
+            <input type="text" name="ScoreLast" id="ScoreLast" value="@Model.ScoreLast" class="form-control" tabindex="3" />
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button id="btnSavePopub" name="submit" value="Save" class="btn-save-popup" form="TrainingResultDetailForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+        <a name="submit" value="Save" class="btn-exit-popup" tabindex="7"><span class="OpenSans">Thoát</span></a>
+    </div>
+</div>
+
+<script src="~/javascript/notify.min.js"></script>
+<script src="~/javascript/jquery.validate.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var valid = function () {
+            $("#TrainingResultDetailForm").validate({
+                rules: {
+                    StudentID: { required: true },
+                    ScoreFirt: { required: true, valiScore: true },
+                    ScoreLast: { required: true, valiScore: true},
+                },
+                messages: {
+                    StudentID: {
+                        required: " Sinh viên không được để trống !",
+                    },
+                    ScoreFirt: {
+                        required: "Điểm không được để trống !",
+                        valiScore: "Điểm phải là số từ 0 đến 10 !",
+                    },
+                    ScoreLast: {
+                        required: "Điểm không được để trống !",
+                        valiScore: "Điểm phải là số từ 0 đến 10 !",
+                    },
+                },
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element, "label-error");
+                }
+            })
+        };
+        valid();
+        $('.btn-exit-popup,.btn-close').off('click').on('click', function (e) {
+            e.preventDefault();
+            $('#popUp').modal('hide');
+            return;
+        });
+        jQuery.validator.addMethod("valiScore", function (value) {
+            var vnf_regex = /^\d*\.?\d*$/; 
+            var rsdate_format = vnf_regex.test(value);
+            if (!rsdate_format) {
+                return false
+            }
+
+            if (0 > value || value > 10) {
+                return false;
+            }
+            var checkt = value.split(".");
+            if (checkt.length > 1) {
+                if (checkt[1].length > 2)
+                    return false
+            }
+            return true;
+
+        }, ''); 
+        // xử lý select 2
+
+        $('.js-select2-enable-search-form-search').select2({
+            language:
+            {
+                noResults: function () {
+                    return "Không có dữ liệu";
+                }
+            },
+
+        });
+        $('.js-select2-enable-search-form-search').on("select2:close", function () {
+
+            var studentID = $('#StudentID').find(":selected").val();
+            if (studentID > 0) {
+                $("#TrainingResultDetailForm").validate().element("#StudentID");
+            }
+
+        });
+
+
+        $('#btnSavePopub').off('click').on('click', function (e) {
+
+            e.preventDefault();
+            var isValid = $('#TrainingResultDetailForm').valid();
+            if (!isValid) {
+                //$("select.error + span")
+                //    .find('span.select2-selection--single')
+                //    .css('cssText', 'border: 1px solid #f58a73 !important');
+                return false;
+            }
+            var data = $('#TrainingResultDetailForm').serialize();
+            var message = "";
+            $.ajax({
+                url: urlUpdatePopup,
+                data: data,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+
+                    if (result.success) {
+                        var data = result.message;
+                        $.notify(data, {
+                            globalPosition: "top center",
+                            className: "success"
+                        });
+                        $('#' + popUpName).modal('hide');
+                        buildTable.ajax.reload();
+
+                    }
+                    else {
+                        $.each(result,
+                            function (index) {
+                                message = result.message;
+                            });
+                        $.notify(result.message, {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                    }
+
+                },
+                error: function (result) {
+                    $.each(result,
+                        function (index) {
+                            message = result.message;
+                        });
+                    $.notify(result.message, {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                }
+            });
+        })
+    });
+</script>

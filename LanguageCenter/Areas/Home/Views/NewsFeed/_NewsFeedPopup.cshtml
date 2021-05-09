@@ -18,15 +18,16 @@
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example2">Mã tin tức</label>
-            <input type="text" name="Code" id="Code" value="@Model.Code" class="form-control" tabindex="2" />
+            <input type="text" name="Code1" disabled="disabled" id="Code1" value="@Model.Code" class="form-control" tabindex="2" />
         </div>
+        <input type="text" name="Code" hidden id="Code" value="@Model.Code" class="form-control" tabindex="2" />
         <div id="Description-grp">
             <div class="form-outline mb-4">
                 <label class="form-label" for="form1Example2">Nội dụng</label>
                 <textarea class="ckeditor" id="Description" value="@Model.Description" name="Description"></textarea>
             </div>
         </div>
-        
+
     </form>
     <div class="modal-footer">
         <button id="btnSave" name="submit" value="Save" class="btn-save-popup" form="NewsFeedForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
@@ -70,10 +71,17 @@
             })
         };
         valid();
- 
+        $("#Title").change(function () {
+            var text_create = $("#Title").val().replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a").replace(/\ /g, '-').replace(/đ/g, "d").replace(/đ/g, "d").replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y").replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u").replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ.+/g, "o").replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ.+/g, "e").replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            $("#Code").val(text_create);
+            $("#Code1").val(text_create);
+        });
+        
 
+        $(".btn-exit-popup").off('click').on('click', function (e) {
+            window.location = "/tin-tuc";
+        });
         $('#btnSave').off('click').on('click', function (e) {
-            debugger
             //e.preventDefault();
             $("#Description").val(CKEDITOR.instances.Description.getData());
             var isValid = $('#NewsFeedForm').valid();
