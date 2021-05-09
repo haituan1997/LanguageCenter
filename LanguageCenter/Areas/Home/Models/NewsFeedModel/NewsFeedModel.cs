@@ -14,6 +14,7 @@ namespace LanguageCenter.Areas.Home.Models.NewsFeedModel
         public long NewFeedID { get; set; }
 
         public string Code { get; set; }
+        public DateTime Createdate { get; set; }
 
         public string Title1 { get; set; }
       

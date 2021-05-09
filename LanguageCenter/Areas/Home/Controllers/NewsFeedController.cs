@@ -73,6 +73,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 if (model.IsEdit == true)
                 {
                     var NewsFeed = Mapper.Map<NewsFeedModel, NewsFeed>(model);
+                    NewsFeed.Createdate = DateTime.Now;
                     _NewsFeedRepository.Update(NewsFeed);
 
                     return this.RedirectToAction("NewsFeeds", "NewsFeed");
@@ -80,6 +81,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 else
                 {
                     var NewsFeed = Mapper.Map<NewsFeedModel, NewsFeed>(model);
+                    NewsFeed.Createdate = DateTime.Now;
                     _NewsFeedRepository.Insert(NewsFeed);
 
                    return this.RedirectToAction("NewsFeeds", "NewsFeed");

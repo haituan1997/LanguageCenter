@@ -59,6 +59,8 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                Title = reader["Title"].AsString(),
                Code = reader["Code"].AsString(),
                Description = reader["Description"].AsString(),
+               Createdate = reader["Createdate"].AsDateTime(),
+
 
            };
         
@@ -70,6 +72,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                 "@Title",NewsFeed.Title,
                 "@Code",NewsFeed.Code,
                 "@Description",NewsFeed.Description,
+                "@Createdate",NewsFeed.Createdate,
             };
         }
     }
