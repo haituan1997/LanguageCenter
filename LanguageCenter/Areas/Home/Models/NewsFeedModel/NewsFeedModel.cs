@@ -17,6 +17,7 @@ namespace LanguageCenter.Areas.Home.Models.NewsFeedModel
         public DateTime Createdate { get; set; }
 
         public string Title1 { get; set; }
+        public string Thumb { get; set; }
       
         [AllowHtml]
         public string Description { get; set; }

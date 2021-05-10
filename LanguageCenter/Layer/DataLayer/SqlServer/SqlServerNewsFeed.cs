@@ -30,6 +30,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@NewsFeedID", NewsFeedID };
             return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
         }
+        public NewsFeed Get_NewsFeedByCode(string slug)
+        {
+            const string procedure = "uspGet_NewsFeedByCode";
+            object[] parms = { "@Code", slug };
+            return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
+        }
         public int Count( string whereClause = null, bool isCreated = true)
         {
             const string procedure = "uspCount_NewsFeed";

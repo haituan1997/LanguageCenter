@@ -1,43 +1,34 @@
-﻿@using LanguageCenter.Layer.DataLayer.Object
+﻿@model LanguageCenter.Areas.Home.Models.NewsFeedModel.NewsFeedModel
+@using LanguageCenter.Layer.DataLayer.Object
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "bản tin";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var newfeds = (IEnumerable<NewsFeed>)ViewBag.newFeds;
-    var firstNewFeds = (NewsFeed)ViewBag.firstNewFeds;
 }
 
-
-
-
-<div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 class="title">Tin tức</h4>
-        </div><!-- /.col-md-12 -->
-    </div><!-- /.row -->
-</div><!-- /.container -->
 <section class="main-content blog-posts style-v1 container" style=" background-color: white; padding: 50px 0px;">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <div class="blog-title-single">
-                    <h1 class="bold">@firstNewFeds.Title</h1>
+                    <h1 class="bold">@Model.Title</h1>
                     <article class="entry clearfix">
                         <div class="entry-border">
                             <div class="main-post">
                                 <div class="wrap-img">
-                                    <img src="@firstNewFeds.Thumb" width="80" height="80" alt="images">
-                                    <h6>@firstNewFeds.Title</h6>
+                                    <img src="@Model.Thumb" width="80" height="80" alt="images">
+                                    <h6>@Model.Title</h6>
                                     <div class="entry-meta">
-                                        <span class="date"><a href="#">@firstNewFeds.Createdate</a></span>
+                                        <span class="date"><a href="#">@Model.Createdate</a></span>
                                         <span class="comment"><a href="#">No comment</a></span>
                                         <span class="tag"><a href="#">Web Design, Life Style</a></span>
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="entry-content">
-                                    @Html.Raw(firstNewFeds.Description)
+                                    @Html.Raw(Model.Description)
                                 </div><!-- /.entry-post -->
 
                             </div><!-- /.main-post -->
@@ -52,7 +43,7 @@
 
                         @foreach (var item in newfeds)
                         {
-                            <li class="popular-news-item">
+                            <li>
                                 <div class="thumb">
                                     <img src="@item.Thumb" alt="image" width="80" height="80">
                                 </div>
@@ -65,11 +56,10 @@
                     </ul><!-- /popular-news clearfix -->
                     @if (ViewBag.Total > 10)
                     {
-                        <button class="back-news" hidden value="0" style="background-color:white;width:10px;height:10px;float:left">Back</button>
+                        <button class="back-news" hidden value="1" style="background-color:white;width:10px;height:10px;float:left">Back</button>
 
-                        <button id="next-news" value="2" style="background-color:white;width:10px;height:10px;float:right">Next</button>
+                        <button id="next-news" value="1" style="background-color:white;width:10px;height:10px;float:right">Next</button>
                     }
-
                 </div><!-- /widget widget-popular-news -->
             </div><!-- /sidebar -->
         </div><!-- /row -->
@@ -77,95 +67,6 @@
 </section>
 
 
-
-
-
-<section class="flat-row about-us parallax parallax1">
-    <div class="overlay bg-222">
-        <div class="container">
-            <div class="row">
-                @{
-                    Html.RenderAction("AllData", "Home");
-                }
-            </div><!-- / .row -->
-        </div><!-- /.container -->
-    </div><!-- /.overlay -->
-</section>
-
-<section class="flat-row pad-bottom-100" style="padding:0px !important">
-    <div class="container" style="background-color:white;padding: 50px 15px;">
-        @{
-            Html.RenderAction("Teachers", "Home");
-        }
-    </div>
-</section>
-
-
-<div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 class="title">Liên hệ</h4>
-        </div><!-- /.col-md-12 -->
-    </div><!-- /.row -->
-</div><!-- /.container -->
-<section class="flat-row contact-page pad-top-134 container" style="background-color:white">
-    <div class="">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="contact-content">
-                    <div class="contact-address">
-                        <div class="style1">
-                            <img src="images/icon/c1.png" alt="image">
-                        </div>
-                        <div class="details">
-                            <h5>Địa chỉ</h5>
-                            <p>Tân Bình, Thành phố Thái Bình</p>
-                            @*<p>NY 10118-3299 USA</p>*@
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="contact-content">
-                    <div class="contact-address">
-                        <div class="style1">
-                            <img src="images/icon/c2.png" alt="image">
-                        </div>
-                        <div class="details">
-                            <h5>Số điện thoại</h5>
-                            <p>0227.3633669</p>
-                            @*<p>Fax: (+1) 800 666 999</p>*@
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="contact-content">
-                    <div class="contact-address">
-                        <div class="style1">
-                            <img src="images/icon/c3.png" alt="image">
-                        </div>
-                        <div class="details">
-                            <h5>Email</h5>
-                            <p>Email: support@ascvn.edu.vn</p>
-                            @*<p>Info@domain.com</p>*@
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.row -->
-
-        <div class="row">
-            <div class="flat-spacer d74px"></div>
-        </div>
-        <div class="map" style="width: 100%; height: 559px; position: relative; overflow: hidden;border: 2px solid #e5e5e5;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.8334619371035!2d106.31662361539686!3d20.472032211924876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135e4c44fa656c3%3A0x19028669f9f200e8!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBUaMOhaSBCw6xuaA!5e0!3m2!1svi!2s!4v1620365317402!5m2!1svi!2s" width="1366" height="559" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-
-    </div><!-- /.container -->
-</section>
 <script>
     $(document).ready(function () {
         $('#next-news').off('click').on('click', function (e) {
