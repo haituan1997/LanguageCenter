@@ -89,6 +89,7 @@
             </nav>
         </div>*@
                         <div class="sb-sidenav-menu-heading">Danh mục</div>
+                        @*chỗ này lấy theo chức năng mình đỡ liệt kê*@
                         @if (((ClaimsIdentity)User.Identity).FindFirst("TypeUser").Value == "3")
                         {
                             <a class="nav-link" href="/giao-vien">
