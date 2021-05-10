@@ -5,6 +5,7 @@ using LanguageCenter.Areas.Home.Models.ClassStudent;
 using LanguageCenter.Areas.Home.Models.TeacherModel;
 using LanguageCenter.Code.Helper.DatatableHelper;
 using LanguageCenter.DataLayer.Object;
+using LanguageCenter.Helper;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
@@ -15,6 +16,7 @@ using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("3")]
     public class ClassController : Controller
     {
         private readonly TeacherRepository _teacherRepository;
