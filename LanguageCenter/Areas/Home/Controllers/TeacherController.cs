@@ -9,9 +9,11 @@ using System.Web.Mvc;
 using AutoMapper;
 using System.IO;
 using System.Configuration;
+using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("2,3")]
     public class TeacherController : Controller
     {
         private readonly TeacherRepository _teacherRepository;

@@ -154,6 +154,8 @@ namespace LanguageCenter.Controllers
             {
                 claims.Add(new Claim(ClaimTypes.Name, username.FullName));
                 claims.Add(new Claim("UserID", username.UserID.ToString())); 
+                claims.Add(new Claim("Password", username.Password.ToString())); 
+                claims.Add(new Claim("TypeUser", username.TypeUser.ToString())); 
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
