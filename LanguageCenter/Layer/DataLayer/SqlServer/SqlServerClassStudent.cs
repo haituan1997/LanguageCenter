@@ -11,22 +11,35 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
 {
     public class SqlServerClassStudent
     {
-        public IEnumerable<ClassStudent> Get_ClassStudentByClassID(long? classID,int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
+        public IEnumerable<ClassStudent> Get_ClassStudentByClassID(long? classID, int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
             const string procedure = "uspGetPaged_StudentByClassID";
-            object[] parms = { "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy ,"@ClassID",classID};
+            object[] parms = { "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy, "@ClassID", classID };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakePaged, parms);
         }
         public IEnumerable<ClassStudent> Get_StudentNotInClass(long classID)
         {
             const string procedure = "uspGet_StudentNotInClass";
-            object[] parms = { "@ClassID", classID};
+            object[] parms = { "@ClassID", classID };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
         }
-        public int Count(long? classID,string whereClause = null, bool isCreated = true)
+        public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
+        {
+            const string procedure = "uspGet_StudentInClass";
+            object[] parms = { "@ClassID", classID };
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
+        }
+
+        public IEnumerable<ClassStudent> Get_StudentInClassNotInTrainingResult(long trainingResultID, long classID, long? trainingResultDetailID = null)
+        {
+            const string procedure = "Get_StudentInClassNotInTrainingResult";
+            object[] parms = { "@ClassID", classID, "@trainingResultDetailID", trainingResultDetailID, "@trainingResultID", trainingResultID };
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
+        }
+        public int Count(long? classID, string whereClause = null, bool isCreated = true)
         {
             const string procedure = "uspCount_StudentByClassID";
-            object[] parms = { "@WhereClause", whereClause,"@ClassID", classID };
+            object[] parms = { "@WhereClause", whereClause, "@ClassID", classID };
             return ForeignLanguageCenterAdapter.GetCount(procedure, parms);
         }
         public void Insert(ClassStudent classStudent)
@@ -56,7 +69,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                StudentID = reader["StudentID"].AsLong(),
                FirtName = reader["FirtName"].AsString(),
                LastName = reader["LastName"].AsString(),
-               FullName = reader["FirtName"].AsString() +" "+ reader["LastName"].AsString(),
+               FullName = reader["FirtName"].AsString() + " " + reader["LastName"].AsString(),
                DateOfBirth = reader["DateOfBirth"].AsDateTime(),
                CurrentAddress = reader["CurrentAddress"].AsString(),
                CityName = reader["CityName"].AsString(),

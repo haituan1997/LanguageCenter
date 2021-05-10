@@ -19,6 +19,7 @@ namespace LanguageCenter.Layer.DataLayer.Object
         public decimal Amount { get; set; }
 
         public short PaymentMethodID { get; set; }
+        public string PaymentMethodName { get; set; }
         public short Status { get; set; }
         public long StudentID { get; set; }
         public long ClassID { get; set; }

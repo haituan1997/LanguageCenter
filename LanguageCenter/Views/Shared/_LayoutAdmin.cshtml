@@ -15,6 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    @RenderSection("scripts", required: false)
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -115,6 +116,14 @@
                         <a class="nav-link" href="/lop">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Lớp
+                        </a>
+                        <a class="nav-link" href="/tin-tuc">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            tạo tin tức
+                        </a>
+                        <a class="nav-link" href="/diem-lop">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Điểm
                         </a>
                     </div>
                 </div>

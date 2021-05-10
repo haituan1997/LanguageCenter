@@ -38,6 +38,13 @@ namespace LanguageCenter.DataLayer.SqlServer
             object[] parms = { "@CourseID", id, "@IndexNumber", indexNumber };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakeClassByCourseID, parms);
         }
+        public IEnumerable<Class> Get_AllClassesNotTrainingResult()
+        {
+            const string procedure = "Get_AllClassesNotTrainingResult";
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
+        }
+        
+
         public Class Get_ClassByClassID(long id)
         {
             const string procedure = "uspGet_ClassByClassID";

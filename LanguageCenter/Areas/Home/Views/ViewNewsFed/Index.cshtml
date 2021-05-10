@@ -1,0 +1,124 @@
+﻿@model LanguageCenter.Areas.Home.Models.NewsFeedModel.NewsFeedModel
+@using LanguageCenter.Layer.DataLayer.Object
+
+@{
+    ViewBag.Title = "bản tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var newfeds = (IEnumerable<NewsFeed>)ViewBag.newFeds;
+}
+
+<section class="main-content blog-posts style-v1 container" style=" background-color: white; padding: 50px 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-title-single">
+                    <h1 class="bold">@Model.Title</h1>
+                    <article class="entry clearfix">
+                        <div class="entry-border">
+                            <div class="main-post">
+                                <div class="wrap-img">
+                                    <img src="@Model.Thumb" width="80" height="80" alt="images">
+                                    <h6>@Model.Title</h6>
+                                    <div class="entry-meta">
+                                        <span class="date"><a href="#">@Model.Createdate</a></span>
+                                        <span class="comment"><a href="#">No comment</a></span>
+                                        <span class="tag"><a href="#">Web Design, Life Style</a></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="entry-content">
+                                    @Html.Raw(Model.Description)
+                                </div><!-- /.entry-post -->
+
+                            </div><!-- /.main-post -->
+                        </div><!-- /.entry-border -->
+                    </article><!-- /entry clearfix -->
+                </div><!-- /blog-title-single -->
+            </div><!-- /col-md-8 -->
+            <div class="sidebar">
+                <div class="widget widget-popular-news">
+                    <h5 class="widget-title">Tin Tức</h5>
+                    <ul class="popular-news clearfix">
+
+                        @foreach (var item in newfeds)
+                        {
+                            <li>
+                                <div class="thumb">
+                                    <img src="@item.Thumb" alt="image" width="80" height="80">
+                                </div>
+                                <div class="text">
+                                    <a href="ban-tin?slug=@item.Code">@item.Title</a>
+                                    <p>@item.Createdate</p>
+                                </div>
+                            </li>
+                        }
+                    </ul><!-- /popular-news clearfix -->
+                    @if (ViewBag.Total > 10)
+                    {
+                        <button class="back-news" hidden value="1" style="background-color:white;width:10px;height:10px;float:left">Back</button>
+
+                        <button id="next-news" value="1" style="background-color:white;width:10px;height:10px;float:right">Next</button>
+                    }
+                </div><!-- /widget widget-popular-news -->
+            </div><!-- /sidebar -->
+        </div><!-- /row -->
+    </div><!-- /container -->
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('#next-news').off('click').on('click', function (e) {
+            var page = $('#next-news').val();
+            $.ajax({
+                method: "GET",
+                url: "/ViewNewsFed/GetViewNewsFed",
+                data: {
+                    page: page
+                }
+            }).done(function (respon) {
+                $('#next-news').val(parseInt($('#next-news').val()) + 1);
+                $(".back-news").val(parseInt($('#.back-news').val()) + 1);
+                $(".back-news").removeAttr('hidden');
+                if ((parseInt(page) *10) >= parseInt(@ViewBag.Total)) {
+                    $('#next-news').prop("hidden", true)
+                }
+                var data = respon.data;
+                $('.popular-news-item').remove();
+                $.each(data, function (i, v) {
+                    var dataAppen = '<li class="popular-news-item"> <div class="thumb"> <img src="' + v.Thumb + '" alt="image" width="80" height="80"> </div> <div class="text"> <a href="ban-tin?slug=' + v.Code + '">' + v.Title + '</a> <p>' + v.CreatedateView +'</p> </div> </li>';
+                    $('.popular-news').append(
+                        dataAppen
+                    )
+                });
+            });
+        });
+        $('.back-news').off('click').on('click', function (e) {
+            var page = $('.back-news').val();
+            $.ajax({
+                method: "GET",
+                url: "/ViewNewsFed/GetViewNewsFed",
+                data: {
+                    page: page
+                }
+            }).done(function (respon) {
+                var data = respon.data;
+                $('#next-news').val(parseInt($('#next-news').val()-1));
+                $('#next-news').removeAttr('hidden');;
+                $(".back-news").val(parseInt(page) - 1);
+                if ((parseInt(page) - 1) == 0) {
+                    $('.back-news').prop("hidden", true)
+                }
+
+                $('.popular-news-item').remove();
+                $.each(data, function (i, v) {
+                    var dataAppen = '<li class="popular-news-item"> <div class="thumb"> <img src="' + v.Thumb + '" alt="image" width="80" height="80"> </div> <div class="text"> <a href="ban-tin?slug=' + v.Code + '">' + v.Title + '</a> <p>' + v.CreatedateView + '</p> </div> </li>';
+                    $('.popular-news').append(
+                        dataAppen
+                    )
+                });
+            });
+        });
+    })
+</script>

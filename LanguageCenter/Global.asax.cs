@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-
+using Code.Helper.StaticData;
 namespace LanguageCenter
 {
     public class MvcApplication : System.Web.HttpApplication
@@ -16,6 +16,7 @@ namespace LanguageCenter
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            StaticDataHelper.InitializeData();
         }
     }
 }

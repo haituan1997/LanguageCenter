@@ -26,7 +26,7 @@ namespace LanguageCenter.DataLayer.SqlServer
         {
             const string procedure = "uspGet_User";
             object[] parms = { "@UserName", userName,"@PassWord", Pass };
-            return ForeignLanguageCenterAdapter.Read(procedure,Make, parms);
+            return ForeignLanguageCenterAdapter.Read(procedure,Make, parms); 
         }
 
 
@@ -40,9 +40,6 @@ namespace LanguageCenter.DataLayer.SqlServer
                UserID = reader["UserID"].AsLong(),
                Username = reader["Username"].AsString(),
                Password = reader["Password"].AsString(),
-               //Email = reader["Email"].AsString(),
-               //Role = reader["Role"].AsInt(),
-               //Phone = reader["Phone"].AsString(),
                FullName = reader["FullName"].AsString(),
                TypeUser = reader["TypeUser"].AsShort(),
 
