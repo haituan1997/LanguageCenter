@@ -175,6 +175,7 @@
     <Compile Include="Areas\Home\Controllers\CourseController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeClassWeekDayController.cs" />
+    <Compile Include="Areas\Home\Controllers\ViewNewsFedController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
     <Compile Include="Areas\Home\Controllers\AccountController.cs" />
     <Compile Include="Areas\Home\Controllers\TrainingResultDetailController.cs" />
@@ -8668,6 +8669,7 @@
     <Content Include="Areas\Home\Views\TrainingResult\_trainingResultPopup.cshtml" />
     <Content Include="Areas\Home\Views\HomeClassWeekDay\ClassWeekDay.cshtml" />
     <Content Include="Areas\Home\Views\HomeClassWeekDay\FullCalendar.cshtml" />
+    <Content Include="Areas\Home\Views\ViewNewsFed\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />

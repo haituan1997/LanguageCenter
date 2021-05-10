@@ -20,6 +20,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerNewsFeed.Get_NewsFeedByNewsFeedID(studenIDl);
         }
+        public NewsFeed Get_NewsFeedByCode(string slug)
+        {
+            return sqlServerNewsFeed.Get_NewsFeedByCode(slug);
+        }
         public int Count( string whereClause)
         {
             return sqlServerNewsFeed.Count( whereClause);

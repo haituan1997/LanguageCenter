@@ -40,6 +40,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public NewsFeed Get_NewsFeedByCode(string slug)
+        {
+            try
+            {
+                return NewsFeedFacade.Get_NewsFeedByCode(slug);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public string Insert(NewsFeed NewsFeed)
         {
             try
