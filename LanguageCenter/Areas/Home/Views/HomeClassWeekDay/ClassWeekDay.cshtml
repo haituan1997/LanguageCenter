@@ -1,4 +1,4 @@
-﻿
+﻿    
 @{
     ViewBag.Title = "ClassWeekDay";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -75,10 +75,9 @@
                             </div><!-- /.course-content -->
                         </div>
                     </div><!-- / .post-wrap -->
-
                 }
             }
-
+            
             <div class="blog-pagination">
                 <ul class="flat-pagination">
                     <li><span class="active">1</span></li>
@@ -99,7 +98,7 @@
                 e.preventDefault();
                 var id = $(this).attr('id');
                 if (id != null && id != undefined) {
-                    window.location.href = "/lich-hoc-theo-lop/" + id;
+                    window.location.href = "lich-hoc-theo-lop?classID=" + id;
                 }
             })
         });

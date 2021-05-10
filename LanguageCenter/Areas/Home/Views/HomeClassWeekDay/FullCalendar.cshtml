@@ -1,7 +1,113 @@
-﻿
+﻿@model LanguageCenter.Areas.Home.Models.Class.ClassModel
+
 @{
     ViewBag.Title = "FullCalendar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>FullCalendar</h2>
+<div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="title">Thời khóa biểu lớp: @Model.ClassName</h4>
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
+<div class="row">
+    <div class="col-xs-9 col-xs-push-2">
+        <div class="box box-primary">
+            <div class="box-body no-padding">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /. box -->
+    </div><!-- /.col -->
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#calendar').fullCalendar();
+
+    });
+
+        
+        //{
+            //defaultView: 'month',
+
+            //header: {
+            //    center: 'addEventButton'
+            //},
+
+            //customButtons: {
+            //    addEventButton: {
+            //        text: 'add event...',
+            //        click: function () {
+            //            var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+            //            var date = moment(dateStr);
+
+            //            if (date.isValid()) {
+            //                $('#calendar').fullCalendar('renderEvent', {
+            //                    title: 'dynamic event',
+            //                    start: date,
+            //                    allDay: true
+            //                });
+            //                alert('Great. Now, update your database...');
+            //            } else {
+            //                alert('Invalid date.');
+            //            }
+            //        }
+            //    }
+            //}
+        });
+        @*calendar.render();
+        $('#calendar').fullCalendar({
+            header:
+            {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            buttonText: {
+                today: 'today',
+                month: 'month',
+                week: 'week',
+                day: 'day'
+            },
+
+            events: function (start, end, timezone, callback) {
+                $.ajax({
+                    url: '/HomeClassWeekDay/GetCalendarByClassID?classID=' + '@Model.ClassID',
+                    type: "GET",
+                    dataType: "JSON",
+
+                    success: function (result) {
+                        debugger
+                        var events = [];
+
+                        $.each(result, function (i, data) {
+                            events.push(
+                                {
+                                    title: data.Title,
+                                    description: data.Desc,
+                                    start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                                    end: moment(data.End_Date).format('YYYY-MM-DD'),
+                                    backgroundColor: "#9501fc",
+                                    borderColor: "#fc0101"
+                                });
+                        });
+
+                        callback(events);
+                    }
+                });
+            },
+
+            eventRender: function (event, element) {
+                element.qtip(
+                    {
+                        content: event.description
+                    });
+            },
+
+            editable: false
+        });*@
+</script>
