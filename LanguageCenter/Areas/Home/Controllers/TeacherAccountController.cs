@@ -3,6 +3,7 @@ using DataTables.Mvc;
 using LanguageCenter.Areas.Home.Models.TeacherAccountModel;
 using LanguageCenter.Areas.Home.Models.TeacherModel;
 using LanguageCenter.Code.Helper.DatatableHelper;
+using LanguageCenter.Helper;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("3")]
     public class TeacherAccountController : Controller
     {
         private readonly TeacherAccountRepository _teacherAccountRepository;

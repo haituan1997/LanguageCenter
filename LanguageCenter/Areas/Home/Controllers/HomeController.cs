@@ -3,6 +3,7 @@ using LanguageCenter.Areas.Home.Models.Class;
 using LanguageCenter.Areas.Home.Models.Course;
 using LanguageCenter.Areas.Home.Models.TeacherModel;
 using LanguageCenter.DataLayer.Object;
+using LanguageCenter.Helper;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
@@ -15,7 +16,7 @@ using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
-
+   
     public class HomeController : Controller
     {
 
@@ -38,11 +39,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         }
         public ActionResult Index()
         {  
-            if(!string.IsNullOrEmpty(User.Identity.Name))
-            {
-                ViewBag.User = User.Identity.Name;
-                ViewBag.UserID = ((ClaimsIdentity)User.Identity).FindFirst("UserID").Value;
-            }
+           
             int total = 0;
             var newsfed = _NewsFeedRepository.Get_NewsFeeds(out total, 1, 10, null, null).ToList();
             foreach(var item in newsfed)

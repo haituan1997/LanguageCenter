@@ -10,8 +10,11 @@ using AutoMapper;
 using DataTables.Mvc;
 using LanguageCenter.Code.Helper.DatatableHelper;
 using Code.Helper.StaticData;
+using LanguageCenter.Helper;
+
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("3")]
     public class PaymentController : Controller
     {
         private readonly PaymentRepository _PaymentRepository;

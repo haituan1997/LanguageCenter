@@ -9,9 +9,11 @@ using System.Web.Mvc;
 using AutoMapper;
 using DataTables.Mvc;
 using LanguageCenter.Code.Helper.DatatableHelper;
+using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("3")]//thì chỗ này mình điền tên controller vào
     public class StudentController : Controller
     {
         private readonly StudentRepository _StudentRepository;

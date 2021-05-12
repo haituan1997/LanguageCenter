@@ -9,9 +9,11 @@ using System.Web.Mvc;
 using AutoMapper;
 using DataTables.Mvc;
 using LanguageCenter.Code.Helper.DatatableHelper;
+using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("2,3")]
     public class TrainingResultDetailController : Controller
     {
         private readonly TrainingResultDetailRepository _TrainingResultDetailRepository;

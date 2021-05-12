@@ -85,7 +85,7 @@
 
                                 </ul>
                                 <ul class="flat-socials">
-                                    @if (string.IsNullOrEmpty(ViewBag.UserID))
+                                    @if (string.IsNullOrEmpty(User.Identity.Name))
                                     {
                                         <li>
                                             <a href="/Account/Login" id="Login">Đăng nhập</a>
@@ -95,7 +95,7 @@
                                     else
                                     {
                                         <li>
-                                            <a href="">@ViewBag.User</a>
+                                            <a href="">@User.Identity.Name</a>
                                             <a href="/Account/LogOff" id="Login">Đăng xuất</a>
                                         </li>
                                     }

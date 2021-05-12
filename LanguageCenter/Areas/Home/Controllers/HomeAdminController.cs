@@ -8,11 +8,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Web;
-using System.Web.Mvc; 
+using System.Web.Mvc;
+using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
-    [Authorize]
+    [CustomAuthorize("2,3")]
     public class HomeAdminController : Controller
     {
         private readonly UserRepository _UserRepository;
@@ -27,6 +28,8 @@ namespace LanguageCenter.Areas.Home.Controllers
             return View();
 
         }
+      
+
         public JsonResult GetEvents()
         {
             var model = new List<Event>();

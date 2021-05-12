@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -97,38 +98,50 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="charts.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Charts
-                        </a>
-                        <a class="nav-link" href="tables.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Tables
-                        </a>
-                        <a class="nav-link" href="/giao-vien">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Giáo viên
-                        </a>
-                        <a class="nav-link" href="/hoc-sinh">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Học sinh
-                        </a>
-                        <a class="nav-link" href="/tai-khoan-hoc-sinh">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Tài khoản học sinh
-                        </a>
-                        <a class="nav-link" href="/tai-khoan-giao-vien">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Tài khoản giáo viên
-                        </a>
-                        <a class="nav-link" href="/khoa-dao-tao">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Khóa đào tạo
-                        </a>
-                        <a class="nav-link" href="/lop">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Lớp
-                        </a>
+                        @if (((ClaimsIdentity)User.Identity).FindFirst("UserID").Value == "3")
+                        {
+                            <a class="nav-link" href="/giao-vien">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Giáo viên
+                            </a>
+                            <a class="nav-link" href="/hoc-sinh">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                sinh viên
+                            </a>
+                            <a class="nav-link" href="/tai-khoan-hoc-sinh">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tài khoản sinh viên
+                            </a>
+                            <a class="nav-link" href="/hoc-phi">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Học phí
+                            </a>
+                            <a class="nav-link" href="/tai-khoan-giao-vien">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tài khoản giáo viên
+                            </a>
+                            <a class="nav-link" href="/khoa-dao-tao">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Khóa đào tạo
+                            </a>
+                            <a class="nav-link" href="/lop">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Lớp
+                            </a>
+                            <a class="nav-link" href="/tin-tuc">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                tạo tin tức
+                            </a>
+                        }
+
+                        @if (((ClaimsIdentity)User.Identity).FindFirst("UserID").Value == "3" || ((ClaimsIdentity)User.Identity).FindFirst("UserID").Value == "2")
+                        {
+                            <a class="nav-link" href="/diem-lop">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Điểm
+                            </a>
+                        }
+
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">

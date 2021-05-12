@@ -4,6 +4,7 @@ using LanguageCenter.Areas.Home.Models.Class;
 using LanguageCenter.Areas.Home.Models.ClassWeekDay;
 using LanguageCenter.Code.Helper.DatatableHelper;
 using LanguageCenter.DataLayer.Object;
+using LanguageCenter.Helper;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
@@ -14,6 +15,7 @@ using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("3")]
     public class ClassWeekDayController : Controller
     {
         private static ClassRepository _classRepository;

@@ -1,5 +1,4 @@
-﻿using LanguageCenter.DataLayer.Object;
-using LanguageCenter.Repository;
+﻿using LanguageCenter.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,7 @@ using LanguageCenter.Layer.DataLayer.Object;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("3")]
     public class HomeClassWeekDayController : Controller
     {
         private readonly ClassWeekDayRepository _classWeekDayRepository;

@@ -10,9 +10,11 @@ using AutoMapper;
 using DataTables.Mvc;
 using LanguageCenter.Code.Helper.DatatableHelper;
 using LanguageCenter.Areas.Home.Models.TrainingResultDetailModel;
+using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("2,3")]
     public class TrainingResultController : Controller
     {
         private readonly TrainingResultRepository _TrainingResultRepository;

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using DataTables.Mvc;
 using LanguageCenter.Code.Helper.DatatableHelper;
+using System.Security.Claims;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
@@ -23,6 +24,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         // GET: Home/NewsFeed
         public ActionResult NewsFeeds()
         {
+            var test = ((ClaimsIdentity)User.Identity).FindFirst("UserID").Value;
             return View();
             
         }

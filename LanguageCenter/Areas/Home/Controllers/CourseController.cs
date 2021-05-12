@@ -2,6 +2,7 @@
 using DataTables.Mvc;
 using LanguageCenter.Areas.Home.Models.Course;
 using LanguageCenter.Code.Helper.DatatableHelper;
+using LanguageCenter.Helper;
 using LanguageCenter.Layer.DataLayer.Object;
 using LanguageCenter.Repository;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
+    [CustomAuthorize("3")]
     public class CourseController : Controller
     {
         private readonly CourseRepository _courseRepository;
