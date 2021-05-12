@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using LanguageCenter.Areas.Home.Models.Class;
 using AutoMapper;
 using LanguageCenter.Layer.DataLayer.Object;
+using LanguageCenter.DataLayer.Object;
+using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
