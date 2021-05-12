@@ -1,36 +1,89 @@
-﻿
+﻿@model LanguageCenter.Areas.Home.Models.Class.ClassModel
+
 @{
     ViewBag.Title = "FullCalendar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
-<h2>FullCalendar</h2>
+<div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="title">Thời khóa biểu lớp: @Model.ClassName</h4>
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
+<div class="container">
+    <div class="row">
+            <div class="box box-primary">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div><!-- /.box-body -->
+            </div><!-- /. box -->
+    </div>
+</div>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<script>
+    $(document).ready(function () {
+         $('#calendar').fullCalendar({
+            header:
+            {
+                left: 'prev,next today',
+                center: 'title',
+                right: ''
+            },
+            buttonText: {
+                today: 'today',
+                month: 'month',
+                week: 'week',
+                day: 'day'
+             },
+             locale: 'vi',
+            events: function (start, end, timezone, callback) {
+                $.ajax({
+                    url: '/HomeClassWeekDay/GetCalendarByClassID?classID=' + '@Model.ClassID',
+                    type: "GET",
+                    dataType: "JSON",
+
+                    success: function (result) {
+                        debugger
+                        var events = [];
+
+                        $.each(result.data, function (i, data) {
+                            events.push(
+                                {
+                                    title: "Thời giam bắt đầu:" + data.StartTime + " \n Thời gian kết thúc:" + data.EndTime,
+                                    description: "a",
+                                    start: moment(data.ClassWeekDayTime).format('YYYY-MM-DD'),
+                                    //end: moment(data.ClassWeekDayTime).format('YYYY-MM-DD'),
+                                    end: "2020-02-03",
+                                    backgroundColor: "#9501fc",
+                                    borderColor: "#fc0101"
+                                });
+                        });
+
+                        callback(events);
+                    }
+                });
+            },
+
+             eventRender: function (event, element) {
+                debugger
+                //element.qtip(
+                //    {
+                //        content: event.description
+                //    });
+            },
+
+            editable: false
+        });
+
+    });
+
+
+
+
+</script>
 

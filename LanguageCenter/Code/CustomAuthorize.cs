@@ -11,7 +11,7 @@ namespace LanguageCenter.Helper
 {
     public class CustomAuthorize : AuthorizeAttribute
     {
-        private readonly string[] allowedroles;
+        private readonly string[] allowedroles;// hàm này mình cútom
         public CustomAuthorize(params string[] roles)
         {
             this.allowedroles = roles;
@@ -25,7 +25,7 @@ namespace LanguageCenter.Helper
                 // Get the claims values
                 try
                 {
-                    //var test= ((ClaimsIdentity)User.Identity).FindFirst("TypeUser").Value;
+                    //nếu chỗ này mình có chức năng như bên mình xong quay đây mình sẽ khoe vs cái ten controller đó, còn chỗ này mình lưu lại cái type trong claim nên a lấy ra so sanh, typ3 thì full quyền
                     var type = identity.Claims.Where(c => c.Type == "TypeUser")
                    .Select(c => c.Value).SingleOrDefault(); ;
                     if (role.IndexOf(type)>=0|| string.IsNullOrEmpty(role))
