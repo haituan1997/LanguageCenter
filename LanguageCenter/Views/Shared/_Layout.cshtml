@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <!--<![endif]-->
 <head>
@@ -40,7 +41,7 @@
 
 
 
-   
+
 
 
 
@@ -96,7 +97,18 @@
                                     {
                                         <li>
                                             <a href="">@User.Identity.Name</a>
-                                            <a href="/Account/LogOff" id="Login">Đăng xuất</a>
+                                            @if (((ClaimsIdentity)User.Identity).FindFirst("TypeUser").Value == "3")
+                                            {
+                                                <ul class="flat-socials-submenu">
+                                                    <li><a href="/admin">Quản trị</a></li>
+                                                    <li><a href="/Account/LogOff">Đăng xuất</a></li>
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Account/LogOff" id="Login">Đăng xuất</a>
+
+                                            }
                                         </li>
                                     }
 
@@ -153,14 +165,7 @@
                                 </li>
                                 <li class="has-sub">
                                     <a class="menu-li-a course" href="/khoa-hoc">Khóa học</a>
-                                    @*<ul class="submenu course">
-                                            @{
-                                                Html.RenderAction("Courses", "Home");
-                                            }
-                                        </ul>*@
                                 </li>
-
-
                                 <li>
                                     <a class="menu-li-a class">Lớp học</a>
                                     <ul class="submenu">
@@ -331,6 +336,8 @@
     <!-- Javascript -->
     <script>
         $(document).ready(function () {
+
+            
             //$('.js-select2-enable-search-form-search').select2({
             //    language:
             //    {

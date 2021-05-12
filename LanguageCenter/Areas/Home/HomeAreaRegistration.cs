@@ -16,6 +16,8 @@ namespace LanguageCenter.Areas
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+            context.MapRoute("", "admin", defaults: new { controller = "HomeAdmin", action = "Index", area = "Home" });
+
             #region home
             context.MapRoute("", "trang-chu", defaults: new { controller = "Home", action = "Index", area = "Home" });
             context.MapRoute("", "khoa-hoc/{id}", defaults: new { controller = "Home", action = "Course", area = "Home" ,id = UrlParameter.Optional});
