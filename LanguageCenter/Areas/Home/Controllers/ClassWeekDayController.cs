@@ -38,7 +38,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult Class(long? id)
         {
             ViewBag.Courses = _courseRepository.Get_AllCourses().ToList();
-            ViewBag.Teachers = _teacherRepository.Get_Teacheres().ToList();
+            ViewBag.Teachers = _teacherRepository.Get_AllTeacheres().ToList();
             
                 var obj = _classRepository.Get_ClassByClassID((long)id);
                 var model = Mapper.Map<Class, NewClassModel>(obj);

@@ -36,6 +36,31 @@
 
 /* Reset
 -------------------------------------------------------------- */
+
+
+.flat-socials:hover ul.flat-socials-submenu {
+	opacity: 1;
+}
+.flat-socials ul.flat-socials-submenu a {
+	color: #676767;
+}
+	.flat-socials ul.flat-socials-submenu a:hover {
+		color: #feb800;
+	}
+.flat-socials ul.flat-socials-submenu {
+	
+	padding: 0px 15px;
+	position: absolute;
+	right: 123px;
+	top: 80%;
+	width: 100px;
+	background-color: #d8d7d7;
+	z-index: 9999;
+	opacity: 0;
+	transition: all 0.3s ease-in-out;
+	color: black;
+	border-radius: 7px;
+}
 	html {
 		overflow-y: scroll;
 		-webkit-text-size-adjust: 100%;

@@ -11,7 +11,19 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
 {
     public class SqlServerTeacher
     {
-        public IEnumerable<Teacher> Get_Teacheres()
+        public IEnumerable<Teacher> Get_Teacheres(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
+        {
+            const string procedure = "uspGetPaged_Teacher";
+            object[] parms = { "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy };
+            return ForeignLanguageCenterAdapter.ReadList(procedure, Make, parms);
+        }
+        public int Count(string whereClause = null, bool isCreated = true)
+        {
+            const string procedure = "uspCount_Teacher";
+            object[] parms = { "@WhereClause", whereClause };
+            return ForeignLanguageCenterAdapter.GetCount(procedure, parms);
+        }
+        public IEnumerable<Teacher> Get_AllTeacheres()
         {
             const string procedure = "uspGet_Tearcheres";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);

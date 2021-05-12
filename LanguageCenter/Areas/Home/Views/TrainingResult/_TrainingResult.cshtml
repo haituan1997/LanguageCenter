@@ -7,81 +7,130 @@
 }
 
 
-<div class="modal-body" style="overflow-y:auto">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 title">
-            <span>Thông tin chung</span>
+<div class="content-info" style="font-size: 13px;">
+
+    <div class="row form-title title">
+        <div class="col-md-10 col-lg-10 " id="custom-title">
+            <i class="fa fa-arrow-left" style=" font-weight: 300; font-size: 14px; top: -4px; position: inherit;"></i>
+            <span class="QuickSand" id="title-form">Danh sách điểm thi theo lớp</span>
         </div>
+        @*<div class="col-md-2 col-lg-2 arrow-link" style="margin-right: 27px;">
+                <a class="btn btn-flat btn-icon-custom pull-right border-radius-class" id="btnRefresh" style="padding-top: 8px;">
+                    <i class="fa fa-sync-alt"></i>
+                    <span class="OpenSans" style="font-weight:400">Làm mới</span>
+                </a>
+            </div>*@
     </div>
-    <form method="post" id="TrainingResultForm" action="@Url.Action("TrainingResult")">
-        @*@Html.AntiForgeryToken()*@
-        @Html.HiddenFor(x => x.TrainingResultID)
-        @Html.HiddenFor(x => x.IsEdit)
-        <div class="form-outline mb-4">
-            <div id="class-grp">
-                <label>Lớp</label>
-                <select class="form-control js-select2-enable-search-form-search" name="ClassID" id="ClassID" data-placeholder="Chọn lớp" tabindex="4">
-                    <option></option>
-                    @foreach (var Class in Classes)
-                    {
-                        var selected = Model.ClassID == Class.ClassID ? "selected" : ""; ;
-                        <option @selected value="@Class.ClassID">@Class.ClassName </option>
-                    }
-                </select>
+    <div class="container-list step-by-step-container" style="max-height:75%">
+        <form method="post" id="TrainingResultForm" action="@Url.Action("TrainingResult")">
+            @*@Html.AntiForgeryToken()*@
+            @Html.HiddenFor(x => x.TrainingResultID)
+            @Html.HiddenFor(x => x.IsEdit)
+            <section class="">
+                <div class="panel-group">
+                    <div class="panel panel-default" id="panel1">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#General">
+                                    <span class="QuickSand">
+                                        Thông tin lớp
+                                    </span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="General" class="panel-collapse collapse in" style="display:block">
+                            <div class="panel-body">
+                                <div class="row info">
+                                    <div class="col-lg-12 col-md-12" style=" padding: 0px 15px;">
+                                        <div class="form-group">
+                                            <label>Chọn lớp</label>
+                                            <select @(Model.IsEdit ? "disabled" : "" ) class="form-control js-select2-enable-search-form-search" name="ClassID" id="ClassID" data-placeholder="Chọn lớp" tabindex="4">
+                                                <option></option>
+                                                @foreach (var Class in Classes)
+                                                {
+                                                    var selected = Model.ClassID == Class.ClassID ? "selected" : ""; ;
+                                                    <option @selected value="@Class.ClassID">@Class.ClassName </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+        </form>
+
+        <section style="margin-bottom: 25px;">
+            <div class="panel-group" style="margin-bottom: 0;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#formlist">
+                                <span class="QuickSand">
+                                    Danh sách điểm
+                                </span>
+                            </a>
+                        </h4>
+                    </div>
+
+                </div>
+                <div class="" id="formlist">
+                    <div class="panel-body tab-body">
+                        <div class="row" style=" position: relative; margin: 10px 10px 10px 0px;">
+                            <div class="action-FormList">
+                                <button id="btnAddNew" class="btn-add-new"><span class="">Thêm mới</span></button>
+                                <a id="btnDeleteAll" class="btn-delete-all" style="padding-top: 5px;"><span>Xóa tất cả</span></a>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 11px;">
+                            <div class="col-lg-12 col-md-12 ">
+                                <table style="width:100%;" id="TrainingResultDetailTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+                                    <thead class="Table-Thead">
+                                        <tr class="Table-Thead-tr">
+                                            <th>ID</th>
+                                            <th>Họ học sinh</th>
+                                            <th>Tên học sinh</th>
+                                            <th>Điểm thi lần đầu</th>
+                                            <th>Điểm thi lần 2</th>
+                                            <th>Hoạt động</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
+
+        <div class="modal-footer">
+            <button id="btnSave" name="submit" value="Save" class="btn-save" form="TrainingResultForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
+            <a name="submit" value="Save" id="exit-view" class=" btn-exit" tabindex="7"><span class="OpenSans">Thoát</span></a>
         </div>
 
-    </form>
-
-    <div class="container-homeadmin">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 title">
-                <span>Danh sách các lớp đã nhập điểm</span>
-            </div>
-        </div>
-        <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
-            <div class="action-FormList">
-                <button id="btnAddNew" class="btn-add-new"><span class="">Thêm mới</span></button>
-                <a id="btnDeleteAll" class="btn-delete-all"><span>Xóa tất cả</span></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 col-md-12 ">
-                <table style="width:100%;" id="TrainingResultDetailTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
-                    <thead class="Table-Thead">
-                        <tr class="Table-Thead-tr">
-                            <th>ID</th>
-                            <th>Họ học sinh</th>
-                            <th>Tên học sinh</th>
-                            <th>Hoạt động</th>
-                        </tr>
-                    </thead>
-                </table>
+    </div>
+    <div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
+        <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
+            <div class="modal-content">
             </div>
         </div>
     </div>
-    <div class="modal-footer">
-        <button id="btnSave" name="submit" value="Save" class="btn-save" form="TrainingResultForm" tabindex="6"><span class="OpenSans">Lưu</span></button>
-        <a name="submit" value="Save" id="exit-view" class=" btn-exit" tabindex="7"><span class="OpenSans">Thoát</span></a>
+    <div class="modal right fade" id="popUpClassWeekDay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
+        <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
+            <div class="modal-content">
+            </div>
+        </div>
     </div>
-
 </div>
-<div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
-    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
-<div class="modal right fade" id="popUpClassWeekDay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
-    <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
 
-<script src="~/Scripts/ckeditor/ckeditor.js"></script>
-<script src="~/Scripts/ckfinder/ckfinder.js"></script>
-<script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckfinder/ckfinder.js"></script>
+    <script>
 
     var tableName = "TrainingResultDetailTable";
     var popUpName = "popUp";
@@ -94,7 +143,9 @@
     var idColum = "TrainingResultDetailID";
     var buildTable
     $(document).ready(function () {
+        if ('@Model.IsEdit' ==='True') {
 
+        }
         buildTable = $('#' + tableName + '').DataTable({
             "ajax": {
                 "url": urlDataTable,
@@ -103,8 +154,10 @@
             },
             "columns": [
                 { "data": "TrainingResultDetailID", "name": "TrainingResultDetailID" },
-                { "data": "FirtName", "name": "FirtName" }, 
-                { "data": "LastName", "name": "LastName" }, 
+                { "data": "FirtName", "name": "FirtName" },
+                { "data": "LastName", "name": "LastName" },
+                { "data": "ScoreFirt", "name": "ScoreFirt" },
+                { "data": "ScoreLast", "name": "ScoreLast" },
                 {
                     "data": "TrainingResultDetailID", "render": function (data) {
                         return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
@@ -153,7 +206,7 @@
                     addSearchControl(oSettings, json);
                     //eventDoubleClick();
                     selected();
-                    caculatorHeightTable();
+                    //caculatorHeightTable();
 
                 }
                 changeCss();
@@ -179,7 +232,7 @@
             $('.page-item.active .page-link').css("cModelsTrainingResultIDext", "color: white; border: 1px solid rgb(222, 226, 230);background-color: #3ca4ab;");
         }
 
-        var caculatorHeightTable = function () {
+        var caculatoModeldIsEditelHeightTable = function () {
             var windowHeight = $(window).height();
             var nav = $('.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark').height();
             var title = $('.container-homeadmin .title').height();
@@ -441,11 +494,11 @@
                 //    .css('cssText', 'border: 1px solid #f58a73 !important');
                 return false;
             }
-
+            $('#ClassID').prop('disabled', false);
 
         });
-        $("#exit-view").off('click').on('click', function (e) {
+        $("#exit-view,.fa-arrow-left").off('click').on('click', function (e) {
             window.location = "/diem-lop";
         });
     });
-</script>
+    </script>

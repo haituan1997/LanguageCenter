@@ -76,7 +76,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             var student = _studentRepository.GetAll_Students().Count();
             data.Add(student);
 
-            var teacher = _teacherRepository.Get_Teacheres().Count();
+            var teacher = _teacherRepository.Get_AllTeacheres().Count();
             data.Add(teacher);
 
             var course = _courseRepository.Get_AllCourses().Count();
@@ -90,7 +90,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         [ChildActionOnly]
         public ActionResult Teachers()
         {
-            var teachers = _teacherRepository.Get_Teacheres();
+            var teachers = _teacherRepository.Get_AllTeacheres();
             ViewBag.DataTeachers = teachers;
             return PartialView("_Teachers");
         }

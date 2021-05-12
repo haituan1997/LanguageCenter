@@ -11,13 +11,21 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
     public class TeacherFacade
     {
         SqlServerTeacher sqlServerTeacher = new SqlServerTeacher();
-        public IEnumerable<Teacher> Get_Teacheres()
+        public IEnumerable<Teacher> Get_Teacheres(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
-            return sqlServerTeacher.Get_Teacheres();
+            return sqlServerTeacher.Get_Teacheres(page, pageSize, orderBy, searchBy);
+        }
+        public IEnumerable<Teacher> Get_AllTeacheres()
+        {
+            return sqlServerTeacher.Get_AllTeacheres();
         }
         public IEnumerable<Teacher> Get_TeacheresNotInTeacherAccount()
         {
             return sqlServerTeacher.Get_TeacheresNotInTeacherAccount();
+        }
+        public int Count(string whereClause)
+        {
+            return sqlServerTeacher.Count(whereClause);
         }
         public TeacherResponse InsertOrUpdate(Teacher teacher)
         {

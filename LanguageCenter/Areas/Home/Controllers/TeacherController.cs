@@ -10,6 +10,8 @@ using AutoMapper;
 using System.IO;
 using System.Configuration;
 using LanguageCenter.Helper;
+using DataTables.Mvc;
+using LanguageCenter.Code.Helper.DatatableHelper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
@@ -28,13 +30,20 @@ namespace LanguageCenter.Areas.Home.Controllers
             return View();
             
         }
-
-        [HttpGet]
-        public ActionResult GetTeacheres()
+        [HttpPost]
+        public ActionResult GetPage_Teacheres([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
-            var teacheres = _teacherRepository.Get_Teacheres();
-            return Json(new { data = teacheres }, JsonRequestBehavior.AllowGet);
+            var requestForm = Request.Form;
+            int totalRows;
+            var requestParams = DatatableHelper.GetParamsFromRequest(requestModel, requestForm);
+            var pageIndex = requestParams.PageIndex;
+            var pageSize = requestParams.PageSize;
+            var orderBy = requestParams.OrderBy;
+            var searchBy = requestParams.SearchBy;
+            var data = _teacherRepository.Get_PagedTeacheres(out totalRows, pageIndex, pageSize, orderBy, searchBy);
+            return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = data.ToArray() }, JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpGet]
         public ActionResult Teacher(long? id)
@@ -49,7 +58,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             }
             else
             {
-                teacher = _teacherRepository.Get_Teacheres().FirstOrDefault(x => x.TeacherID == (long)id);
+                teacher = _teacherRepository.Get_AllTeacheres().FirstOrDefault(x => x.TeacherID == (long)id);
                 var model = Mapper.Map<Teacher, TeacherModel>(teacher);
                 model.Title = "Cập nhập giáo viên";
                 model.IsEdit = true;
