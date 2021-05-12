@@ -27,77 +27,29 @@ namespace LanguageCenter.Areas.Home.Controllers
             return View();
 
         }
-        public JsonResult getpage([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
+        public JsonResult GetEvents()
         {
-            var requestForm = Request.Form;
-            var requestParams = DatatableHelper.GetParamsFromRequest(requestModel, requestForm);
-            var pageIndex = requestParams.PageIndex;
-            var pageSize = requestParams.PageSize;
-            var orderBy = requestParams.OrderBy;
-
-            var data = new List<UserModel1>();
-            data.Add(new UserModel1()
+            var model = new List<Event>();
+            model.Add(new Event()
             {
-                test=1,
-                UserID=1,
-                FullName="lê hoa 1"
+                EventID = 1,
+                Subject = "test",
+                Description = "test1",
+                Start = DateTime.Now,
+                ThemeColor = "red",
+                IsFullDay = true
             });
-            data.Add(new UserModel1()
-            {
-                UserID = 2,
-                FullName = "lê hoa 2"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 3,
-                FullName = "lê hoa 3"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 4,
-                FullName = "lê hoa 4"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 5,
-                FullName = "lê hoa 5"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 6,
-                FullName = "lê hoa 6"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 7,
-                FullName = "lê hoa 7"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 8,
-                FullName = "lê hoa 8"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 9,
-                FullName = "lê hoa 9"
-            });
-            data.Add(new UserModel1()
-            {
-                UserID = 10,
-                FullName = "lê hoa 10"
-            });
-            
-            return Json(new { draw = requestModel.Draw, recordsTotal =15, recordsFiltered=15,  data = data.ToArray() }, JsonRequestBehavior.AllowGet);
-                   
-
+            return new JsonResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-       public class UserModel1
+        public partial class Event
         {
-            public int UserID { get; set; }
-            public string FullName { get; set; }
-            public int test { get; set; }
+            public int EventID { get; set; }
+            public string Subject { get; set; }
+            public string Description { get; set; }
+            public System.DateTime Start { get; set; }
+            public Nullable<System.DateTime> End { get; set; }
+            public string ThemeColor { get; set; }
+            public bool IsFullDay { get; set; }
         }
-
     }
 }

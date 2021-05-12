@@ -12,68 +12,35 @@
         </div><!-- /.col-md-12 -->
     </div><!-- /.row -->
 </div><!-- /.container -->
-<div class="row">
-    <div class="col-xs-9 col-xs-push-2">
-        <div class="box box-primary">
-            <div class="box-body no-padding">
-                <!-- THE CALENDAR -->
-                <div id="calendar"></div>
-            </div><!-- /.box-body -->
-        </div><!-- /. box -->
-    </div><!-- /.col -->
+<div class="container">
+    <div class="row">
+            <div class="box box-primary">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div><!-- /.box-body -->
+            </div><!-- /. box -->
+    </div>
 </div>
 
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 <script>
     $(document).ready(function () {
-
-        $('#calendar').fullCalendar();
-
-    });
-
-        
-        //{
-            //defaultView: 'month',
-
-            //header: {
-            //    center: 'addEventButton'
-            //},
-
-            //customButtons: {
-            //    addEventButton: {
-            //        text: 'add event...',
-            //        click: function () {
-            //            var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-            //            var date = moment(dateStr);
-
-            //            if (date.isValid()) {
-            //                $('#calendar').fullCalendar('renderEvent', {
-            //                    title: 'dynamic event',
-            //                    start: date,
-            //                    allDay: true
-            //                });
-            //                alert('Great. Now, update your database...');
-            //            } else {
-            //                alert('Invalid date.');
-            //            }
-            //        }
-            //    }
-            //}
-        });
-        @*calendar.render();
-        $('#calendar').fullCalendar({
+         $('#calendar').fullCalendar({
             header:
             {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: ''
             },
             buttonText: {
                 today: 'today',
                 month: 'month',
                 week: 'week',
                 day: 'day'
-            },
-
+             },
+             locale: 'vi',
             events: function (start, end, timezone, callback) {
                 $.ajax({
                     url: '/HomeClassWeekDay/GetCalendarByClassID?classID=' + '@Model.ClassID',
@@ -84,13 +51,14 @@
                         debugger
                         var events = [];
 
-                        $.each(result, function (i, data) {
+                        $.each(result.data, function (i, data) {
                             events.push(
                                 {
-                                    title: data.Title,
-                                    description: data.Desc,
-                                    start: moment(data.Start_Date).format('YYYY-MM-DD'),
-                                    end: moment(data.End_Date).format('YYYY-MM-DD'),
+                                    title: "Thời giam bắt đầu:" + data.StartTime + " \n Thời gian kết thúc:" + data.EndTime,
+                                    description: "a",
+                                    start: moment(data.ClassWeekDayTime).format('YYYY-MM-DD'),
+                                    //end: moment(data.ClassWeekDayTime).format('YYYY-MM-DD'),
+                                    end: "2020-02-03",
                                     backgroundColor: "#9501fc",
                                     borderColor: "#fc0101"
                                 });
@@ -101,13 +69,21 @@
                 });
             },
 
-            eventRender: function (event, element) {
-                element.qtip(
-                    {
-                        content: event.description
-                    });
+             eventRender: function (event, element) {
+                debugger
+                //element.qtip(
+                //    {
+                //        content: event.description
+                //    });
             },
 
             editable: false
-        });*@
+        });
+
+    });
+
+
+
+
 </script>
+
