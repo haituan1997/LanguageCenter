@@ -75,7 +75,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult Class(long? id)
         {
             ViewBag.Courses = _courseRepository.Get_AllCourses().ToList();
-            ViewBag.Teachers = _teacherRepository.Get_Teacheres().ToList();
+            ViewBag.Teachers = _teacherRepository.Get_AllTeacheres().ToList();
             if (id == null)
             {
                 var model = new Class {
@@ -110,7 +110,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult Class(NewClassModel model)
         {
             ViewBag.Courses = _courseRepository.Get_AllCourses().ToList();
-            ViewBag.Teachers = _teacherRepository.Get_Teacheres().ToList();
+            ViewBag.Teachers = _teacherRepository.Get_AllTeacheres().ToList();
             if (!ModelState.IsValid)
             {
                 TempData["Error"] = "Đã có lỗi xảy ra";

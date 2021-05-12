@@ -94,7 +94,6 @@
             }
         });
 
-
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -105,10 +104,6 @@
             }
         }
 
-        //$("#file").change(function () {
-        //    readURL(this);
-        //    $("#file").css("display", "none");
-        //});
         $("#imgVCAvatar").hover(function () {
             $("#browser").css("display", "block");
         }, function () {
@@ -124,18 +119,26 @@
         $("#browser").click(function () {
             $("#file").click();
         });
+
         var valid = function () {
             $("#TeacherForm").validate({
                 rules: {
-                    FirtName: "required",
+                    FirtName: { required:true },
+                    LastName: { required:true },
                     Email: { email: true },
+                    NumberPhone: { required:true },
                 },
                 messages: {
                     FirtName: {
                         required: "Họ giáo viên không được để trống!",
-                        //minlength: "Địa chỉ ngắn vậy, chém gió ah?"
+                    },
+                    LastName: {
+                        required: "Tên giáo viên không được để trống!",
                     },
                     Email: { email: "Email không đúng địng dạng!" },
+                    NumberPhone: {
+                        required: "Số điện thoại không được để trống!",
+                    },
                 },
                 errorPlacement: function (error, element) {
                     error.insertAfter(element, "label-error");
@@ -143,7 +146,7 @@
             })
         };
         valid();
-        $('.btn-exit-popup').off('click').on('click', function (e) {
+        $('.btn-exit-popup,.btn-close').off('click').on('click', function (e) {
 
             e.preventDefault();
             $('#popUp').modal('hide');

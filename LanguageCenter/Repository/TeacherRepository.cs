@@ -15,12 +15,24 @@ namespace LanguageCenter.Repository
         {
             teacherFacade = new TeacherFacade();
         }
-
-        public IEnumerable<Teacher> Get_Teacheres()
+        public IEnumerable<Teacher> Get_PagedTeacheres(out int total, int page, int pageSize, string orderBy = null, string searchBy = null)
         {
             try
             {
-                return teacherFacade.Get_Teacheres();
+                total = teacherFacade.Count(searchBy);
+                return teacherFacade.Get_Teacheres(page, pageSize, orderBy, searchBy);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public IEnumerable<Teacher> Get_AllTeacheres()
+        {
+            try
+            {
+                return teacherFacade.Get_AllTeacheres();
             }
             catch (Exception ex)
             {

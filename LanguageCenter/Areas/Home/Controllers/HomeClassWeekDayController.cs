@@ -12,7 +12,7 @@ using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
-    [CustomAuthorize("3")]
+    [CustomAuthorize("1")]
     public class HomeClassWeekDayController : Controller
     {
         private readonly ClassWeekDayRepository _classWeekDayRepository;
