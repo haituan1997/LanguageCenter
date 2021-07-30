@@ -52,8 +52,11 @@ namespace LanguageCenter.Areas.Home.Controllers
                 fisrtNews = newsfed[0];
             }
             var listNews = new List<NewsFeed>();
-            newsfed.RemoveAt(0);
-           
+            if (newsfed.Count>0)
+            {
+                newsfed.RemoveAt(0);
+
+            }
             ViewBag.newFeds = newsfed;
             ViewBag.firstNewFeds = fisrtNews;
             ViewBag.Total = total;
