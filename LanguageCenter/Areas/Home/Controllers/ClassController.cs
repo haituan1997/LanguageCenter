@@ -13,11 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static Code.Enumerator.Enumerator;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
-    [CustomAuthorize("3")]
-    public class ClassController : Controller
+    public class ClassController : BaseController
     {
         private readonly TeacherRepository _teacherRepository;
         private readonly ClassRepository _classRepository;
@@ -35,10 +35,15 @@ namespace LanguageCenter.Areas.Home.Controllers
             Mapper.CreateMap<NewClassModel, Class>();
             Mapper.CreateMap<ClassStudent, ClassStudentModel>();
             Mapper.CreateMap<ClassStudentModel, ClassStudent>();
+
+            
         }
+
         // GET: Home/Class
         public ActionResult Classes()
         {
+            if (TeacherID != -1)
+                ViewBag.Function = new Tuple<int, int>((int)TypeOfPermission.Type0, (int)TypeOfPermission.Type1);
             return View();
         }
         [HttpPost]
@@ -67,6 +72,10 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 orderBy = orderBy.Replace("CourseName", "Name");
             }
+
+            if (TeacherID != -1)
+                searchBy += " AND cl.TeacherID =" + TeacherID;
+
             var data = _classRepository.Get_Classes(out totalRows, pageIndex, pageSize, orderBy, searchBy);
             return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = data.ToArray() }, JsonRequestBehavior.AllowGet);
 
@@ -78,7 +87,8 @@ namespace LanguageCenter.Areas.Home.Controllers
             ViewBag.Teachers = _teacherRepository.Get_AllTeacheres().ToList();
             if (id == null)
             {
-                var model = new Class {
+                var model = new Class
+                {
                     Title = "Thêm mới lớp học",
                     IsCreated = false,
                     //TeacherID = 0,
@@ -96,7 +106,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             else
             {
                 var obj = _classRepository.Get_ClassByClassID((long)id);
-                var model = Mapper.Map<Class,NewClassModel>(obj);
+                var model = Mapper.Map<Class, NewClassModel>(obj);
                 model.Title = "Cập nhập lớp học";
                 model.IsEdit = true;
                 ViewBag.ClassID = model.ClassID;
@@ -114,7 +124,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["Error"] = "Đã có lỗi xảy ra";
-                return View("Class",model);
+                return View("Class", model);
             }
             try
             {
@@ -122,7 +132,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 {
                     var objClass = Mapper.Map<NewClassModel, Class>(model);
                     _classRepository.Update(objClass);
-                    TempData["Success"] = "Cập nhập lớp thành công!" ;
+                    TempData["Success"] = "Cập nhập lớp thành công!";
                 }
                 else
                 {
@@ -131,13 +141,13 @@ namespace LanguageCenter.Areas.Home.Controllers
                     _classRepository.Update(objClass);
                     TempData["Success"] = "Thêm mới lớp thành công!";
                 }
-                
+
                 return RedirectToAction("Classes", "Class", new { id = "" });
             }
             catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
-                return View("Class",model);
+                return View("Class", model);
             }
         }
         [ActionName("DeleteClass")]
@@ -158,7 +168,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetPage_StudenByClassID([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel,long? classID)
+        public ActionResult GetPage_StudenByClassID([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel, long? classID)
         {
             var requestForm = Request.Form;
             int totalRows;
@@ -186,7 +196,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             var model = new ClassStudentModel();
             model.Title = "Chọn học sinh";
             model.ClassID = id;
-            return PartialView("_ClassStudent",model);
+            return PartialView("_ClassStudent", model);
         }
 
         [HttpPost]
@@ -198,16 +208,16 @@ namespace LanguageCenter.Areas.Home.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Đã có lỗi xảy ra!"}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "Đã có lỗi xảy ra!" }, JsonRequestBehavior.AllowGet);
             }
             try
             {
                 _classStudentRepository.Insert(model);
-                return Json(new { success = true ,message="Thêm mới học sinh vào lớp thành công!"},JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, message = "Thêm mới học sinh vào lớp thành công!" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = true, message = ex.Message}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         [ActionName("DeleteClassStudent")]

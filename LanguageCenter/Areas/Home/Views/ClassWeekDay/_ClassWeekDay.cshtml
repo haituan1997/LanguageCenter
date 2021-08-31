@@ -15,7 +15,7 @@
 
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Ngày học</label>
-            <input type="text" name="ClassWeekDayTime" id="ClassWeekDayTime" value="@classWeekDayTime" autofocus class="form-control" tabindex="1" />
+            <input type="date" name="ClassWeekDayTime" id="ClassWeekDayTime" value="@classWeekDayTime" autofocus class="form-control" tabindex="1" />
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Thời gian bắt đầu</label>
@@ -62,7 +62,7 @@
             })
         };
         valid2();
-        $("#ClassWeekDayTime").datepicker({ format: 'mm/dd/yyyy', language: 'vi' });
+        //$("#ClassWeekDayTime").datepicker({ format: 'mm/dd/yyyy', language: 'vi' });
         $("ClassWeekDayTime").click(function () {
             $("#ClassWeekDayTime").datepicker("show");
         });

@@ -29,11 +29,6 @@ namespace LanguageCenter.DataLayer.SqlServer
             return ForeignLanguageCenterAdapter.Read(procedure,Make, parms); 
         }
 
-
-        
-
-
-
         private static readonly Func<IDataReader, User> Make = reader =>
            new User
            {

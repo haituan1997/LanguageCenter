@@ -5,7 +5,13 @@ namespace Code.Enumerator
 {
     public class Enumerator
     {
-       
+        public enum TypeOfPermission
+        {
+            [Description("Có quyền")]
+            Type1 = 1,
+            [Description("Không quyền")]
+            Type0 = 0,
+        }
         public enum PaymentMethod
         {
             [Description("Trực tiếp")]

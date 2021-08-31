@@ -12,6 +12,7 @@
     <link href="~/css/DataTable.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
@@ -128,6 +129,10 @@
 
                         @if (((ClaimsIdentity)User.Identity).FindFirst("TypeUser").Value == "3" || ((ClaimsIdentity)User.Identity).FindFirst("TypeUser").Value == "2")
                         {
+                            <a class="nav-link" href="/lop">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Lớp
+                            </a>
                             <a class="nav-link" href="/diem-lop">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Điểm
