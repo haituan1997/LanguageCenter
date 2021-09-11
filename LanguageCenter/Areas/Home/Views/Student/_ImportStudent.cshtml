@@ -412,6 +412,14 @@
     .fa-check:before {
         content: "\f00c";
     }
+    .item-file {
+        text-align: center;
+        cursor: pointer;
+    }
+    a:hover {
+        color: #23527c;
+        text-decoration: underline;
+    }
 </style>
 <div class="modal-header">
     <div class="modal-title">Nhập dữ liệu</div>
@@ -692,7 +700,7 @@
 
             // Click next button
             allNextBtn.click(function () {
-                //loadFileErros();
+                loadFileErros();
                 $(".Note-Erros-import").hide();
                 var curStep = $("div.setup-panel a.btn-current-step");
                 var curStepBtn = curStep.attr("href");
@@ -827,13 +835,12 @@
             });
 
             function loadFileErros() {
-
-                var url = '/FilesHistoryImport/FilesHistoryImportTop5'
+                var url = '/FileHistoryImport/GetByContronllerAndUserId'
                 $.ajax({
                     url: url,
                     type: 'GET',
                     data: {
-                        controllerName: 'RelativeMartyr'
+                        controllerName: 'Student'
                     },
                     dataType: 'json',
                     success: function (response) {
@@ -844,9 +851,8 @@
                                 $('#List-File-import-Erros .item').remove();
                                 $.each(data, function (i, v) {
                                     $('#List-File-import-Erros').append('<div class="item item-file">' +
-                                        '<img src = "./images/erros_import.jpg" style = "display:inline-block" width = "29" height = "29" />' +
-                                        //'<a href="/Content/fileHistoryImport' + v.FileName + '">' + v.FileName + '</a></div >');
-                                        '<a href="/Content/fileHistoryImport/' + v.FileName + '">' + v.FileName + '</a></div >');
+                                        '<img src = "./images/upload-error.png" style = "display:inline-block" width = "29" height = "29" />' +
+                                        '<a href="./FileHistoryImport/' + v.FileName + '">' + v.FileName + '</a></div >');
                                 });
                             }
 

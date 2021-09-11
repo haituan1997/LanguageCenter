@@ -17,7 +17,7 @@ using System.Web.Mvc;
 namespace LanguageCenter.Areas.Home.Controllers
 {
    
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
 
         // GET: Home/Home
@@ -26,6 +26,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         private readonly TeacherRepository _teacherRepository;
         private readonly CourseRepository _courseRepository;
         private readonly NewsFeedRepository _NewsFeedRepository;
+        private readonly RegistrationClassRepository _registrationClassRepository;
         public HomeController()
         {
             _ClassRepository = new ClassRepository();
@@ -33,6 +34,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             _courseRepository = new CourseRepository();
             _studentRepository = new StudentRepository();
             _NewsFeedRepository = new NewsFeedRepository();
+            _registrationClassRepository = new RegistrationClassRepository();
             Mapper.CreateMap<Teacher, TeacherModel>();
             Mapper.CreateMap<Class, ClassModel>();
             Mapper.CreateMap<Course, CourseModel>();
@@ -129,16 +131,37 @@ namespace LanguageCenter.Areas.Home.Controllers
         {
             var courses = _courseRepository.Get_AllCourses().ToList();
             ViewBag.Class = null;
+            ViewBag.StudentID = StudentID;
             if (id != null)
             {
                 indexNumber = indexNumber != null ? indexNumber : 1;
-                ViewBag.Class = Mapper.Map<IEnumerable<Class>, IEnumerable<ClassModel>>(_ClassRepository.Get_Class_ByCourseID((long)id, (int)indexNumber));
-                ViewBag.ToTalCount = _ClassRepository.Get_Class_ByCourseID((long)id, (int)indexNumber).Count();
+                var classes = Mapper.Map<IEnumerable<Class>, IEnumerable<ClassModel>>(_ClassRepository.Get_Class_ByCourseID((long)id, (int)indexNumber));
+                if (StudentID != -1)
+                {
+                    var listClassesRegistered = _registrationClassRepository.GetByStudentId(StudentID);
+                    foreach (var item in classes)
+                    {
+                        if (listClassesRegistered.Any(x=>x.ClassID == item.ClassID))
+                            item.IsRegistered = true;
+                    }
+                }
+                ViewBag.Class = (classes);
+                ViewBag.ToTalCount = classes.Count();
             }
             else
             {
                 indexNumber = 1;
-                ViewBag.Class = courses != null ? Mapper.Map<IEnumerable<Class>, IEnumerable<ClassModel>>(_ClassRepository.Get_Class_ByCourseID(courses.FirstOrDefault().CourseID, (int)indexNumber)) : null;
+                var classes = courses != null ? Mapper.Map<IEnumerable<Class>, IEnumerable<ClassModel>>(_ClassRepository.Get_Class_ByCourseID(courses.FirstOrDefault().CourseID, (int)indexNumber)) : null;
+                if (StudentID != -1)
+                {
+                    var listClassesRegistered = _registrationClassRepository.GetByStudentId(StudentID);
+                    foreach (var item in classes)
+                    {
+                        if (listClassesRegistered.Any(x => x.ClassID == item.ClassID))
+                            item.IsRegistered = true;
+                    }
+                }
+                ViewBag.Class = classes;
                 if (courses != null)
                 {
                     ViewBag.ToTalCount = _ClassRepository.Get_Class_ByCourseID(courses.FirstOrDefault().CourseID, (int)indexNumber).Count();

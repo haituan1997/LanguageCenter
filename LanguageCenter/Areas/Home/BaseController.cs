@@ -36,9 +36,9 @@ namespace LanguageCenter.Areas.Home
             {
                 try
                 {
-                    if (((ClaimsIdentity)User.Identity).FindFirst("TypeUser").Value == "1") // học sinh = 1
+                    if (((ClaimsIdentity)User.Identity).FindFirst("TypeUser") != null && ((ClaimsIdentity)User.Identity).FindFirst("TypeUser").Value == "1") // học sinh = 1
                     {
-                        var studentId = long.Parse(((ClaimsIdentity)User.Identity).FindFirst("UserID").Value);
+                        var studentId  = long.Parse(((ClaimsIdentity)User.Identity).FindFirst("UserID").Value);
                         return studentId;
                     }
                     else
@@ -69,6 +69,7 @@ namespace LanguageCenter.Areas.Home
                     return -1;
                 }
             }
+            
         }
         public long UserID
         {
@@ -92,7 +93,7 @@ namespace LanguageCenter.Areas.Home
             }
         }
 
-        public byte TypeUser
+        public long TypeUser
         {
             get
             {

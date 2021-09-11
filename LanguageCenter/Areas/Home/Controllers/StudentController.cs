@@ -25,12 +25,15 @@ namespace LanguageCenter.Areas.Home.Controllers
     public class StudentController : BaseController
     {
         private readonly StudentRepository _StudentRepository;
+        private readonly FileHistoryImportRepository _fileHistoryImportRepository;
         public StudentController()
         {
             _StudentRepository = new StudentRepository();
+            _fileHistoryImportRepository = new FileHistoryImportRepository();
             Mapper.CreateMap<Student, StudentModel>();
             Mapper.CreateMap<StudentModel, Student>();
             Mapper.CreateMap<ImportStudentModel, Student>();
+            Mapper.CreateMap<FilesHistoryImport, FileHistoryImport>();
         }
         // GET: Home/Student
         public ActionResult Students()
@@ -144,7 +147,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         #region Tải file mẫu
         private XSSFWorkbook LoadDataToExcel()
         {
-            var excelTemplateFile = OPCPackage.Open(Server.MapPath(@"\TemplaceImport\template_import_hoc_sinh.xlsx"));
+            var excelTemplateFile = OPCPackage.Open(Server.MapPath(@"\Code\TemplateImport\template_import_hoc_sinh.xlsx"));
             var templateWorkbook = new XSSFWorkbook(excelTemplateFile);
             var sheetCategory = templateWorkbook.GetSheet("danh_muc");
 
@@ -374,10 +377,11 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 ControllerName = nameof(Student),
                 FileName = fileName,
-                TypeUser = TypeUser,
+                TypeUser = (byte)TypeUser,
                 UserID = UserID != -1 ? UserID : TeacherID,
             };
-            //_filesHistoryImportRepository.InsertFilesHistoryImport(filesHistoryImport);
+            var model = Mapper.Map<FileHistoryImport>(filesHistoryImport);
+            _fileHistoryImportRepository.Insert(model);
 
             var workbook = LoadDataToExcel();
             var sheet = workbook.GetSheetAt(0);
@@ -458,5 +462,62 @@ namespace LanguageCenter.Areas.Home.Controllers
         #endregion end save file import
 
         #endregion end import
+
+        #region ExportData
+        public ActionResult ExportData()
+        {
+            var excelTemplateFile = OPCPackage.Open(Server.MapPath(@"\Code\TemplateExport\template_export_hoc_sinh.xlsx"));
+            var templateWorkbook = new XSSFWorkbook(excelTemplateFile);
+            var sheet = templateWorkbook.GetSheet("hoc_sinh");
+            var datas = _StudentRepository.GetAll_Students();
+            AddObjects(
+                sheet, datas.ToList(),
+                _ => _.StudentID,
+                _ => _.FirtName,
+                _ => _.LastName,
+                _ => _.DateOfBirth,
+                _ => _.PhoneNumber,
+                _ => _.CurrentAddress,
+                _ => _.Email
+            );
+            var stream = new MemoryStream();
+            templateWorkbook.Write(stream);
+
+            var excelTemplateFileNameDownload = $"danh_sach_hoc_sinh_{DateTime.Now:ddMMyyyy}_{DateTime.Now:HHmmss}.xlsx";
+            return File(stream.ToArray(), "application/vnd.ms-excel", excelTemplateFileNameDownload);
+        }
+        protected void AddObjects<T>(ISheet sheet, IList<T> items, params Func<T, object>[] propertySelectors)
+        {
+            var cellStyle = sheet.Workbook.CreateCellStyle();
+            var font = sheet.Workbook.CreateFont();
+            font.FontHeightInPoints = 12;
+            font.FontName = "Times New Roman";
+            font.IsBold = false;
+            cellStyle.SetFont(font);
+            cellStyle.BorderLeft = BorderStyle.Thin;
+            cellStyle.BorderTop = BorderStyle.Thin;
+            cellStyle.BorderRight = BorderStyle.Thin;
+            cellStyle.BorderBottom = BorderStyle.Thin;
+            cellStyle.Alignment = HorizontalAlignment.Left;
+            cellStyle.VerticalAlignment = VerticalAlignment.Center;
+            cellStyle.WrapText = true;
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                var row = sheet.CreateRow(i + 2);
+
+                for (var j = 0; j < propertySelectors.Length; j++)
+                {
+                    var cell = row.CreateCell(j);
+                    var value = propertySelectors[j](items[i]);
+                    if (value != null)
+                    {
+                        cell.SetCellValue(value.ToString());
+                    }
+                    cell.CellStyle = cellStyle;
+                }
+            }
+        }
+        #endregion
     }
 }
