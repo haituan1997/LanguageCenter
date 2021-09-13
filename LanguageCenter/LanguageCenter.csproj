@@ -263,6 +263,7 @@
     <Compile Include="Layer\DataLayer\Object\FileHistoryImport.cs" />
     <Compile Include="Layer\DataLayer\Object\Language.cs" />
     <Compile Include="Layer\DataLayer\Object\Level.cs" />
+    <Compile Include="Layer\DataLayer\Object\ObjectFilter.cs" />
     <Compile Include="Layer\DataLayer\Object\RegistrationClass.cs" />
     <Compile Include="Layer\DataLayer\Object\TrainingResultDetail.cs" />
     <Compile Include="Layer\DataLayer\Object\TrainingResult.cs" />
