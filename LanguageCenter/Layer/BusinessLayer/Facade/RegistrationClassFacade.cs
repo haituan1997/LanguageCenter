@@ -50,6 +50,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
             }
         }
 
+        public Tuple<List<ClassStudent>, object[]> GetPage_RegistrationClassByClassID(long? classID, int page, int pageSize, string orderBy, string searchBy)
+        {
+            return SqlServerRegistrationClass.GetPage_RegistrationClassByClassID(classID, page, pageSize, orderBy, searchBy);
+        }
         public class RegistrationClassResponse : ResponseBase
         {
             public long RegistrationClassID { get; set; }

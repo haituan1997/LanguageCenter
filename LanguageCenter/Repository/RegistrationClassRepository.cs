@@ -54,5 +54,16 @@ namespace LanguageCenter.Repository
             }
 
         }
+        public Tuple<List<ClassStudent>, object[]> GetPage_RegistrationClassByClassID(long? classID, int page, int pageSize, string orderBy, string searchBy)
+        {
+            try
+            {
+                return registrationClassFacade.GetPage_RegistrationClassByClassID(classID, page, pageSize, orderBy, searchBy);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

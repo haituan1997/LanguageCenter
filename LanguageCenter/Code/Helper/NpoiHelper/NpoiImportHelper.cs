@@ -173,5 +173,15 @@ namespace LanguageCenter.Code.Helper.NpoiHelper
 
             return value;
         }
+        public static bool CheckCompareText(string fieldImportText, string fieldCompareText)
+        {
+            byte[] fieldImport = Encoding.ASCII.GetBytes(fieldImportText.Trim());
+            byte[] fieldCompare = Encoding.ASCII.GetBytes(fieldCompareText.Trim());
+            if (string.Join(",", fieldImport) == string.Join(",", fieldCompare))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -8718,6 +8718,9 @@
     <Content Include="Areas\Home\Views\Student\_ImportStudent.cshtml" />
     <Content Include="Code\TemplateImport\template_import_hoc_sinh.xlsx" />
     <Content Include="Code\TemplateExport\template_export_hoc_sinh.xlsx" />
+    <Content Include="Areas\Home\Views\Class\_RegistrationClass.cshtml" />
+    <Content Include="Areas\Home\Views\Class\_UploadPartial.cshtml" />
+    <Content Include="Areas\Home\Views\Class\_ImportStudent.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />

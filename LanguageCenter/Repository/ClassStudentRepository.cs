@@ -28,6 +28,19 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public IEnumerable<ClassStudent> GetData_For_Export(long classId)
+        {
+            try
+            {
+                return classStudentFacade.GetData_For_Export(classId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public IEnumerable<ClassStudent> Get_StudentNotInClass(long classID)
         {
             try

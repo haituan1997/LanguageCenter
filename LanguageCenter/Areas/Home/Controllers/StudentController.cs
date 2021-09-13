@@ -216,6 +216,8 @@ namespace LanguageCenter.Areas.Home.Controllers
                 //if (validKey != validTemplateFile)
                 //    throw new Exception("Import thất bại do tệp tin không phù hợp!");
 
+                var students = _StudentRepository.GetAll_Students().ToArray();
+
                 int totalRow = sheet.LastRowNum;
 
                 var invalidStudentModels = new List<ImportStudentModel>();
@@ -232,7 +234,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                         continue;
 
                     actualRow++;
-                    var entity = ProcessExcelRow(sheet, rowIndex);
+                    var entity = ProcessExcelRow(sheet, rowIndex, students);
 
                     if (entity != null)
                     {
@@ -281,7 +283,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
         }
-        private ImportStudentModel ProcessExcelRow(ISheet worksheet, int row)
+        private ImportStudentModel ProcessExcelRow(ISheet worksheet, int row, Student[] students)
         {
             var upto255Characters = 255;
             var exceptionMessage = new StringBuilder();
@@ -291,8 +293,16 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 model.FirtName = NpoiImportHelper.GetStringCellValueFromRow(worksheet, row, 0, "Họ", true, upto255Characters, exceptionMessage);
                 model.LastName = NpoiImportHelper.GetStringCellValueFromRow(worksheet, row, 1, "Tên", true, upto255Characters, exceptionMessage);
+                if (students.Where(x => NpoiImportHelper.CheckCompareText(x.FirtName, model.FirtName) && NpoiImportHelper.CheckCompareText(x.LastName, model.LastName)).Any())
+                {
+                    exceptionMessage.Append("Họ và tên đã tồn tại trong hệ thống; ");
+                }
                 model.DateOfBirth = NpoiImportHelper.GetDateFormatCellValueFromRow(worksheet, row, 2, "Ngày sinh", true, exceptionMessage);
                 model.PhoneNumber = NpoiImportHelper.GetStringCellValueFromRow(worksheet, row, 3, "Số điện thoại", true, upto255Characters, exceptionMessage);
+                if (students.Where(x => NpoiImportHelper.CheckCompareText(x.PhoneNumber, model.PhoneNumber)).Any())
+                {
+                    exceptionMessage.Append("Số điện thoại đã tồn tại trong hệ thống; ");
+                }
                 model.CurrentAddress = NpoiImportHelper.GetStringCellValueFromRow(worksheet, row, 4, "Địa chỉ", true, upto255Characters, exceptionMessage);
                 model.Email = NpoiImportHelper.GetStringCellValueFromRow(worksheet, row, 5, "Email", false, upto255Characters, exceptionMessage);
 
@@ -475,7 +485,7 @@ namespace LanguageCenter.Areas.Home.Controllers
                 _ => _.StudentID,
                 _ => _.FirtName,
                 _ => _.LastName,
-                _ => _.DateOfBirth,
+                _ => _.DateOfBirth?.ToString("dd/MM/yyyy"),
                 _ => _.PhoneNumber,
                 _ => _.CurrentAddress,
                 _ => _.Email

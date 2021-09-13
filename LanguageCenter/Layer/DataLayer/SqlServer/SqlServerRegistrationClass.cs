@@ -29,6 +29,26 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@StudentID", studentId };
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make, parms);
         }
+
+        public Tuple<List<ClassStudent>, object[]> GetPage_RegistrationClassByClassID(long? classID, int page, int pageSize, string orderBy, string searchBy)
+        {
+            const string procedure = "uspGetPage_RegistrationClassByClassID";
+            object[] parms =
+            {
+                "ClassID", classID,
+                "@Page", page,
+                "@PageSize", pageSize,
+                "@OrderByColumn", orderBy,
+                "@SearchBy", searchBy
+            };
+
+            object[] outputParams =
+            {
+                 "@TotalRecords", DbType.Int32
+            };
+
+            return ForeignLanguageCenterAdapter.ReadListWithOutputParam(procedure, MakePaged, parms, outputParams);
+        }
         private static object[] Take(RegistrationClass registrationClass)
         {
             return new object[]
@@ -44,6 +64,19 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
               RegistrationClassID = reader["RegistrationClassID"].AsLong(),
               StudentID = reader["StudentID"].AsLong(),
               ClassID = reader["ClassID"].AsLong(),
+          };
+        private static readonly Func<IDataReader, ClassStudent> MakePaged = reader =>
+          new ClassStudent
+          {
+              ClassID = reader["ClassID"].AsLong(),
+              StudentID = reader["StudentID"].AsLong(),
+              FirtName = reader["FirtName"].AsString(),
+              LastName = reader["LastName"].AsString(),
+              FullName = reader["FirtName"].AsString() + " " + reader["LastName"].AsString(),
+              DateOfBirth = reader["DateOfBirth"].AsDateTime(),
+              CurrentAddress = reader["CurrentAddress"].AsString(),
+              Email = reader["Email"].AsString(),
+              PhoneNumber = reader["PhoneNumber"].AsString(),
           };
     }
 }

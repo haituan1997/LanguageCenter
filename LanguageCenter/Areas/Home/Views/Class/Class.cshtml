@@ -2,7 +2,7 @@
 @using LanguageCenter.Layer.DataLayer.Object
 @{
     ViewBag.Title = "Class";
-    Layout = "~/Views/Shared/_Layout3.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 @{
     var courses = (IEnumerable<Course>)ViewBag.Courses;
@@ -151,7 +151,9 @@
                             <div class="row" style=" position: relative; margin: 10px 10px 10px 0px;">
                                 <div class="action-FormList">
                                     <button id="btnAddNew" class="btn-add-new"><span class="">Thêm mới</span></button>
-                                    <a id="btnDeleteAll" class="btn-delete-all" style="padding-top: 5px;"><span>Xóa tất cả</span></a>
+                                    <a id="btnDeleteAll" class="btn-delete-all"><span>Xóa tất cả</span></a>
+                                    <a id="btnImport" style="margin-left:10px" class="a-import"><span class="">Import</span></a>
+                                    <a id="btnExportData" class="btn-delete-all"><span>Export</span></a>
                                 </div>
                             </div>
                             <div class="row" style="padding-right: 0px;">
@@ -175,20 +177,23 @@
                     </div>
                 </div>
             </section>
-            
+            <section>
+                @Html.Partial("_RegistrationClass")
+            </section>
 
             <section class="row line-control step-action-button">
                 <div class="col-lg-12 col-md-12">
                     <a id="btn-exit" name="submit" value="Save" class="btn-exit" tabindex="36" style="margin-right: 47px;"><span class="OpenSans">Thoát</span></a>
                     @*<button id="btnSaveAndCreate" name="submit" value="SaveAndCreate" class="btn btn-flat btn-solid-custom pull-right saveForm border-radius-class" form="VeteranForm" tabindex="35">
-                    <span class="OpenSans">Lưu và tạo mới</span>
-                </button>*@
+                            <span class="OpenSans">Lưu và tạo mới</span>
+                        </button>*@
                     <button id="btnSave" name="submit" value="Save" class="btn-save" form="ClassForm" tabindex="34"><span class="OpenSans">Lưu</span></button>
                 </div>
             </section>
         </form>
     </div>
 </div>
+
 <div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
     <div class="modal-dialog modal-side modal-top-right " style="width: 500px; float: right; height:90%;margin-top:55px">
         <div class="modal-content">
@@ -202,6 +207,13 @@
     </div>
 </div>
 
+<section>
+    <div id="ImportStudentModal" class="modal modal-full-screen" data-backdrop="static" data-keyboard="false" role="dialog" style="display: none; ">
+        <div class="modal-content modal-content-full-screen">
+            @Html.Partial("_ImportStudent")
+        </div>
+    </div>
+</section>
 <script>
     var tableName = "StudentTable";
     var popUpName = "popUp";
@@ -302,14 +314,14 @@
                     },
                     { "data": "CurrentAddress", "name": "CurrentAddress" },
                     { "data": "Email", "name": "Email" },
-                    { "data": "PhoneNumber", "name": "PhoneNumber", "width": "130px" },
+                    { "data": "PhoneNumber", "name": "PhoneNumber", "width": "150px" },
                     {
                         "data": "ClassStudentID", "width": "130px !Important", "render": function (data) {
                             return "<a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
                         },
                         "orderable": false,
                         "searchable": false,
-                        "width": "80px"
+                        "width": "120px"
                     }
 
                 ],
@@ -520,6 +532,7 @@
                                             });
                                             id = [];
                                             buildTable.ajax.reload();
+                                            $('#RegistrationClassTable').DataTable().ajax.reload();
                                         }
                                         else {
                                             $.each(result,
@@ -549,6 +562,26 @@
                 });
             }
         };
+
+        var ClickImport = function (e) {
+            $('#btnImport').off('click').on('click', function (e) {
+                $('#ImportStudentModal').modal('show');
+                var step1 = $('a[href="#step-1"]');
+                step1.removeAttr('disabled').trigger('click');
+            });
+        }
+
+        function ExportData() {
+            $('#btnExportData').off('click').on('click', function () {
+                var url = "/Class/ExportData?classId=" + @Html.Raw(Json.Encode(@ViewBag.ClassID));
+                document.location.href = url;
+                return;
+            });
+        };
+
         buildTableStudent();
+        ClickImport();
+        ExportData();
+
     })
 </script>

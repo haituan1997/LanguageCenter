@@ -18,7 +18,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         // GET: Home/FileHistoryImport
         public ActionResult GetByContronllerAndUserId(string controllerName)
         {
-            var files = _fileHistoryImportRepository.GetByContronllerAndUserId(controllerName, UserID, (byte)TypeUser);
+            var files = _fileHistoryImportRepository.GetByContronllerAndUserId(controllerName, UserID, (byte)TypeUser).Take(5);
             return Json(new { status = true, data = files }, JsonRequestBehavior.AllowGet);
         }
     }
