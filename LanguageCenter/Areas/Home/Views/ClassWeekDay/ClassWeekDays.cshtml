@@ -2,7 +2,7 @@
 @using LanguageCenter.Layer.DataLayer.Object
 @{
     ViewBag.Title = "Class";
-    Layout = "~/Views/Shared/_Layout3.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 @{
     var courses = (IEnumerable<Course>)ViewBag.Courses;
@@ -181,9 +181,9 @@
                 <div class="col-lg-12 col-md-12">
                     <a id="btn-exit" name="submit" value="Save" class="btn-exit" tabindex="36" style="margin-right: 47px;"><span class="OpenSans">Thoát</span></a>
                     @*<button id="btnSaveAndCreate" name="submit" value="SaveAndCreate" class="btn btn-flat btn-solid-custom pull-right saveForm border-radius-class" form="VeteranForm" tabindex="35">
-                    <span class="OpenSans">Lưu và tạo mới</span>
-                </button>*@
-                    <button id="btnSave" name="submit" value="Save" class="btn-save" form="ClassForm" tabindex="34"><span class="OpenSans">Lưu</span></button>
+                            <span class="OpenSans">Lưu và tạo mới</span>
+                        </button>*@
+                    @*<button id="btnSave" name="submit" value="Save" class="btn-save" form="ClassForm" tabindex="34"><span class="OpenSans">Lưu</span></button>*@
                 </div>
             </section>
         </form>
@@ -379,61 +379,67 @@
                         e.stopPropagation();
                     })
             });
-            $('#' + tableName).each(function () {
-                var obj = $(this);
-                var item = $("tbody", obj);
-                item.on("click",
-                    ".btn-delele-table",
-                    function (e) {
-                        let row = buildTable.row($(this).parents("tr"));
-                        var id = [];
-                        var itemDeleteID = $(row.data()).attr(idColum);;
-                        id.push(itemDeleteID);
-                        if (!confirm("Bạn có đồng ý xóa???")) {
-                            return false;
-                        }
-                        else {
-                            $.ajax({
-                                url: urlDeleteDetail,
-                                data: { id },
-                                type: 'POST',
-                                dataType: 'json',
-                                success: function (result) {
-                                    if (result.success) {
-                                        var data = result.message;
-                                        $.notify(data, {
-                                            globalPosition: "top center",
-                                            className: "success"
-                                        });
-                                        id = [];
-                                        buildTable.ajax.reload();
-                                    }
-                                    else {
-                                        $.each(result,
-                                            function (index) {
-                                                message = result[index].Message;
-                                            });
-                                        $.notify(message, {
-                                            globalPosition: "top center",
-                                            className: "error"
-                                        });
-                                    }
-                                },
-                                error: function (result) {
-                                    $.each(result,
-                                        function (index) {
-                                            message = result[index].Message;
-                                        });
-                                    $.notify(message, {
-                                        globalPosition: "top center",
-                                        className: "error"
+            $('#' + tableName + ' tbody').on('click', 'a.btn-delele-table', function (e) {
+                debugger
+                e.stopPropagation();
+                let row = buildTable.row($(this).parents("tr"));
+                var id = [];
+                var itemDeleteID = $(row.data()).attr(idColum);;
+                id.push(itemDeleteID);
+                if (!confirm("Bạn có đồng ý xóa???")) {
+                    return false;
+                }
+                else {
+                    $.ajax({
+                        url: urlDeleteDetail,
+                        data: { id },
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (result) {
+                            if (result.success) {
+                                var data = result.message;
+                                $.notify(data, {
+                                    globalPosition: "top center",
+                                    className: "success"
+                                });
+                                id = [];
+                                buildTable.ajax.reload();
+                            }
+                            else {
+                                $.each(result,
+                                    function (index) {
+                                        message = result[index].Message;
                                     });
-                                }
+                                $.notify(message, {
+                                    globalPosition: "top center",
+                                    className: "error"
+                                });
+                            }
+                        },
+                        error: function (result) {
+                            $.each(result,
+                                function (index) {
+                                    message = result[index].Message;
+                                });
+                            $.notify(message, {
+                                globalPosition: "top center",
+                                className: "error"
                             });
                         }
-                        e.stopPropagation();
-                    })
-            })
+                    });
+                }
+            });
+            //$('#' + tableName).each(function () {
+            //    var obj = $(this);
+            //    var item = $("tbody", obj);
+            //    item.on("click",
+            //        ".btn-delele-table",
+            //        function (e) {
+            //            debugger
+            //            e.preventDefault();
+                        
+            //        })
+            //})
         };
         var action = function () {
             $('#btnAddNew').off('click').on('click', function (e) {
@@ -515,7 +521,7 @@
             })
         }
         actionControlMaster();
-        actionControl();
+        //actionControl();
         action();
 
     });

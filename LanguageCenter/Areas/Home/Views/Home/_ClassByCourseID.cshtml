@@ -3,6 +3,7 @@
 @{
     var classes = (IEnumerable<ClassModel>)ViewBag.Class;
     var totalCount = ViewBag.ToTalCount != null ? (int)ViewBag.ToTalCount : 0;
+    var studentID = ViewBag.StudentID != null ? (long)ViewBag.StudentID : 0;
 }
 
 @if (classes != null)
@@ -36,9 +37,126 @@
                         <span>Dự kiến kết thúc</span>
                     </li>
                 </ul>
-                <a class="flat-button orange">Đăng ký</a>
+                @if (ViewBag.StudentID != -1)
+                {
+                    <a id="register" data-ClassID="@item.ClassID" class="flat-button orange" style="cursor:pointer;@(item.IsRegistered == true? "display:none" : "")">Đăng ký</a>
+                    <a id="cancelRegistration" data-ClassID="@item.ClassID" class="flat-button blue-registered" style="cursor:pointer;@(item.IsRegistered == false? "display:none" : "")"><span>Đã đăng ký</span></a>
+                }
             </div><!-- /.course-content -->
         </div>
 
     }
 }
+
+<script>
+    $(document).ready(function (e) {
+        var cancel;
+        var register;
+        var Register = function (e) {
+            $('.flat-pagination').each(function () {
+                $('#register').off('click').on('click', function (e) {
+                    debugger
+                    e.stopPropagation();
+                    register = $(this);
+                    cancel = register.closest('.course-content').children('#cancelRegistration');
+                    var classId = $(this).attr('data-classid');
+                    var message = "";
+                    if (classId != "" && classId != undefined) {
+                        $.ajax({
+                            url: '/RegistrationClass/RegisterForClasses',
+                            data: { classId },
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                debugger
+                                if (result.success) {
+                                    cancel.show();
+                                    register.hide();
+                                    var data = result.message;
+                                    $.notify(data, {
+                                        globalPosition: "top center",
+                                        className: "success"
+                                    });
+                                }
+                                else {
+                                    $.each(result,
+                                        function (index) {
+                                            message = result.message;
+                                        });
+                                    $.notify(message, {
+                                        globalPosition: "top center",
+                                        className: "error"
+                                    });
+                                }
+                            },
+                            error: function (result) {
+                                $.each(result,
+                                    function (index) {
+                                        message = result.message;
+                                    });
+                                $.notify(message, {
+                                    globalPosition: "top center",
+                                    className: "error"
+                                });
+                            }
+                        });
+                    }
+                })
+            })
+        };
+
+        var CancelRegistration = function (e) {
+            $('.flat-pagination').each(function () {
+                $('#cancelRegistration').off('click').on('click', function (e) {
+                    e.stopPropagation();
+                    cancel = $(this);
+                    register = cancel.closest('.course-content').children('#register');
+                    var classId = $(this).attr('data-classid');
+                    var message = "";
+                    if (classId != "" && classId != undefined) {
+                        $.ajax({
+                            url: '/RegistrationClass/CancelRegistrater',
+                            data: { classId },
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                if (result.success) {
+                                    cancel.hide();
+                                    register.show();
+                                    var data = result.message;
+                                    $.notify(data, {
+                                        globalPosition: "top center",
+                                        className: "success"
+                                    });
+                                }
+                                else {
+                                    $.each(result,
+                                        function (index) {
+                                            message = result.message;
+                                        });
+                                    $.notify(message, {
+                                        globalPosition: "top center",
+                                        className: "error"
+                                    });
+                                }
+                            },
+                            error: function (result) {
+                                $.each(result,
+                                    function (index) {
+                                        message = result.message;
+                                    });
+                                $.notify(message, {
+                                    globalPosition: "top center",
+                                    className: "error"
+                                });
+                            }
+                        });
+                    }
+                })
+            })
+        }
+
+        Register();
+        CancelRegistration();
+    });
+</script>

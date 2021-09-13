@@ -1,0 +1,870 @@
+﻿<style>
+    .modal-content-full-screen {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 30px;
+        border: 0;
+    }
+
+    .modal-content {
+        border-radius: 0;
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    #ImportStudentModal .modal-header {
+        padding: 0;
+        border: none;
+    }
+
+    .modal-full-screen .modal-content-full-screen .close {
+        margin-top: 18px !important;
+        margin-right: 0;
+    }
+
+    .border-radius-class {
+        border-radius: 3px !important;
+    }
+
+    .btn {
+        font-size: 13px;
+    }
+
+    .btn-solid-custom {
+        background-color: #3ca4ab;
+        color: #ffffff;
+        height: 35px;
+        font-weight: 600;
+        border-radius: 0;
+        display: block;
+    }
+
+    .modal-content-full-screen > .modal-header > .modal-title {
+        font-size: 24px;
+        font-weight: 400;
+        color: #414142;
+        background: #fff;
+        padding: 15px 0 8px 0;
+    }
+
+    .modal-title {
+        margin: 0;
+        line-height: 1.42857143;
+    }
+
+    .modal-content-full-screen .modal-custom-body {
+        height: calc(100vh - 133px);
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 0;
+    }
+
+    .modal-body-import {
+        padding-top: 5px !important;
+    }
+
+    .modal-body {
+        padding: 20px 25px 20px 25px;
+    }
+
+    .modal-body-import .row {
+        margin-top: 15px;
+    }
+
+    .modal-body .row {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+        .modal-body .row > div {
+            padding-left: 0;
+        }
+
+    .import-step {
+        height: 80px;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    .setup-content {
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    .modal-body-import .row {
+        margin-top: 15px;
+    }
+
+    .modal-body .row {
+        FONT-VARIANT: JIS04;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+        .modal-body .row > div {
+            padding-left: 0;
+        }
+
+    .import-title {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .setup-content span.item-title {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .setup-content .control {
+        position: relative;
+        font-size: 15px;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    .modal-body label {
+        margin-bottom: 8px;
+    }
+
+    label {
+        font-weight: 600 !important;
+    }
+
+    .control span {
+        margin-left: 23px;
+    }
+
+    .setup-content .control {
+        position: relative;
+        font-size: 15px;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    label {
+        font-weight: 600 !important;
+    }
+
+    .control input {
+        position: absolute;
+        z-index: 1;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .setup-content .control__indicator {
+        top: 3px;
+    }
+
+    .control__indicator {
+        position: absolute;
+        top: 3px;
+        left: 0;
+        height: 15px;
+        width: 15px;
+        background: #fff;
+        border: 1px solid #d8d8d8;
+    }
+
+    .stepwizard {
+        position: relative;
+        margin-left: 33.33333333%;
+    }
+
+    .stepwizard-step {
+        /* display: table-cell; */
+        /* text-align: center; */
+        position: relative;
+        float: left;
+        width: 23%;
+        margin-right: 5px;
+    }
+
+    .connecting-line {
+        height: 2px;
+        background: #e5e5e5;
+        position: absolute;
+        left: 35px;
+        right: 0;
+        top: 14px;
+    }
+
+    .stepwizard-step a {
+        /* box-shadow: 10px 0 0 0 #ffffff, -10px 0 0 0 #ffffff; */
+    }
+
+    .btn-default-step {
+        background-color: #ffffff;
+        border: 3px solid #e5e5e5;
+    }
+
+    .btn-current-step {
+        background-color: #ffffff;
+        border: 3px solid #64D836;
+    }
+
+
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+        .btn-circle i {
+            color: #ffffff;
+            position: absolute;
+            font-size: 19px;
+            font-weight: 100;
+            left: 6px;
+            top: 6px;
+        }
+
+    .stepwizard-step-label-bold {
+        font-weight: 500;
+        color: #414142;
+    }
+
+    .stepwizard-step-label {
+        width: 110px;
+        position: absolute;
+        left: -40px;
+        top: 40px;
+        text-align: center;
+        color: #b5b5b5;
+    }
+
+    .stepwizard-step-label-bold {
+        font-weight: 500;
+        color: #414142;
+        font-size: 13px;
+    }
+
+    .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+        pointer-events: none;
+        opacity: 1;
+        /* box-shadow: 10px 0 0 0 #ffffff, -10px 0 0 0 #ffffff; */
+    }
+
+
+    .modal-body-import .row {
+        margin-top: 15px;
+    }
+
+    .modal-body .row {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+    .row {
+        display: block !important;
+    }
+
+    .btn-actived-step {
+        background-color: #64D836;
+        border: 3px solid #64D836;
+    }
+
+    .box.has-advanced-upload {
+        outline: 1px dashed #e5e5e5;
+    }
+
+    .box {
+        background-color: #f8f8f8;
+        position: relative;
+        padding: 10px;
+        border: none;
+        margin-bottom: 0 /*min-height: 220px*/;
+    }
+
+    .box__file + label {
+        max-width: 80%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .box img, .box label, .box p {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    #Header-erros {
+        font-family: SVN-Gilroy;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 21px;
+        text-align: center;
+        color: #414142;
+        margin-bottom: 22px !important;
+    }
+
+    .box__uploading {
+        display: none;
+    }
+
+    .box__button {
+        display: none !important;
+        color: #e5edf1;
+        padding: 8px 16px;
+        margin: 40px auto 0;
+    }
+
+    .modal-content-full-screen .modal-footer .pull-left {
+        margin-left: 0 !important;
+    }
+
+    .modal-footer .btn {
+        margin-left: 10px !important;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .border-radius-class {
+        border-radius: 3px !important;
+    }
+
+    .btn {
+        font-size: 13px;
+    }
+
+    .btn-custom {
+        background-color: #ffffff;
+        color: #3ca4ab;
+        padding-left: 15px;
+        padding-right: 15px;
+        height: 35px;
+        font-weight: 600;
+        border-radius: 0;
+        border: 1px solid #3ca4ab;
+        display: block;
+    }
+
+    .box.has-advanced-upload .box__dragndrop {
+        display: inline;
+        color: #a5a5a5;
+    }
+
+    .box__file + label {
+        max-width: 80%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .box img, .box label, .box p {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .box img, .box label, .box p {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .modal-body label {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .control input:checked ~ .control__indicator {
+        background: #3ca4ab;
+        border-color: #3ca4ab;
+    }
+
+    .control input:checked ~ .control__indicator:after {
+        display: block;
+    }
+
+    .control--checkbox .control__indicator:after {
+        left: 4px;
+        top: 1px;
+        width: 5px;
+        height: 9px;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        transform: rotate( 45deg );
+    }
+
+    .control__indicator:after {
+        content: '';
+        position: absolute;
+        display: none;
+    }
+    .fa-check:before {
+        content: "\f00c";
+    }
+    .item-file {
+        text-align: center;
+        cursor: pointer;
+    }
+    a:hover {
+        color: #23527c;
+        text-decoration: underline;
+    }
+</style>
+<div class="modal-header">
+    <div class="modal-title">Nhập dữ liệu</div>
+    @*<button type="button" id="close-btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+    <button id="btnDownloadFileImport" href="#" class="btn btn-flat btn-solid-custom " style="display: none; margin-top: 18px; margin-right: 10px;" aria-hidden="true">
+        <span class="OpenSans btnIconLeft">Tải xuống file mẫu</span>
+    </button>
+</div>
+<div class="modal-body modal-custom-body modal-body-import">
+    <div class="row">
+        <div class="import-step">
+            <div class="stepwizard col-md-offset-4 col-lg-offset-4">
+                <div class="stepwizard-row setup-panel">
+                    <div class="stepwizard-step">
+                        <div class="connecting-line"></div>
+                        <a href="#step-1" type="button" class="btn btn-current-step btn-circle">
+                            <i></i>
+                        </a>
+                        <div class="stepwizard-step-label stepwizard-step-label-bold">
+                            <span>Chuẩn bị</span>
+                        </div>
+                    </div>
+                    <div class="stepwizard-step">
+                        <a href="#step-2" type="button" class="btn btn-default-step btn-circle" disabled="disabled">
+                            <i></i>
+                        </a>
+                        <div class="connecting-line"></div>
+                        <div class="stepwizard-step-label">
+                            <span id="uploadStatus">Tải tệp tin</span>
+                        </div>
+                    </div>
+                    <div class="stepwizard-step">
+                        <a href="#step-3" type="button" class="btn btn-default-step btn-circle" disabled="disabled">
+                            <i></i>
+                        </a>
+                        <div class="stepwizard-step-label">
+                            <span id="stepStatus">Tải lên hoàn tất</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="setup-content" id="step-1">
+        <div class="row">
+            <div class="import-title text-center">Hãy xem lại một vài điều trước khi bạn bắt đầu</div>
+        </div>
+        <div class="col-md-3 col-lg-3"></div>
+        <div class="col-md-6 col-lg-6" style=" margin-left: 25%;">
+            <div class="row">
+                <span class="item-title">Xem lại các tệp của bạn</span>
+            </div>
+            <div class="row">
+                <label class="control control--checkbox" for="ckb1">
+                    <span>Tệp này ở định dạng .xlsx</span>
+                    <input type="checkbox" id="ckb1" tabindex="1" required="required" />
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            <div class="row">
+                <label class="control control--checkbox" for="ckb2">
+                    <span>Dung lượng file <= 25MB</span>
+                    <input type="checkbox" id="ckb2" tabindex="2" required="required" />
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+            @*<div class="row">
+                    <label class="control control--checkbox" for="ckb4">
+                        <span>
+                            Giới tính, Tỉnh/ thành phố, Quận/ huyện, Xã/ phường, Mối quan hệ chọn theo danh sách sẵn có
+                        </span>
+                        <input type="checkbox" id="ckb4" tabindex="4" required="required" />
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>*@
+            <div class="row">
+                <label class="control control--checkbox" for="ckb5">
+                    <span>Những cột có màu đỏ là bắt buộc phải nhập, những cột có màu đen là không bắt buộc phải nhập</span>
+                    <input type="checkbox" id="ckb5" tabindex="5" required="required" />
+                    <div class="control__indicator"></div>
+                </label>
+            </div>
+
+        </div>
+    </div>
+    <div class="setup-content" id="step-2">
+        <div class="row">
+            <div class="import-title text-center">
+                <span id="lblImportStatus">Chọn tệp để tải lên</span>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12">
+            @Html.Partial("_UploadPartial")
+        </div>
+    </div>
+    <div class="setup-content" id="step-3">
+        <div class="row">
+            <div class="import-title text-center">
+                <span id="lblFinalStatus">Đang tải lên</span>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-md-3 col-lg-3"></div>
+                <div class="col-md-6 col-lg-6" style=" margin-left: 25%;">
+                    <div class="box has-advanced-upload">
+                        <div class="box__input">
+                            <img id="imgUploadComplete" src="./images/upload-start.png" />
+                            <label id="lblFileUpload"></label>
+                            <p id="lblImportMessage" style="display: none"></p>
+
+                        </div>
+                    </div>
+                    <div class="Note-Erros-import" hidden style="text-align:center !important">
+                        <p class="erros-Note">
+                            Tệp tin chứa dữ liệu lỗi. Bạn có thể tải xuống tệp tin lỗi, xem và sửa đổi nếu cần!
+                        </p>
+                        <p class="text-File-Erros">Tải xuống tệp tin lỗi</p>
+                        <img src="./images/erros_import.jpg" style="display:inline-block" width="29" height="29" />
+                        <a id="link-path-file" href="#">FileName </a>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" id="importCadreError" style="display: none">
+                <div class="buca-custom-table import-error-table" style="min-height: 170px">
+                    <table id="ImportCadreErrorTable" class="cell-border display hover table-font" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="popup-action-control">
+        <button id="btnBack" type="button" class="border-radius-class btn btn-flat btn-custom pull-left prevBtn" aria-hidden="true" style="margin-right: 10px !important; display: none"><span class="OpenSans btnIconLeft">Quay lại</span></button>
+        <button id="close-btn" type="button" class="border-radius-class btn btn-flat btn-custom pull-left" aria-hidden="true" data-dismiss="modal" style="margin-left: 0 !important;"><span class="OpenSans btnIconLeft">Hủy bỏ</span></button>
+        <button id="btnNext" type="button" class="border-radius-class btn btn-flat btn-solid-custom pull-right nextBtn" aria-hidden="true"><span class="OpenSans" style="padding-right: 8px">Tiếp tục</span></button>
+        @*<button id="btnUpload" type="button" class="btn btn-flat btn-solid-custom pull-right" aria-hidden="true" style="display: none"><i class="fa fa-long-arrow-right" style="float: right; line-height: 20px"></i><span class="OpenSans" style="padding-right: 8px">Tải lên</span></button>*@
+        <button id="btnFinish" type="button" class="border-radius-class btn btn-flat btn-solid-custom pull-right" aria-hidden="true" style="display: none"><span class="OpenSans" style="padding-right: 8px">Hoàn tất</span></button>
+        <button id="btnRetry" type="button" class="border-radius-class btn btn-flat btn-solid-custom pull-right" aria-hidden="true" style="display: none"><span class="OpenSans" style="padding-right: 8px;">Tải lại tệp</span></button>
+    </div>
+</div>
+
+
+<script>
+    $(document)
+        .ready(function () {
+            var navListItems = $('div.setup-panel div a'),
+                allWells = $('.setup-content'),
+                allNextBtn = $('.nextBtn'),
+                allPrevBtn = $('.prevBtn');
+            allWells.hide();
+            $('input:radio[name="Override"]').change(
+                function () {
+                    getValueOverride();
+                });
+            var getValueOverride = function () {
+                if ($("#Override").prop("checked")) {
+                    $("#OverrideData").val(1);
+                } else {
+                    $("#OverrideData").val(2);
+                }
+            }
+            $("#NotOverride").prop("checked", true);
+            // Click step buttons
+            navListItems.click(function (e) {
+                e.preventDefault();
+                var $target = $($(this).attr('href')),
+                    $item = $(this);
+
+                if (!$item.hasClass('disabled')) {
+                    navListItems.removeClass('btn-current-step').addClass('btn-default-step');
+                    $item.addClass('btn-current-step');
+                    allWells.hide();
+                    $target.show();
+                    var currentStep = $(this).attr('href');
+
+                    if (currentStep === "#step-1") {
+                        $(":checkbox").each(function () {
+                            $(this).prop("checked", false);
+                        });
+                        $("#btnBack").hide();
+                        $('#btnFinish').hide();
+                        $("#btnNext").show();
+                        $("#btnRetry").hide();
+                        $(this).removeClass('btn-actived-step');
+                        $(this).closest('.stepwizard-step')
+                            .find('.connecting-line')
+                            .removeClass('connecting-line-active');
+
+                        var others = $('div.setup-panel div a[href="' + currentStep + '"]')
+                            .parent()
+                            .nextAll()
+                            .children("a");
+                        others.each(function () {
+                            $(this).attr("disabled", "disabled");
+                            $(this).closest('.stepwizard-step')
+                                .find('.stepwizard-step-label')
+                                .removeClass('stepwizard-step-label-bold');
+                            $(this).closest('.stepwizard-step')
+                                .find('.connecting-line')
+                                .removeClass('connecting-line-active');
+                            $(this).removeClass('btn-actived-step').removeClass("btn-error-step");
+                            $(this).children("i").attr('class', '');
+                        });
+                        $("#uploadStatus").text("Tải tệp tin");
+                        $("#stepStatus").text("Tải lên hoàn tất");
+                    }
+                    else if (currentStep === "#step-2") {
+
+                        $('#btnRetry').trigger("click");
+                        $(this).removeClass('btn-actived-step');
+                        $(this).closest('.stepwizard-step')
+                            .find('.connecting-line')
+                            .removeClass('connecting-line-active');
+
+                        var others = $('div.setup-panel div a[href="' + currentStep + '"]')
+                            .parent()
+                            .nextAll()
+                            .children("a");
+                        others.each(function () {
+                            $(this).attr("disabled", "disabled");
+                            $(this).closest('.stepwizard-step')
+                                .find('.stepwizard-step-label')
+                                .removeClass('stepwizard-step-label-bold');
+                            $(this).closest('.stepwizard-step')
+                                .find('.connecting-line')
+                                .removeClass('connecting-line-active');
+                            $(this).removeClass('btn-actived-step').removeClass("btn-error-step");
+                            $(this).children("i").attr('class', '');
+                        });
+                        $("#uploadStatus").text("Tải tệp tin");
+                        $("#stepStatus").text("Tải lên hoàn tất");
+                        $("#lblFinalStatus").text("Đang tải lên");
+                        $("#imgUploadComplete").attr("src", './images/upload-start.png');
+                        $('#lblFileUploading').click(true);
+                    } else if (currentStep === "#step-3") {
+                        //$('#ImportMartyrModal').faLoading('fa-spinner');
+                        $("#lblImportMessage").hide();
+                    }
+                }
+            });
+
+            // Click previous button
+            allPrevBtn.click(function () {
+                var curStep = $("div.setup-panel a.btn-current-step");
+                curStep.closest('.stepwizard-step')
+                    .find('.stepwizard-step-label')
+                    .removeClass('stepwizard-step-label-bold');
+                curStep.removeClass('btn-actived-step');
+                var curStepBtn = curStep.attr("href");
+                if (curStepBtn === "#step-2") {
+                    $("#btnBack").hide();
+                }
+                if (curStepBtn === "#step-3") {
+                    curStep.removeClass("btn-actived-step").removeClass("btn-error-step");
+                    curStep.children("i").removeClass("fa fa-times");
+                    $("#uploadStatus").text("Tải tệp tin");
+                    $("#stepStatus").text("Tải lên hoàn tất");
+                    $('#btnRetry').trigger("click");
+                }
+                var prevStepWizard = $('div.setup-panel div a[href="' + curStepBtn + '"]')
+                    .parent()
+                    .prev()
+                    .children("a");
+                prevStepWizard.removeClass('btn-actived-step');
+                prevStepWizard.closest('.stepwizard-step')
+                    .find('.connecting-line')
+                    .removeClass('connecting-line-active');
+                prevStepWizard.trigger('click');
+            });
+
+            // Click next button
+            allNextBtn.click(function () {
+                loadFileErros();
+                $(".Note-Erros-import").hide();
+                var curStep = $("div.setup-panel a.btn-current-step");
+                var curStepBtn = curStep.attr("href");
+                var nextStepWizard = $('div.setup-panel div a[href="' + curStepBtn + '"]')
+                    .parent()
+                    .next()
+                    .children("a");
+                var isValid = true;
+                if (curStepBtn === "#step-1") {
+                    var checkboxs = $("#step-1").find("input[type='checkbox']");
+                    for (var i = 0; i < checkboxs.length; i++) {
+                        if (!checkboxs[i].validity.valid) {
+                            isValid = false;
+                        }
+                    }
+                    if (isValid) {
+                        $("#btnBack").show();
+                        curStep.addClass("btn-actived-step");
+                        curStep.children("i").addClass("fa fa-check");
+                        curStep.closest('.stepwizard-step')
+                            .find('.connecting-line')
+                            .addClass('connecting-line-active');
+                        nextStepWizard.closest('.stepwizard-step')
+                            .find('.stepwizard-step-label')
+                            .addClass('stepwizard-step-label-bold');
+                        nextStepWizard.removeAttr('disabled').trigger('click');
+                        $('#btnFinish').hide();
+                        $("#btnNext").hide();
+                        $('#btnRetry').hide();
+                        $("#lblImportStatus").text("Chọn tệp để tải lên");
+                        $("#uploadStatus").text("Tải tệp tin");
+                        $("#stepStatus").text("Tải lên hoàn tất");
+                        $("#imgUpload").attr("src", './images/upload-start.png');
+                        $("#lblUploadStatus").text("");
+                        $("#lblFile").html("<span class=\"box__dragndrop\">Kéo thả tệp tại đây để tải lên<br/>hoặc<br/></span><strong>Chọn tệp tin</strong>");
+                        $("#file").val("");
+                        $(".box").removeClass("is-uploading");
+                        $("#lblFile").removeClass("file-info");
+                        $("#importCadreError").hide();
+                        $("#importCollectEvidenceError").hide();
+                    } else {
+                        $.notify("Bạn cần tích chọn xác nhận các thông tin của tệp tải lên để tiếp tục!", {
+                            globalPosition: "top center",
+                            className: "error"
+                        });
+                        //$("#error-msgbox-modal #error-msg").text("Bạn cần tích chọn xác nhận các thông tin của tệp tải lên để tiếp tục!");
+                        //$("#error-msgbox-modal #error-msg1").text('');
+                        //$('#error-msgbox-modal').modal('show');
+                    }
+                    //}
+                } else if (curStepBtn === "#step-2") {
+                    curStep.removeClass('btn-actived-step');
+                    var curStepBtn = curStep.attr("href");
+                    curStep.addClass("btn-actived-step");
+                    curStep.children("i").addClass("fa fa-check");
+                    curStep.closest('.stepwizard-step')
+                        .find('.connecting-line')
+                        .addClass('connecting-line-active');
+                    nextStepWizard.closest('.stepwizard-step')
+                        .find('.stepwizard-step-label')
+                        .addClass('stepwizard-step-label-bold');
+                    nextStepWizard.removeAttr('disabled').trigger('click');
+
+                    $('#btnUploadFile').trigger('click');
+
+                } else if (curStepBtn === "#step-3") {
+                    //$('.myprogress').css('width', '0');
+                    //$(".progress").hide();
+                }
+            });
+            $("#btnDownloadFileImport").show();
+            // active step1
+
+            var step1 = $('a[href="#step-1"]');
+            step1.removeAttr('disabled').trigger('click');
+
+            // re-upload file
+            $('#btnRetry').bind('click', function () {
+                var curStep = $("div.setup-panel a.btn-current-step");
+                var curStepBtn = curStep.attr("href");
+
+                if (curStepBtn === "#step-3") {
+                    curStep.removeClass("btn-actived-step").removeClass("btn-error-step");
+                    curStep.children("i").removeClass("fa fa-times");
+                    $("#uploadStatus").text("Tải tệp tin");
+                    $("#stepStatus").text("Tải lên hoàn tất");
+
+                    var prevStepWizard = $('div.setup-panel div a[href="' + curStepBtn + '"]')
+                        .parent()
+                        .prev()
+                        .children("a");
+                    prevStepWizard.removeClass('btn-actived-step');
+                    prevStepWizard.closest('.stepwizard-step')
+                        .find('.connecting-line')
+                        .removeClass('connecting-line-active');
+                    prevStepWizard.trigger('click');
+                }
+
+                var curStep = $("div.setup-panel a.btn-current-step");
+                curStep.removeClass("btn-actived-step").removeClass("btn-error-step").addClass("btn-current-step");
+                curStep.children("i").removeClass("fa fa-times");
+                $('#btnFinish').hide();
+                $('#btnRetry').hide();
+                $("#lblImportStatus").text("Chọn tệp để tải lên");
+                $("#uploadStatus").text("Tải tệp tin");
+                $("#stepStatus").text("Tải lên hoàn tất");
+                $("#btnNext").hide();
+                $("#imgUpload").attr("src", './images/upload-start.png');
+                $("#lblUploadStatus").text("");
+                $("#lblFile").html("<span class=\"box__dragndrop\">Kéo thả tệp tại đây để tải lên<br/>hoặc<br/></span><strong>Chọn tệp tin</strong>");
+                $("#file").val("");
+                $(".box").removeClass("is-uploading");
+                $("#lblFile").removeClass("file-info");
+                $("#importCadreError").hide();
+                $("#importCollectEvidenceError").hide();
+
+            });
+            $('#btnRetry').bind('click', function () {
+                //var tableLoad = $('#StudentTable').dataTable();
+                buildTable.ajax.reload();
+            });
+            $('#btnFinish')
+                .bind('click',
+                    function () {
+                        window.location.replace('/hoc-sinh');
+                    });
+
+            // download file mẫu
+
+            $('#btnDownloadFileImport').bind('click', function () {
+                window.location = "/Student/DownloadTemplate";
+            });
+
+            function loadFileErros() {
+                var url = '/FileHistoryImport/GetByContronllerAndUserId'
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {
+                        controllerName: 'Student'
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status) {
+                            var data = response.data;
+
+                            if (data.length > 0) {
+                                $('#List-File-import-Erros .item').remove();
+                                $.each(data, function (i, v) {
+                                    $('#List-File-import-Erros').append('<div class="item item-file">' +
+                                        '<img src = "./images/upload-error.png" style = "display:inline-block" width = "29" height = "29" />' +
+                                        '<a href="./FileHistoryImport/' + v.FileName + '">' + v.FileName + '</a></div >');
+                                });
+                            }
+
+
+                        }
+                    },
+                    error: function (response) {
+                        ('#List-File-import-Erros .item').remove();
+                    }
+                });
+            };
+        });
+</script>
+
+

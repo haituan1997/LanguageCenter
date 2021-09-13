@@ -6,12 +6,20 @@ using System.Web;
 namespace LanguageCenter.Layer.DataLayer.Object
 {
     public class Student
-    { 
-        public long StudentID { get; set; } 
+    {
+        public long StudentID { get; set; }
 
         public string FirtName { get; set; }
 
         public string LastName { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return string.IsNullOrEmpty(FirtName) ? FirtName + " " + LastName : LastName;
+            }
+        }
 
         public string Email { get; set; }
 

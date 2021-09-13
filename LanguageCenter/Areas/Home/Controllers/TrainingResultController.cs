@@ -14,7 +14,7 @@ using LanguageCenter.Helper;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
-    [CustomAuthorize("2,3")]
+    //[CustomAuthorize("2,3")]
     public class TrainingResultController : Controller
     {
         private readonly TrainingResultRepository _TrainingResultRepository;

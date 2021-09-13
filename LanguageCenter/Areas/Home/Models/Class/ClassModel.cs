@@ -28,6 +28,7 @@ namespace LanguageCenter.Areas.Home.Models.Class
         public bool IsEdit { get; set; }
         public string Title { get; set; }
         public int NumberClass { get; set; }
+        public bool IsRegistered{ get; set; }
 
     }
 }

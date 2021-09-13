@@ -1,0 +1,259 @@
+﻿<style>
+    .btn-registration {
+        border-radius: 10px;
+        border: 1px solid rgb(188 194 199);
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+
+        .btn-registration:hover {
+            background-color: #3ca4ab;
+            color: white !important;
+            border: 1px solid #3ca4ab;
+        }
+</style>
+<div class="panel-group" style="margin-bottom: 0;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#formlist1">
+                    <span class="QuickSand">
+                        Danh sách học sinh đăng ký vào lớp
+                    </span>
+                </a>
+            </h4>
+        </div>
+
+    </div>
+    <div class="" id="formlist1">
+        <div class="panel-body tab-body">
+            <div class="row" style="padding: 10px 0px 0px 0px;">
+                <div class="col-lg-12 col-md-12 ">
+                    <table style="width:100%;" id="RegistrationClassTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+                        <thead class="Table-Thead">
+                            <tr class="Table-Thead-tr">
+                                <th>Mã học viên </th>
+                                <th>Họ và tên</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
+                                <th>Hoạt động</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var tableName1 = "RegistrationClassTable";
+    var urlDataTable1 = "/danh-sach-hoc-sinh-dang-ky-theo-lop/" + '@ViewBag.ClassID';
+    $(document).ready(function () {
+        var buildTableStudentStudent = function () {
+            buildTableStudent = $('#' + tableName1 + '').DataTable({
+                "ajax": {
+                    "url": urlDataTable1,
+                    "type": "Post",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "StudentID", "name": "StudentID", "width": "130px" },
+                    { "data": "FullName", "name": "FullName" },
+                    {
+                        "data": "DateOfBirth", "name": "DateOfBirth", "width": "130px", "render": function (data, type, full) {
+                            var date = data.replace("Date", "");
+                            date = date.replaceAll("/", "");
+                            date = date.replace("(", "");
+                            date = date.replace(")", "");
+                            date = parseInt(date);
+                            return moment(new Date(date)).locale('el').format('DD/MM/YYYY');
+
+                        }
+                    },
+                    { "data": "CurrentAddress", "name": "CurrentAddress" },
+                    { "data": "Email", "name": "Email" },
+                    { "data": "PhoneNumber", "name": "PhoneNumber", "width": "150px" },
+                    {
+                        "data": "ClassStudentID", "width": "130px !Important", "render": function (data) {
+                            return "<a class='btn btn-registration' style='margin-left:5px' id=" + data + ">Đồng ý</a>";
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "120px"
+                    }
+
+                ],
+                "processing": true,
+                "serverSide": true,
+                //"scrollX": true,
+                //scrollY: true,
+                "language": {
+                    search: "",
+                    lengthMenu: "Hiển thị _MENU_",
+                    entries: "",
+                    processing: "<i class='fa fa-spinner fa-spin' style='font-size:50px;color: #3ca4ab'></i>",
+                    infoEmpty: "",
+                    infoFiltered: "",
+                    searchPlaceholder: "Tìm kiếm thông tin",
+                    //emptyTable: emptyselected,
+                    zeroRecords: "<class='text-danger' align='center'>Không có dữ liệu</>",
+                    info: "Bản ghi từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
+                    paginate:
+                    {
+                        previous: "<",
+                        next: ">",
+                        first: "",
+                        last: ""
+                    },
+                    select: {
+                        rows: {
+                            _: "",
+                            0: "",
+                            1: ""
+                        }
+                    },
+                },
+                //"scrollY": true,
+                //"dom": '<"top"l>rt<"bottom"ip><"clear">',
+                "dom": '<"top">rt<"bottom"lirp><"clear">',
+                "fnInitComplete": function (oSettings, json, obj) {
+                    if (json.data.length > 0) {
+                        addSearchControl(oSettings, json);
+                        selected();
+                        caculatorHeightTable();
+                    }
+                    changeCss();
+                    actionControl();
+                }
+            });
+            var selected = function () {
+                $('#' + tableName1 + ' tbody').on('click', 'tr', function () {
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
+                    }
+                    else {
+                        //table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                })
+            };
+            function changeCss() {
+                $('.table-striped tbody tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
+                $('.table-striped tbody tr td:last-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
+                $('.table-striped tbody tr td:first-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
+                $('#' + tableName1 + '_wrapper .dataTables_scrollBody').css("cssText", "border-bottom: 1px solid #dee2e6 1px solid #dee2e6 !important");
+                $('.table-striped thead tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
+                $('#' + tableName1 + '_length select').css("cssText", " width: 70%;");
+                $('.page-item.active .page-link').css("cssText", "color: white; border: 1px solid rgb(222, 226, 230);background-color: #3ca4ab;");
+            }
+            var caculatorHeightTable = function () {
+                var windowHeight = $(window).height();
+                var nav = $('.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark').height();
+                var title = $('.container-homeadmin .title').height();
+                var dataTablesscrollHead = $('.dataTables_scrollHead').height();
+                var dataTableslength = $('.dataTables_length').height();
+                $('.dataTables_scrollBody').height(windowHeight - nav - title - dataTablesscrollHead - dataTableslength * 2 - 100);
+                //$('.table-striped tbody tr').css("cssText", "height:10px !important");
+            }
+            function addSearchControl(oSettings, json) {
+                dataJson = json.data;
+                $("#" + tableName1 + " thead").append($("#" + tableName1 + " thead tr:first").clone());
+                $("#" + tableName1 + " thead tr:eq(1) th").each(function (index) {
+                    if (index != 6) {
+                        $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
+                        var searchControl = $("#" + tableName1 + " thead tr:eq(1) th:eq(" + index + ") input");
+                        searchControl.on('keyup', function () {
+                            buildTableStudent.column(index).search(searchControl.val()).draw();
+                        });
+                    } else if (index == 6) {
+
+                        $(this).replaceWith('<th></th>');
+                    }
+                    else {
+                        var elementDropDown = $('<select class="table-sl-search" />');
+                        elementDropDown.append($('<option/>').attr('value', '').text('Tất cả'));
+                        var email = [];
+                        var nameElement = oSettings.aoColumns[index].data;
+                        $(json.data).each(function (index, element) {
+                            if ($.inArray(element.Email, email) == -1) {
+                                email.push(element.Email);
+                                elementDropDown.append($('<option/>').attr('value', element.Email).text(element.Email));
+                            }
+                        });
+                        $(this).replaceWith('<th>' + $(elementDropDown).prop('outerHTML') + '</th>');
+                        var searchControl = $("#" + tableName1 + " thead tr:eq(1) th:eq(" + index + ") select");
+                        searchControl.on('change', function () {
+                            buildTableStudent.column(index).search(searchControl.val() == "" ? "" : '^' + searchControl.val() + '$', true, false).draw();
+                        });
+                    }
+                });
+            }
+
+            var actionControl = function () {
+                $('#' + tableName1).each(function () {
+                    var obj = $(this);
+                    var item = $("tbody", obj);
+                    item.on("click",
+                        ".btn-registration",
+                        function (e) {
+                            debugger
+                            e.stopPropagation();
+
+                            let row = buildTableStudent.row($(this).parents("tr"));
+                            var id = row.data().StudentID;
+                            if (!confirm("Bạn có đồng ý chuyển???")) {
+                                return false;
+                            }
+                            else {
+                                $.ajax({
+                                    url: "/dang-ky-hoc-sinh-theo-lop",
+                                    data:
+                                    {
+                                        studentId: id,
+                                        classId: @Html.Raw(Json.Encode(@ViewBag.ClassID)) ,
+                                    },
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    success: function (result) {
+                                        if (result.success) {
+                                            var data = result.message;
+                                            $.notify(data, {
+                                                globalPosition: "top center",
+                                                className: "success"
+                                            });
+                                            buildTableStudent.ajax.reload();
+                                            $('#StudentTable').DataTable().ajax.reload();
+                                        }
+                                        else {
+                                            $.each(result,
+                                                function (index) {
+                                                    message = result[index].Message;
+                                                });
+                                            $.notify(message, {
+                                                globalPosition: "top center",
+                                                className: "error"
+                                            });
+                                        }
+                                    },
+                                    error: function (result) {
+                                        $.each(result,
+                                            function (index) {
+                                                message = result[index].Message;
+                                            });
+                                        $.notify(message, {
+                                            globalPosition: "top center",
+                                            className: "error"
+                                        });
+                                    }
+                                });
+                            }
+
+                        })
+                });
+            }
+        };
+        buildTableStudentStudent();
+    });
+</script>

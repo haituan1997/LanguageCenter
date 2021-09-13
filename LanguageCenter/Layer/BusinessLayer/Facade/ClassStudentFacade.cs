@@ -19,6 +19,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerClassStudent.Get_StudentNotInClass( classID);
         }
+        public IEnumerable<ClassStudent> GetData_For_Export(long classId)
+        {
+            return sqlServerClassStudent.GetData_For_Export(classId);
+        }
         public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
         {
             return sqlServerClassStudent.Get_StudentInClass(classID);

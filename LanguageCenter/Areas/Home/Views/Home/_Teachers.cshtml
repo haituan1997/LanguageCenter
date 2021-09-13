@@ -26,31 +26,35 @@
                     <h4 class="name">@item.FirtName @item.LastName</h4>
                     <ul class="flat-socials">
                         <li class="facebook">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a  ><i class="fa fa-facebook"></i></a>
                         </li>
                         <li class="twitter">
-                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a  ><i class="fa fa-twitter"></i></a>
                         </li>
                         <li class="linkedin">
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a  ><i class="fa fa-linkedin"></i></a>
                         </li>
                         <li class="youtube">
-                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a  ><i class="fa fa-youtube-play"></i></a>
                         </li>
                     </ul>
                     <ul class="flat-information">
                         <li class="position">
-                            <a href="#" title="position">Giáo viên</a>
+                            <a   title="position">Giáo viên</a>
                         </li>
                         <li class="phone">
-                            <a href="+61383766284" title="Phone number">@item.NumberPhone</a>
+                            <a  title="Phone number">@item.NumberPhone</a>
                         </li>
-                        <li class="email">
-                            <a href="mailto:AlitStudios@gmail.com" title="Email address">@item.Email</a>
-                        </li>
+                        @if (!string.IsNullOrEmpty(@item.Email))
+                        {
+                            <li class="email">
+                                <a href="mailto:'+@item.Email+'" title="Email address">@item.Email</a>
+                            </li>
+                        }
+
                         @*<li class="skype">
-                            <a href="skype:skype.educate?call" title="skype">skype.educate</a>
-                        </li>*@
+            <a href="skype:skype.educate?call" title="skype">skype.educate</a>
+        </li>*@
                     </ul>
 
                 </div>
@@ -68,21 +72,21 @@
                 <h4 class="name">Leonardo Bonucci</h4>
                 <ul class="flat-socials">
                     <li class="facebook">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a  ><i class="fa fa-facebook"></i></a>
                     </li>
                     <li class="twitter">
-                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a  ><i class="fa fa-twitter"></i></a>
                     </li>
                     <li class="linkedin">
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a  ><i class="fa fa-linkedin"></i></a>
                     </li>
                     <li class="youtube">
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a  ><i class="fa fa-youtube-play"></i></a>
                     </li>
                 </ul>
                 <ul class="flat-information">
                     <li class="position">
-                        <a href="#" title="position">Graphic Designer</a>
+                        <a   title="position">Graphic Designer</a>
                     </li>
                     <li class="phone">
                         <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>
@@ -105,21 +109,21 @@
                 <h4 class="name">Leonardo Bonucci</h4>
                 <ul class="flat-socials">
                     <li class="facebook">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a  ><i class="fa fa-facebook"></i></a>
                     </li>
                     <li class="twitter">
-                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a  ><i class="fa fa-twitter"></i></a>
                     </li>
                     <li class="linkedin">
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a  ><i class="fa fa-linkedin"></i></a>
                     </li>
                     <li class="youtube">
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a  ><i class="fa fa-youtube-play"></i></a>
                     </li>
                 </ul>
                 <ul class="flat-information">
                     <li class="position">
-                        <a href="#" title="position">Graphic Designer</a>
+                        <a   title="position">Graphic Designer</a>
                     </li>
                     <li class="phone">
                         <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>
@@ -142,21 +146,21 @@
                 <h4 class="name">Leonardo Bonucci</h4>
                 <ul class="flat-socials">
                     <li class="facebook">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a  ><i class="fa fa-facebook"></i></a>
                     </li>
                     <li class="twitter">
-                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a  ><i class="fa fa-twitter"></i></a>
                     </li>
                     <li class="linkedin">
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a  ><i class="fa fa-linkedin"></i></a>
                     </li>
                     <li class="youtube">
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a  ><i class="fa fa-youtube-play"></i></a>
                     </li>
                 </ul>
                 <ul class="flat-information">
                     <li class="position">
-                        <a href="#" title="position">Graphic Designer</a>
+                        <a   title="position">Graphic Designer</a>
                     </li>
                     <li class="phone">
                         <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>
@@ -179,21 +183,21 @@
                 <h4 class="name">Leonardo Bonucci</h4>
                 <ul class="flat-socials">
                     <li class="facebook">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a  ><i class="fa fa-facebook"></i></a>
                     </li>
                     <li class="twitter">
-                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a  ><i class="fa fa-twitter"></i></a>
                     </li>
                     <li class="linkedin">
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a  ><i class="fa fa-linkedin"></i></a>
                     </li>
                     <li class="youtube">
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a  ><i class="fa fa-youtube-play"></i></a>
                     </li>
                 </ul>
                 <ul class="flat-information">
                     <li class="position">
-                        <a href="#" title="position">Graphic Designer</a>
+                        <a   title="position">Graphic Designer</a>
                     </li>
                     <li class="phone">
                         <a href="+61383766284" title="Phone number"> 0084 962 226 602</a>

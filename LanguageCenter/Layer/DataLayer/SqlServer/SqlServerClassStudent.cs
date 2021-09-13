@@ -23,6 +23,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@ClassID", classID };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
         }
+        public IEnumerable<ClassStudent> GetData_For_Export(long classID)
+        {
+            const string procedure = "uspGet_Data_Student_For_Export";
+            object[] parms = { "@ClassID", classID };
+            return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
+        }
         public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
         {
             const string procedure = "uspGet_StudentInClass";
