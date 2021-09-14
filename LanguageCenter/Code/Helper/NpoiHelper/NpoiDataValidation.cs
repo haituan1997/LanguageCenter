@@ -28,6 +28,14 @@ namespace LanguageCenter.Code.Helper.NpoiHelper
         {
         }
 
+        public static NpoiDataValidation SetValueToDropListDownCell(ISheet sheetName, string arrayName, string cellName, string fieldName, int fromIndex, int toIndex)
+        {
+            var item = new NpoiDataValidation((XSSFSheet)sheetName, arrayName, toIndex, fromIndex, cellName, cellName);
+            item.InitValidationBox(fieldName, fieldName + " không hợp lệ", "Dữ liệu", "Chọn " + fieldName.ToLower());
+            item.AddValidation();
+            return item;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NpoiDataValidation"/> class.
         /// </summary>
