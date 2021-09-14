@@ -162,9 +162,8 @@ namespace LanguageCenter.Areas.Home.Controllers
 
             #region set value to drop list down
             var sheetDataImport = templateWorkbook.GetSheet("hoc_sinh");
-            var testValidation = new NpoiDataValidation((XSSFSheet)sheetDataImport, nameof(b), 202, 2, "M", "M");
-            testValidation.InitValidationBox("Test", "Test", "Test", "Test");
-            testValidation.AddValidation();
+            var testValidation = NpoiDataValidation.SetValueToDropListDownCell(sheetDataImport, nameof(b), "M", "Test", 2, 202);
+            
             #endregion
 
             //pass word file 
