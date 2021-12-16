@@ -2,7 +2,7 @@
 @using LanguageCenter.DataLayer.Object
 @{
     ViewData["Title"] = "Tạo mới sản phẩm";
-    Layout = "~/Views/Shared/_Layout3.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var Classes = (IEnumerable<Class>)ViewBag.Class;
 }
 
@@ -42,7 +42,7 @@
                             <div class="panel-body">
                                 <div class="row info">
                                     <div class="col-lg-12 col-md-12" style=" padding: 0px 15px;">
-                                        <div class="form-group">
+                                        <div class="form-group" id="ClassID-Grp">
                                             <label>Chọn lớp</label>
                                             <select @(Model.IsEdit ? "disabled" : "" ) class="form-control js-select2-enable-search-form-search" name="ClassID" id="ClassID" data-placeholder="Chọn lớp" tabindex="4">
                                                 <option></option>
@@ -128,9 +128,9 @@
     </div>
 </div>
 
-    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
-    <script src="~/Scripts/ckfinder/ckfinder.js"></script>
-    <script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/ckfinder/ckfinder.js"></script>
+<script>
 
     var tableName = "TrainingResultDetailTable";
     var popUpName = "popUp";
@@ -142,7 +142,30 @@
     var urlDeleteDetail = "/xoa-diem-hoc-sinh";
     var idColum = "TrainingResultDetailID";
     var buildTable
-    $(document).ready(function () {
+        $(document).ready(function () {
+            var valid = function () {
+                $("#TrainingResultForm").validate({
+                    rules: {
+                        ClassID: { required: true},
+                    },
+                    messages: {
+                        ClassID: {
+                            required: "Tên lớp học không được để trống !",
+                            maxlength: "Tên lớp học không được quá {0} ký tự !",
+                        },
+
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.attr("name") === "ClassID") {
+                            error.insertAfter("#ClassID-Grp");
+                        }else
+                            error.insertAfter(element, "label-error");
+                    }
+                })
+            };
+            valid();
+
+
         if ('@Model.IsEdit' ==='True') {
 
         }
@@ -501,4 +524,4 @@
             window.location = "/diem-lop";
         });
     });
-    </script>
+</script>

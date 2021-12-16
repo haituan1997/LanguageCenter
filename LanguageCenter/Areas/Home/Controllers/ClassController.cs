@@ -47,7 +47,10 @@ namespace LanguageCenter.Areas.Home.Controllers
             Mapper.CreateMap<Teacher, TeacherModel>();
             Mapper.CreateMap<Class, NewClassModel>();
             Mapper.CreateMap<Class, ClassModel>();
-            Mapper.CreateMap<NewClassModel, Class>();
+            Mapper.CreateMap<NewClassModel, Class>()
+                .ForMember(x => x.StartDate,y=>y.MapFrom(a=>a.StartDate))
+                .ForMember(x => x.EndDate,y=>y.MapFrom(a=>a.EndDate))
+                ;
             Mapper.CreateMap<ClassStudent, ClassStudentModel>();
             Mapper.CreateMap<ClassStudentModel, ClassStudent>();
             Mapper.CreateMap<FilesHistoryImport, FileHistoryImport>();
