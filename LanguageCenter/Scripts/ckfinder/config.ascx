@@ -16,6 +16,7 @@
 		//
 		// ... where Session[ "IsAuthorized" ] is set to "true" as soon as the
 		// user logs on your system.
+
 		return true;
 	}
 
@@ -30,7 +31,7 @@
 		LicenseKey = "";
 
 		// The base URL used to reach files in CKFinder through the browser.
-        BaseUrl = "/Images/";
+		BaseUrl = "/images/UploadFile/";
 
 		// The phisical directory in the server where the file will end up. If
 		// blank, CKFinder attempts to resolve BaseUrl.
@@ -111,6 +112,14 @@
 		// Perform additional checks for image files.
 		SecureImageUploads = true;
 
+		// Enables protection in the connector.
+		// The default CSRF protection mechanism is based on double submit cookies, where
+		// connector checks if the request contains a valid token that matches the token
+		// sent in the cookie
+		//
+		// https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet#Double_Submit_Cookies
+		EnableCsrfProtection = true;
+
 		// The session variable name that CKFinder must use to retrieve the
 		// "role" of the current user. The "role" is optional and can be used
 		// in the "AccessControl" settings (bellow in this file).
@@ -131,6 +140,7 @@
 		acl.Role = "*";
 		acl.ResourceType = "*";
 		acl.Folder = "/";
+
 		acl.FolderView = true;
 		acl.FolderCreate = true;
 		acl.FolderRename = true;
@@ -182,5 +192,5 @@
 		type.AllowedExtensions = new string[] { "swf", "flv" };
 		type.DeniedExtensions = new string[] { };
 	}
- 
+
 </script>
