@@ -42,7 +42,7 @@ namespace LanguageCenter.Areas.ViewNewsFed.Controllers
             ViewBag.newFeds = newsfed;
             ViewBag.Total = total;
 
-            var data = _NewsFeedRepository.Get_NewsFeedByCode("ong-mat-troi");
+            var data = _NewsFeedRepository.Get_NewsFeedByCode(slug);
             var model = Mapper.Map<NewsFeed, NewsFeedModel>(data);
             model.Thumb = Getthum(model.Description);
             return View(model);

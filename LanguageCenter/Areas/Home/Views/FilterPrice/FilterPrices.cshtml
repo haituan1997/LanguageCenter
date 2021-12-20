@@ -1,0 +1,282 @@
+﻿@using LanguageCenter.Layer.DataLayer.Object
+@{
+    ViewBag.Title = "FilterPrices";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var courses = (IEnumerable<Course>)ViewBag.Courses;
+}
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.notify( @Html.Raw(Json.Encode(TempData["Success"])), {
+                globalPosition: "top center",
+                className: "success"
+            })
+        });
+    </script>
+}
+@if (TempData["Error"] != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.notify(@Html.Raw(Json.Encode(TempData["Error"])), {
+            globalPosition: "top center",
+            className: "error"
+        });
+        })
+    </script>
+}
+<style>
+    .action-FormList span {
+        margin-right: 5px;
+    }
+
+    .select2-container .select2-selection--single {
+        width: 300px !important;
+    }
+</style>
+<div class="container-homeadmin">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 title">
+            <span>Danh sách lớp</span>
+        </div>
+    </div>
+    <div class="row" style=" position: relative; margin: 0px 10px 10px 0px;">
+        <div class="action-FormList">
+            <select class="form-control js-select2-enable-search-form-search" name="CourseID" id="CourseID" data-placeholder="Chọn khóa học" tabindex="1">
+                <option></option>
+                @if (courses != null)
+                {
+                    foreach (var course in courses)
+                    {
+                        <option value="@course.CourseID">@course.Name</option>
+                    }
+                }
+            </select>
+            <select style="margin-left:5px;" class="form-control js-select2-enable-search-form-search" name="ClassID" id="ClassID" data-placeholder="Chọn lớp" tabindex="2">
+                <option></option>
+            </select>
+            <a id="btn-search" tabindex="3" class="btn-delete-all" style="width: 100%;"><span>Tìm kiếm</span></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 ">
+            <table style="width:100%;" id="TempTable" class="table-striped table-bordered table cust-datatable dataTable no-footer">
+                <thead class="Table-Thead">
+                    <tr class="Table-Thead-tr">
+                        <th>Tên khóa</th>
+                        <th>Tên lớp</th>
+                        <th>Giáo viên</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal right fade" id="popUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
+    <div class="modal-dialog modal-side modal-top-right " style="float:right" @*width: 820px;max-width:100%;*@>
+        <div class="modal-content" style="background:none">
+        </div>
+    </div>
+</div>
+<script>
+    var tableName = "TempTable";
+    var totalColum = 4;
+    var dataJson;
+    var urlDataTable = "/danh-sach-tra-cuu-hoc-phi";
+    var idColum = "ClassID";
+    var buildTable;
+
+    $(document).ready(function () {
+
+        buildTable = $('#' + tableName + '').DataTable({
+            "ajax": {
+                "url": urlDataTable,
+                "type": "Post",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "CourseName", "name": "CourseName" },
+                { "data": "ClassName", "name": "TeacherName" },
+                { "data": "TeacherName", "name": "TeacherName" },
+                { "data": "ToTalAmount", "name": "ToTalAmount" },
+            ],
+            "processing": true,
+            "serverSide": true,
+            //"scrollX": true,
+            //scrollY: true,
+            "language": {
+                search: "",
+                lengthMenu: "Hiển thị _MENU_",
+                entries: "",
+                processing: "<i class='fa fa-spinner fa-spin' style='font-size:50px;color: #3ca4ab'></i>",
+                infoEmpty: "",
+                infoFiltered: "",
+                searchPlaceholder: "Tìm kiếm thông tin",
+                //emptyTable: emptyselected,
+                zeroRecords: "<class='text-danger' align='center'>Không có dữ liệu</>",
+                info: "Bản ghi từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
+                paginate:
+                {
+                    previous: "<",
+                    next: ">",
+                    first: "",
+                    last: ""
+                },
+                select: {
+                    rows: {
+                        _: "",
+                        0: "",
+                        1: ""
+                    }
+                },
+            },
+            //"dom": '<"top"l>rt<"bottom"ip><"clear">',
+            "dom": '<"top">rt<"bottom"lirp><"clear">',
+            "fnInitComplete": function (oSettings, json, obj) {
+
+                if (json.data.length > 0) {
+                    addSearchControl(oSettings, json);
+                    //eventDoubleClick();
+                    caculatorHeightTable();
+                }
+                selected();
+                changeCss();
+            }
+        });
+        function hoverTbody() {
+            $('#' + tableName + ' tbody')
+                .on('mouseenter', 'td', function () {
+                    var colIdx = buildTable.cell(this).index().column;
+                    $(buildTable.cells().nodes()).removeClass('highlight');
+                    $(buildTable.column(colIdx).nodes()).addClass('highlight');
+                });
+        }
+        //hoverTbody();
+        function changeCss() {
+            $('.table-striped tbody tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
+            $('.table-striped tbody tr td:last-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
+            $('.table-striped tbody tr td:first-child').css("cssText", "border-bottom: 1px solid #dee2e6;text-align: center;");
+            $('#' + tableName + '_wrapper .dataTables_scrollBody').css("cssText", "border-bottom: 1px solid #dee2e6 1px solid #dee2e6 !important");
+            $('.table-striped thead tr td').css("cssText", "border-bottom: 1px solid #dee2e6;");
+            $('#' + tableName + '_length select').css("cssText", " width: 70%;");
+            $('.page-item.active .page-link').css("cssText", "color: white; border: 1px solid rgb(222, 226, 230);background-color: #3ca4ab;");
+        }
+
+        var caculatorHeightTable = function () {
+            var windowHeight = $(window).height();
+            var nav = $('.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark').height();
+            var title = $('.container-homeadmin .title').height();
+            var dataTablesscrollHead = $('.dataTables_scrollHead').height();
+            var dataTableslength = $('.dataTables_length').height();
+            $('.dataTables_scrollBody').height(windowHeight - nav - title - dataTablesscrollHead - dataTableslength * 2 - 100);
+            //$('.table-striped tbody tr').css("cssText", "height:10px !important");
+        }
+        function addSearchControl(oSettings, json) {
+
+            dataJson = json.data;
+            $("#" + tableName + " thead").append($("#" + tableName + " thead tr:first").clone());
+            $("#" + tableName + " thead tr:eq(1) th").each(function (index) {
+                if (index != 7) {
+                    $(this).replaceWith('<th><input type="text" class="table-ip-search" ></input></th>');
+                    var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") input");
+                    searchControl.on('keyup', function () {
+                        buildTable.column(index).search(searchControl.val()).draw();
+                    });
+                } else if (index == totalColum) {
+                    $(this).replaceWith('<th></th>');
+                }
+                else {
+                    var elementDropDown = $('<select class="table-sl-search" />');
+                    elementDropDown.append($('<option/>').attr('value', '').text('Tất cả'));
+                    var email = [];
+                    var nameElement = oSettings.aoColumns[index].data;
+                    $(json.data).each(function (index, element) {
+                        if ($.inArray(element.Email, email) == -1) {
+                            email.push(element.Email);
+                            elementDropDown.append($('<option/>').attr('value', element.Email).text(element.Email));
+                        }
+                    });
+                    $(this).replaceWith('<th>' + $(elementDropDown).prop('outerHTML') + '</th>');
+                    var searchControl = $("#" + tableName + " thead tr:eq(1) th:eq(" + index + ") select");
+                    searchControl.on('change', function () {
+                        buildTable.column(index).search(searchControl.val() == "" ? "" : '^' + searchControl.val() + '$', true, false).draw();
+                    });
+                }
+            });
+        }
+
+        var selected = function () {
+            $('#' + tableName + ' tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    //table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            })
+        };
+
+        var loadClassesByCourseID = function (courseID) {
+            if (courseID != null || courseID != undefined) {
+                $.ajax({
+                    method: "GET",
+                    url: "/Class/GetClassesByCourseID",
+                    data: {
+                        courseID: courseID,
+
+                    }
+                }).done(function (data) {
+                    var results = data.data;
+                    if (results.length > 0) {
+                        $("#ClassID").empty();
+                        $("#ClassID")
+                            .append('<option value="x" disabled>-- Chọn lớp --</option>');
+                        $("#ClassID").append('<option></option>');
+
+                        $.each(results,
+                            function (index) {
+                                $("#ClassID").append('<option value=' + results[index].ClassID + '>' + results[index].ClassName + '</option>');
+                            });
+                    } else {
+                        $("#ClassID")
+                            .empty()
+                            .append('<option value=""></option>')
+                            .select2("val", "");
+                    }
+                });
+            }
+        }
+
+        $('#CourseID').change(function () {
+            var courseID = $(this).val();
+            loadClassesByCourseID(courseID)
+        })
+        function search() {
+            $('#btn-search').off('click').on('click', function () {
+                var exObject = {
+                    "CourseID": $('#CourseID').val(),
+                    "ClassID": $('#ClassID').val(),
+                }
+                $('#TempTable').DataTable().search(JSON.stringify(exObject)).draw();
+            })
+        }
+        search();
+        async function asyncCall() {
+            $('.js-select2-enable-search-form-search').select2({
+                language:
+                {
+                    noResults: function () {
+                        return "Không có dữ liệu";
+                    }
+                },
+
+            });
+        }
+        asyncCall();
+    });
+</script>

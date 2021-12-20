@@ -317,6 +317,22 @@ namespace LanguageCenter.Areas.Home.Controllers
             }
 
         }
+
+        public ActionResult GetClassesByCourseID(long courseID)
+        {
+
+            try
+            {
+                var classes = _classRepository.Get_Class_ByCourseID(courseID, 0);
+
+                return Json(new { success = true, data = classes }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         #region ExportData
         public ActionResult ExportData(long classId)
         {

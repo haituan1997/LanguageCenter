@@ -95,8 +95,10 @@
                                             <th>ID</th>
                                             <th>Họ học sinh</th>
                                             <th>Tên học sinh</th>
-                                            <th>Điểm thi lần đầu</th>
-                                            <th>Điểm thi lần 2</th>
+                                            <th>Điểm thi lý thuyết lần đầu</th>
+                                            <th>Điểm thi lý thuyết lần 2</th>
+                                            <th>Điểm thi thực hành lần đầu</th>
+                                            <th>Điểm thi thực hành lần 2</th>
                                             <th>Hoạt động</th>
                                         </tr>
                                     </thead>
@@ -134,7 +136,7 @@
 
     var tableName = "TrainingResultDetailTable";
     var popUpName = "popUp";
-    var totalColum = 3;
+    var totalColum = 8;
     var dataJson;
     var urlUpdatePopup = '/luu-diem-hoc-sinh';
     var urlDetailPopup = "/chi-tiet-diem-hoc-sinh/";
@@ -181,6 +183,8 @@
                 { "data": "LastName", "name": "LastName" },
                 { "data": "ScoreFirt", "name": "ScoreFirt" },
                 { "data": "ScoreLast", "name": "ScoreLast" },
+                { "data": "ScorePracticeFirst", "name": "ScorePracticeFirst" },
+                { "data": "ScorePracticeLast", "name": "ScorePracticeLast" },
                 {
                     "data": "TrainingResultDetailID", "render": function (data) {
                         return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";

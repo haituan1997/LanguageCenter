@@ -21,7 +21,8 @@ namespace LanguageCenter.Areas.Home.Controllers
         private readonly TrainingResultDetailRepository _TrainingResultDetailRepository;
         private readonly ClassRepository _classRepository;
         private readonly ClassStudentRepository _classStudentRepository;
-        public TrainingResultController() {
+        public TrainingResultController()
+        {
             _TrainingResultRepository = new TrainingResultRepository();
             _TrainingResultDetailRepository = new TrainingResultDetailRepository();
             _classRepository = new ClassRepository();
@@ -35,7 +36,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult TrainingResults()
         {
             return View();
-            
+
         }
 
         [HttpPost]
@@ -49,7 +50,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             var orderBy = requestParams.OrderBy;
             var searchBy = requestParams.SearchBy;
 
-            var data = _TrainingResultRepository.Get_TrainingResults(out totalRows, pageIndex,pageSize,orderBy,searchBy);
+            var data = _TrainingResultRepository.Get_TrainingResults(out totalRows, pageIndex, pageSize, orderBy, searchBy);
             return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = data.ToArray() }, JsonRequestBehavior.AllowGet);
 
         }
@@ -70,27 +71,27 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult TrainingResult(long? id)
         {
-           var  classes = _classRepository.Get_AllClassesNotTrainingResult().ToList();
+            var classes = _classRepository.Get_AllClassesNotTrainingResult().ToList();
             if (id == null)
             {
                 ViewBag.Class = classes;
                 var model = new TrainingResultModel()
                 {
-                    ClassID=0,
-                    IsCreated= false
-                }; 
+                    ClassID = 1,
+                    IsCreated = false
+                };
                 model.IsEdit = false;
-                var data = Mapper.Map<TrainingResultModel,TrainingResult>(model);
-                model .TrainingResultID= _TrainingResultRepository.Insert(data);
+                var data = Mapper.Map<TrainingResultModel, TrainingResult>(model);
+                model.TrainingResultID = _TrainingResultRepository.Insert(data);
                 return View("_TrainingResult", model);
             }
             else
             {
-                
+
                 var TrainingResult = _TrainingResultRepository.Get_TrainingResultByTrainingResultID((long)id);
                 classes.Add(_classRepository.Get_ClassByClassID(TrainingResult.ClassID));
                 ViewBag.Class = classes;
-                var model = Mapper.Map<TrainingResult, TrainingResultModel>(TrainingResult); 
+                var model = Mapper.Map<TrainingResult, TrainingResultModel>(TrainingResult);
                 model.IsEdit = true;
                 return View("_TrainingResult", model);
             }
@@ -104,16 +105,16 @@ namespace LanguageCenter.Areas.Home.Controllers
                 throw new Exception("Có lỗi xảy ra. Vui lòng kiểm tra lại");
             try
             {
-               
+
                 var TrainingResult = Mapper.Map<TrainingResultModel, TrainingResult>(model);
                 TrainingResult.IsCreated = true;
                 _TrainingResultRepository.Update(TrainingResult);
                 return this.RedirectToAction("TrainingResults", "TrainingResult");
-                
+
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = ex.Message}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -135,7 +136,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             }
         }
         [HttpGet]
-        public ActionResult TrainingResultDetail(long? id, long? trainingResultDetailID )
+        public ActionResult TrainingResultDetail(long? id, long? trainingResultDetailID)
         {
 
             var TrainingResultDetail = _TrainingResultDetailRepository.Get_TrainingResultDetailByTrainingResultDetailID((long)id);
@@ -147,16 +148,16 @@ namespace LanguageCenter.Areas.Home.Controllers
             return PartialView("_trainingResultPopup", model);
         }
         [HttpGet]
-        public ActionResult InsertTrainingResultDetail(long id,long classID)
+        public ActionResult InsertTrainingResultDetail(long id, long classID)
         {
             var model = new TrainingResultDetailModel();
             model.IsEdit = false;
-            model.TrainingResultID = id; 
-            ViewBag.ClassStudent = _classStudentRepository.Get_StudentInClassNotInTrainingResult(id,classID, 0).ToList();
+            model.TrainingResultID = id;
+            ViewBag.ClassStudent = _classStudentRepository.Get_StudentInClassNotInTrainingResult(id, classID, 0).ToList();
 
             return PartialView("_trainingResultPopup", model);
-            
+
         }
-       
+
     }
 }

@@ -137,6 +137,10 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "xoa-hoc-lich-hoc-lop", defaults: new { controller = "ClassWeekDay", action = "DeleteClassClassWeekDay", area = "Home", id = UrlParameter.Optional });
             #endregion
 
+            #region tra cứu học phí
+            context.MapRoute("", "tra-cuu-hoc-phi", defaults: new { controller = "FilterPrice", action = "FilterPrices", area = "Home", });
+            context.MapRoute("", "danh-sach-tra-cuu-hoc-phi", defaults: new { controller = "FilterPrice", action = "Paged_FilterPrices", area = "Home", });
+            #endregion
         }
     }
 }

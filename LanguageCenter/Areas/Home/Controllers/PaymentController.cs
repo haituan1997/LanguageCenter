@@ -20,7 +20,8 @@ namespace LanguageCenter.Areas.Home.Controllers
         private readonly PaymentRepository _PaymentRepository;
         private readonly ClassRepository _ClassRepository;
         private readonly ClassStudentRepository _ClassStudentRepository;
-        public PaymentController() {
+        public PaymentController()
+        {
             _PaymentRepository = new PaymentRepository();
             _ClassRepository = new ClassRepository();
             _ClassStudentRepository = new ClassStudentRepository();
@@ -31,7 +32,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult Payments()
         {
             return View();
-            
+
         }
 
         [HttpPost]
@@ -45,11 +46,11 @@ namespace LanguageCenter.Areas.Home.Controllers
             var orderBy = requestParams.OrderBy;
             var searchBy = requestParams.SearchBy;
             searchBy = searchBy.Replace("PaymentMethodName", "PaymentMethodID");
-            var data = _PaymentRepository.Get_Payments(out totalRows, pageIndex,pageSize,orderBy,searchBy);
-            foreach(var item in data)
+            var data = _PaymentRepository.Get_Payments(out totalRows, pageIndex, pageSize, orderBy, searchBy);
+            foreach (var item in data)
             {
                 item.PaymentMethodName = StaticDataHelper.PaymentMethod.FirstOrDefault(x => x.Key == item.PaymentMethodID)?.Value;
-            }    
+            }
             return Json(new { draw = requestModel.Draw, recordsTotal = totalRows, recordsFiltered = totalRows, data = data.ToArray() }, JsonRequestBehavior.AllowGet);
 
         }
@@ -58,9 +59,11 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult Payment(long? id)
         {
             ViewBag.Class = _ClassRepository.Get_AllClasses().ToList();
+            ViewBag.IsEdit = id == null? 0: 1;
+
             if (id == null)
             {
-                
+
                 var model = new PaymentModel();
                 model.PaymentDate = DateTime.Now;
                 model.Title = "Thêm mới học phí sinh viên";
@@ -87,14 +90,14 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 if (model.IsEdit == true)
                 {
-                    var Payment = Mapper.Map<PaymentModel, Payment>(model); 
+                    var Payment = Mapper.Map<PaymentModel, Payment>(model);
                     _PaymentRepository.Update(Payment);
 
                     return Json(new { success = true, message = "Cập nhập học phi sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    var Payment = Mapper.Map<PaymentModel, Payment>(model); 
+                    var Payment = Mapper.Map<PaymentModel, Payment>(model);
                     _PaymentRepository.Insert(Payment);
 
                     return Json(new { success = true, message = "Thêm mới học sinh viên thành công!" }, JsonRequestBehavior.AllowGet);
@@ -102,7 +105,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = ex.Message}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -123,11 +126,17 @@ namespace LanguageCenter.Areas.Home.Controllers
                 return Json(new { success = false, message = "Sinh viên đã được dùng ở chức năng khác" }, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult GetStudent_ByClass(long id)
+        public ActionResult GetStudent_ByClass(long id,int? isEdit = null,long? studentID = null)
         {
             try
             {
-                var students = _ClassStudentRepository.Get_StudentInClass(id).ToList();  
+                var studentsPriced = _PaymentRepository.GetStudentPaidByClassID(id).ToList();
+
+                if (studentsPriced != null)
+                    studentsPriced.RemoveAll(x=>x.StudentID == (long)studentID);
+
+                var studentIds = studentsPriced != null ? string.Join(",", studentsPriced.Select(x => x.StudentID)) : string.Empty;
+                var students = _ClassStudentRepository.Get_StudentInClass(id, isEdit != null ? studentIds : null).ToList();
                 return Json(new { success = true, data = students }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

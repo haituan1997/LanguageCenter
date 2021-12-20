@@ -112,6 +112,8 @@ namespace LanguageCenter.Areas.Home.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+       
 #endregion
         #region ngôn ngữ
         public ActionResult Language()

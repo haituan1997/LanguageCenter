@@ -10,31 +10,31 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
 {
     public class ClassStudentFacade
     {
-        SqlServerClassStudent sqlServerClassStudent= new SqlServerClassStudent();
-        public IEnumerable<ClassStudent> Get_ClassStudentByClassID( long? classID,int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
+        SqlServerClassStudent sqlServerClassStudent = new SqlServerClassStudent();
+        public IEnumerable<ClassStudent> Get_ClassStudentByClassID(long? classID, int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
-            return sqlServerClassStudent.Get_ClassStudentByClassID(classID,page, pageSize, orderBy, searchBy );
+            return sqlServerClassStudent.Get_ClassStudentByClassID(classID, page, pageSize, orderBy, searchBy);
         }
         public IEnumerable<ClassStudent> Get_StudentNotInClass(long classID)
         {
-            return sqlServerClassStudent.Get_StudentNotInClass( classID);
+            return sqlServerClassStudent.Get_StudentNotInClass(classID);
         }
         public IEnumerable<ClassStudent> GetData_For_Export(long classId)
         {
             return sqlServerClassStudent.GetData_For_Export(classId);
         }
-        public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
+        public IEnumerable<ClassStudent> Get_StudentInClass(long classID, string notInStudentIds = null)
         {
-            return sqlServerClassStudent.Get_StudentInClass(classID);
+            return sqlServerClassStudent.Get_StudentInClass(classID, notInStudentIds);
         }
-        public IEnumerable<ClassStudent> Get_StudentInClassNotInTrainingResult(long trainingResultID,long classID, long? TrainingResult = null)
+        public IEnumerable<ClassStudent> Get_StudentInClassNotInTrainingResult(long trainingResultID, long classID, long? TrainingResult = null)
         {
-            return sqlServerClassStudent.Get_StudentInClassNotInTrainingResult(trainingResultID,classID, TrainingResult);
+            return sqlServerClassStudent.Get_StudentInClassNotInTrainingResult(trainingResultID, classID, TrainingResult);
         }
-        
-        public int Count(string whereClause,long? classID)
+
+        public int Count(string whereClause, long? classID)
         {
-            return sqlServerClassStudent.Count(classID,whereClause );
+            return sqlServerClassStudent.Count(classID, whereClause);
         }
         public ClassStudentResponse Insert(ClassStudent classStudent)
         {

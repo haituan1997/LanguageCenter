@@ -10,19 +10,27 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
 {
     public class PaymentFacade
     {
-        SqlServerPayment sqlServerPayment = new SqlServerPayment(); 
+        SqlServerPayment sqlServerPayment = new SqlServerPayment();
         public IEnumerable<Payment> Get_Payments(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
-            return sqlServerPayment.Get_Payments(page,pageSize,orderBy,searchBy);
+            return sqlServerPayment.Get_Payments(page, pageSize, orderBy, searchBy);
         }
-        
+        public Tuple<List<Payment>, object[]> GetPaged_FilterPrice(FilterPrice filterPrice)
+        {
+            return sqlServerPayment.GetPaged_FilterPrice(filterPrice);
+        }
+        public IEnumerable<Payment> GetStudentPaidByClassID(long classID)
+        {
+            return sqlServerPayment.GetStudentPaidByClassID(classID);
+        }
+
         public Payment Get_PaymentByPaymentID(long studenIDl)
         {
             return sqlServerPayment.Get_PaymentByPaymentID(studenIDl);
         }
-        public int Count( string whereClause)
+        public int Count(string whereClause)
         {
-            return sqlServerPayment.Count( whereClause);
+            return sqlServerPayment.Count(whereClause);
         }
         public PaymentResponse Insert(Payment Payment)
         {
@@ -69,11 +77,11 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
                     var checkxoaall = true;
                     foreach (var item in ids)
                     {
-                       
-                            sqlServerPayment.Delete(item);
+
+                        sqlServerPayment.Delete(item);
 
                     }
-                    if(checkxoaall==false)
+                    if (checkxoaall == false)
                     {
                         throw new Exception("Sinh viên này đã được dùng ở chức năng khác.");
                     }
