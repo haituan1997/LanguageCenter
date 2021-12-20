@@ -39,6 +39,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<Course> Get_Courses_For_Home()
+        {
+            try
+            {
+                return courseFacade.Get_Courses_For_Home();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public IEnumerable<Course> Get_CoursesAndCountClass()
         {
             try

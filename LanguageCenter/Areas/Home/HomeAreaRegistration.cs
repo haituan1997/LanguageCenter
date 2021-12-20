@@ -19,6 +19,8 @@ namespace LanguageCenter.Areas
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute("", "admin", defaults: new { controller = "HomeAdmin", action = "Index", area = "Home" });
+            context.MapRoute("", "dang-nhap", defaults: new { controller = "Account", action = "LoginUser", area = "Home" });
+            context.MapRoute("", "dang-ky", defaults: new { controller = "Account", action = "Register", area = "Home" });
 
             #region home
             context.MapRoute("", "trang-chu", defaults: new { controller = "Home", action = "Index", area = "Home" });

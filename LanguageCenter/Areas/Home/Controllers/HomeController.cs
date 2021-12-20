@@ -112,7 +112,7 @@ namespace LanguageCenter.Areas.Home.Controllers
 
         public ActionResult Course(long? id,int? indexNumber)
         {
-            var courses = _courseRepository.Get_AllCourses().ToList();
+            var courses = _courseRepository.Get_Courses_For_Home().ToList();
             ViewBag.Course = Mapper.Map<IEnumerable<Course>, IEnumerable<CourseModel>>(courses);
             ViewBag.CourseID = id;
             return View("Course");
@@ -121,7 +121,7 @@ namespace LanguageCenter.Areas.Home.Controllers
 
         public ActionResult CourseMenuRight()
         {
-            var courses = _courseRepository.Get_CoursesAndCountClass().Take(15).ToList();
+            var courses = _courseRepository.Get_Courses_For_Home().Take(15).ToList();
             ViewBag.CoursesMenuRught = courses;
             return PartialView("_CourseMenuRight");
         }

@@ -18,6 +18,7 @@ using LanguageCenter.Code.Helper.NpoiHelper;
 using NPOI.SS.UserModel;
 using System.Text;
 using LanguageCenter.Areas.Home.Views.FilesHistoryImport;
+using System.Globalization;
 
 namespace LanguageCenter.Areas.Home.Controllers
 {
@@ -145,7 +146,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         }
 
         #region Tải file mẫu
-        private XSSFWorkbook LoadDataToExcel() 
+        private XSSFWorkbook LoadDataToExcel()
         {
             var excelTemplateFile = OPCPackage.Open(Server.MapPath(@"\Code\TemplateImport\template_import_hoc_sinh.xlsx"));
             var templateWorkbook = new XSSFWorkbook(excelTemplateFile);
@@ -163,7 +164,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             #region set value to drop list down
             var sheetDataImport = templateWorkbook.GetSheet("hoc_sinh");
             var testValidation = NpoiDataValidation.SetValueToDropListDownCell(sheetDataImport, nameof(b), "M", "Test", 2, 202);
-            
+
             #endregion
 
             //pass word file 
@@ -320,7 +321,16 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 try
                 {
-                    var student = Mapper.Map<Student>(item);
+                    string[] formats = { "dd/MM/yyyy" };
+                    var student = new Student()
+                    {
+                        FirtName = item.FirtName,
+                        LastName = item.LastName,
+                        DateOfBirth = DateTime.ParseExact(item.DateOfBirth, formats, new CultureInfo("en-US"), DateTimeStyles.None),
+                        Email = item.Email,
+                        PhoneNumber = item.PhoneNumber,
+                        CurrentAddress = item.CurrentAddress,
+                    };
                     _StudentRepository.Insert(student);
                     return true;
                 }

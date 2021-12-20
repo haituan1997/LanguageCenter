@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Đăng nhập</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="/fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -13,43 +13,43 @@
 </head>
 <body>
 
-    <div class="main">
+    <div class="main" >
 
 
 
         <!-- Sing in  Form -->
-        <section class="sign-in">
+        <section class="sign-in" >
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="/images/signin-image.jpg" alt="sing up image"></figure>
-                        <a href="/Account/Register" class="signup-image-link">Create an account</a>
+                        <a href="/Account/Register" class="signup-image-link">Tạo tài khoản</a>
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">Sign up</h2>
+                        <h2 class="form-title">Đăng nhập</h2>
                         <form method="POST" asp-controller="Account" asp-action="Login" class="register-form" id="login-form">
                             <div asp-validation-summary="All" style="color:red;">
                                 @Html.ValidationMessageFor(model => model.UserName)
-                            </div> 
-                           
+                            </div>
+
                             <div class="form-group">
                                 <label for="UserName"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="UserName" value="@Model.UserName" id="UserName" placeholder="Your Name" />
-                              
+                                <input type="text" name="UserName" value="@Model.UserName" id="UserName" placeholder="Tài khoản" />
+
                             </div>
                             <div class="form-group">
                                 <label for="Password"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" value="@Model.Password" name="Password" id="Password" placeholder="Password" />
-                                 
+                                <input type="password" value="@Model.Password" name="Password" id="Password" placeholder="Mật khẩu" />
+
 
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Lưu tài khoản</label>
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Đăng nhập" />
                             </div>
                         </form>
 

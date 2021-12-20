@@ -203,9 +203,11 @@
                                                 uploadError(2);
 
                                                 if (data.rowTotal != "0") {
-                                                    $('#link-path-file').attr('href', "/Content/fileHistoryImport/" + data.nameFile);
+                                                    $('#link-path-file').attr('href', "/FileHistoryImport/" + data.nameFile);
                                                     $('#link-path-file').text(data.nameFile);
-                                                    $(".Note-Erros-import").show();
+                                                    //$(".Note-Erros-import").show();
+                                                    $(".Note-Erros-import").css("cssText", "display: block !important;text-align: center !important;");
+
                                                 }
                                                 if (data.rowTotal == "0") {
                                                     $("#lblImportMessage").text(data.errorMessage);

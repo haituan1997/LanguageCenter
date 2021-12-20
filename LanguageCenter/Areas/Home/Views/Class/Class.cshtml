@@ -128,6 +128,13 @@
                                             <input type="text" class="form-control" id="Price" name="Price" value="@Model.Price" tabindex="1">
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="form-group">
+                                            <input type="checkbox" class="hidden" id="IsComplete" name="IsComplete" checked="@Model.IsComplete" />
+                                            <label for="IsComplete" tabindex="9"></label>
+                                            <label>Đã hoàn thành</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -238,6 +245,20 @@
     var buildTableClassWeekDay;
     var buildTable1;
     $(document).ready(function () {
+        if ('@Model.IsComplete' === 'True') {
+            $('#IsComplete').prop('checked', true);
+        }
+        else
+        {
+            $('#IsComplete').prop('checked', false);
+        }
+        
+        $('#IsComplete')
+            .change(function () {
+                debugger
+                $(this).val($(this).prop('checked'));
+            });
+
         $("#StartDate").datepicker({ orientation: 'auto', format: 'mm/dd/yyyy', language: 'vi' });
         $("#EndDate").datepicker({ orientation: 'auto', format: 'mm/dd/yyyy', language: 'vi' });
 

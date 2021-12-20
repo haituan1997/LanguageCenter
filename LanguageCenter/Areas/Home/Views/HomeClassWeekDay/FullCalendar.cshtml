@@ -6,7 +6,6 @@
 }
 
 <style>
-
 </style>
 <div class="container" style=" background-color: #1d89f8; opacity: 0.7; color: white;">
     <div class="row">
@@ -17,20 +16,27 @@
 </div><!-- /.container -->
 <div class="container" style=" background-color: white; padding: 50px 15px;">
     <div class="row">
-            <div class="box box-primary">
-                <div class="box-body no-padding">
-                    <!-- THE CALENDAR -->
-                    <div id="calendar"></div>
-                </div><!-- /.box-body -->
-            </div><!-- /. box -->
+        <div class="box box-primary">
+            <div class="box-body no-padding">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /. box -->
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/i18n/jquery.ui.datepicker-be.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/lang-all.js"></script>
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 <script>
     $(document).ready(function () {
-         $('#calendar').fullCalendar({
+        $('#calendar').fullCalendar({
+            monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            monthNamesShort: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            dayNames: ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'],
+            dayNamesShort: ['Chủ nhật','Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'],
+            lang: 'vi',
+            locale: 'vi',
             header:
             {
                 left: 'prev,next today',
@@ -38,12 +44,11 @@
                 right: ''
             },
             buttonText: {
-                today: 'today',
-                month: 'month',
-                week: 'week',
-                day: 'day'
+                today: 'Ngày hiện tại',
+                month: 'Tháng',
+                week: 'Tuần',
+                day: 'Ngày'
              },
-             locale: 'vi',
             events: function (start, end, timezone, callback) {
                 $.ajax({
                     url: '/HomeClassWeekDay/GetCalendarByClassID?classID=' + '@Model.ClassID',

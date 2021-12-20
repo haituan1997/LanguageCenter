@@ -30,6 +30,7 @@ namespace LanguageCenter.DataLayer.Object
         public bool IsCreated { get; set; }
         public string Title { get; set; }
         public int NumberClass { get; set; }
+        public bool IsComplete{ get; set; }
         
 
     }
