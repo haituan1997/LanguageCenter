@@ -52,11 +52,11 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
-        public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
+        public IEnumerable<ClassStudent> Get_StudentInClass(long classID,string notInStudentIds = null)
         {
             try
             {
-                return classStudentFacade.Get_StudentInClass(classID);
+                return classStudentFacade.Get_StudentInClass(classID,notInStudentIds);
             }
             catch (Exception ex)
             {

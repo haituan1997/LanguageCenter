@@ -17,11 +17,11 @@
                 @Html.HiddenFor(x => x.CourseID)
                 @Html.HiddenFor(x => x.IsEdit)
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form1Example1">Tên khóa học</label>
+                    <label class="form-label" for="form1Example1">Mã khóa học</label>
                     <input type="text" name="Code" id="Code" value="@Model.Code" autofocus class="form-control" tabindex="1" />
                 </div>
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form1Example2">Mã khóa học</label>
+                    <label class="form-label" for="form1Example2">Tên khóa học</label>
                     <input type="text" name="Name" id="Name" value="@Model.Name" class="form-control" tabindex="2" />
                 </div>
                 <div class="form-outline mb-4">
@@ -41,7 +41,7 @@
                     <a class='btn btn-add-table' id="addCategory"><i class='fa fa-plus icon-edit-table'></i></a>
                 </div>
                 <div class="form-outline mb-4">
-                    <div class="add-plus-in-row" >
+                    <div class="add-plus-in-row">
                         <div id="LanguageID-Grp">
                             <label>Ngôn ngữ</label>
                             <select class="form-control js-select2-enable-search-form-search" name="LanguageID" id="LanguageID" data-placeholder="Chọn học sinh" tabindex="4">
@@ -57,7 +57,7 @@
                     <a class='btn btn-add-table' id="addLanguage"><i class='fa fa-plus icon-edit-table'></i></a>
                 </div>
                 <div class="form-outline mb-4">
-                    <div class="add-plus-in-row" >
+                    <div class="add-plus-in-row">
                         <div id="LevelID-Grp">
                             <label>Cấp độ</label>
                             <select class="form-control js-select2-enable-search-form-search" name="LevelID" id="LevelID" data-placeholder="Chọn học sinh" tabindex="4">
@@ -74,7 +74,7 @@
                 </div>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form1Example2">Mô tả</label>
-                    <textarea type="text" name="Description" id="Description" value="@Model.Description" class="form-control" tabindex="5" />
+                    <textarea type="text" name="Description" id="Description" value="@Model.Description" class="form-control" tabindex="5">@Model.Description</textarea>
                 </div>
             </form>
         </div>
@@ -141,7 +141,7 @@
             url: "/load-ngon-ngu",
         })
             .done(function (data) {
-                 
+
                 var results = data.data;
                 if (results.length > 0) {
                     $("#LanguageID").empty();
@@ -178,10 +178,10 @@
                         function (index) {
                             $("#LevelID")
                                 .append('<option value=' +
-                                results[index].LevelID +
+                                    results[index].LevelID +
                                     ' ' +
-                                '>' +
-                                results[index].Code + " - " + results[index].Name+
+                                    '>' +
+                                    results[index].Code + " - " + results[index].Name +
                                     '</option>');
                         });
                 } else {
@@ -193,14 +193,22 @@
             });
     }
     $(document).ready(function () {
+        $('.js-select2-enable-search-form-search').select2({
+            language:
+            {
+                noResults: function () {
+                    return "Không có dữ liệu";
+                }
+            },
+        });
         var valid = function () {
             $("#CourseForm").validate({
                 rules: {
                     Code: { required: true, maxlength: 255 },
                     Name: { required: true, maxlength: 255 },
-                    CategoryID: { required: true},
-                    LanguageID: { required: true},
-                    LevelID: { required: true},
+                    CategoryID: { required: true },
+                    LanguageID: { required: true },
+                    LevelID: { required: true },
                 },
                 messages: {
                     Code: {
@@ -228,8 +236,8 @@
                         error.insertAfter("#LanguageID-Grp");
                     } else if (element.attr("name") === "LevelID") {
                         error.insertAfter("#LevelID-Grp");
-                    } else 
-                    error.insertAfter(element, "label-error");
+                    } else
+                        error.insertAfter(element, "label-error");
                 }
             })
         };
@@ -258,7 +266,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
-                     
+
                     if (result.success) {
                         var data = result.message;
                         $.notify(data, {
@@ -296,7 +304,7 @@
 
         var addClick = function () {
             $('#addCategory').off('click').on('click', function (e) {
-                 
+
                 e.preventDefault();
                 $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:820px;max-width:100%;float:right;");
                 $('.category-popup').removeClass('hide');
@@ -305,7 +313,7 @@
                 return;
             });
             $('#addLanguage').off('click').on('click', function (e) {
-                 
+
                 e.preventDefault();
                 $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:820px;max-width:100%;float:right;");
                 $('.language-popup').removeClass('hide');
@@ -314,7 +322,7 @@
                 return;
             });
             $('#addLevel').off('click').on('click', function (e) {
-                 
+
                 e.preventDefault();
                 $('.modal-dialog.modal-side.modal-top-right ').css("cssText", "width:820px;max-width:100%;float:right;");
                 $('.level-popup').removeClass('hide');

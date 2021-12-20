@@ -22,9 +22,12 @@ namespace LanguageCenter.Layer.DataLayer.Object
         public string PaymentMethodName { get; set; }
         public short Status { get; set; }
         public long StudentID { get; set; }
-        public long ClassID { get; set; }
+        public long? ClassID { get; set; }
+        public long? CourseID { get; set; }
         public string ClassName { get; set; } 
-
+        public string CourseName { get; set; }
+        public string TeacherName { get; set; }
+        public decimal ToTalAmount { get; set; }
 
     }
 

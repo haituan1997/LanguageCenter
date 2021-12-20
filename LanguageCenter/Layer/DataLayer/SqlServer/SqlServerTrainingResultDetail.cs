@@ -19,24 +19,23 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
         public IEnumerable<TrainingResultDetail> Get_TrainingResultDetails(long trainingResultID, int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
             const string procedure = "uspGetPaged_TrainingResultDetail";
-            object[] parms = { "@TrainingResultID", trainingResultID, "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy};
-            return ForeignLanguageCenterAdapter.ReadList(procedure, Make,parms);
+            object[] parms = { "@TrainingResultID", trainingResultID, "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy };
+            return ForeignLanguageCenterAdapter.ReadDataTableToListByEntity<TrainingResultDetail>(procedure, parms);
         }
-       
-        
+
         public TrainingResultDetail Get_TrainingResultDetailByTrainingResultDetailID(long TrainingResultDetailID)
         {
             const string procedure = "uspGet_TrainingResultDetailByTrainingResultDetailID";
             object[] parms = { "@TrainingResultDetailID", TrainingResultDetailID };
             return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
         }
-        public int Count( string whereClause = null, long? trainingResultID = null)
+        public int Count(string whereClause = null, long? trainingResultID = null)
         {
             const string procedure = "uspCount_TrainingResultDetail";
-            object[] parms = { "@WhereClause", whereClause , "@TrainingResultID", trainingResultID };
+            object[] parms = { "@WhereClause", whereClause, "@TrainingResultID", trainingResultID };
             return ForeignLanguageCenterAdapter.GetCount(procedure, parms);
         }
-        public void Insert(TrainingResultDetail TrainingResultDetail )
+        public void Insert(TrainingResultDetail TrainingResultDetail)
         {
             const string procedure = "uspInsert_TrainingResultDetail";
             ForeignLanguageCenterAdapter.Insert(procedure, Take(TrainingResultDetail)).AsString();
@@ -64,7 +63,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                FirtName = reader["FirtName"].AsString(),
 
            };
-        
+
         private static object[] Take(TrainingResultDetail TrainingResultDetail)
         {
             return new object[]
@@ -74,6 +73,8 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                 "@StudentID",TrainingResultDetail.StudentID,
                 "@ScoreFirt",TrainingResultDetail.ScoreFirt,
                 "@ScoreLast",TrainingResultDetail.ScoreLast,
+                "@ScorePracticeFirst",TrainingResultDetail.ScorePracticeFirst,
+                "@ScorePracticeLast",TrainingResultDetail.ScorePracticeLast,
             };
         }
     }

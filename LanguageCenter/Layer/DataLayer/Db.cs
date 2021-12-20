@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace LanguageCenter.DataLayer
@@ -206,6 +207,135 @@ namespace LanguageCenter.DataLayer
             }
         }
 
+        public static T ReadDataAndMapToObject<T>(string procedure, string connectionString, object[] parms = null)
+        {
+            using (var connection = Factory.CreateConnection())
+            {
+                Debug.Assert(connection != null, "connection != null");
+                connection.ConnectionString = connectionString;
+
+                using (var command = Factory.CreateCommand())
+                {
+                    Debug.Assert(command != null, "command != null");
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedure;
+                    command.SetParameters(parms);  // Extension method
+
+                    connection.Open();
+
+                    var t = default(T);
+
+                    DataTable dt = new DataTable();
+                    dt.Load(command.ExecuteReader());
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (dt.Rows.IndexOf(row) == 0)
+                        {
+                            t = GetItem<T>(row);
+                            break;
+                        }
+                    }
+
+                    return t;
+                }
+            }
+        }
+
+        public static Tuple<List<T>, object[]> ReadDataTableToListByEntityAndOutput<T>(string procedure, string connectionString, object[] parms = null, IList<object> outputParms = null)
+        {
+            using (var connection = Factory.CreateConnection())
+            {
+                Debug.Assert(connection != null, "connection != null");
+                connection.ConnectionString = connectionString;
+
+                using (var command = Factory.CreateCommand())
+                {
+                    Debug.Assert(command != null, "command != null");
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedure;
+                    command.SetParametersWithOutputParam(parms, outputParms);
+
+                    connection.Open();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(command.ExecuteReader());
+
+                    List<T> data = new List<T>();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        T item = GetItem<T>(row);
+                        data.Add(item);
+                    }
+
+                    var obj = new object[outputParms.Count / 2];
+                    for (var i = 0; i < outputParms.Count; i += 2)
+                    {
+                        var name = outputParms[i].ToString();
+                        var value = command.Parameters[name].Value;
+                        obj[i] = value;
+                    }
+
+                    return Tuple.Create(data, obj);
+                }
+            }
+        }
+
+        public static List<T> ReadDataTableToListByEntity<T>(string procedure, string connectionString, object[] parms = null)
+        {
+            using (var connection = Factory.CreateConnection())
+            {
+                Debug.Assert(connection != null, "connection != null");
+                connection.ConnectionString = connectionString;
+
+                using (var command = Factory.CreateCommand())
+                {
+                    Debug.Assert(command != null, "command != null");
+                    command.Connection = connection;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedure;
+                    command.SetParameters(parms);
+
+                    connection.Open();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(command.ExecuteReader());
+
+                    List<T> data = new List<T>();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        T item = GetItem<T>(row);
+                        data.Add(item);
+                    }
+
+                    return data;
+                }
+            }
+        }
+        private static T GetItem<T>(DataRow dr)
+        {
+            Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
+
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    if (pro.Name.ToLower() == column.ColumnName.ToLower())
+                        if (!string.IsNullOrEmpty(dr[column.ColumnName].ToString()))
+                        {
+                            pro.SetValue(obj, dr[column.ColumnName], null);
+                        }
+                        else
+                            continue;
+                }
+            }
+            return obj;
+        }
         /// <summary>
         /// Gets a record count.
         /// </summary>

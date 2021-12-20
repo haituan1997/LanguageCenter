@@ -19,8 +19,36 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
         public IEnumerable<Payment> Get_Payments(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
             const string procedure = "uspGetPaged_Payment";
-            object[] parms = {  "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy};
+            object[] parms = { "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakePage, parms);
+        }
+        public Tuple<List<Payment>, object[]> GetPaged_FilterPrice(FilterPrice filterPrice)
+        {
+            const string procedure = "uspGetPaged_FilterPrice";
+            object[] parms =
+            {
+                "@Page", filterPrice.Paged
+                ,"@PageSize", filterPrice.PagedSize
+                ,"@OrderByColumn", filterPrice.OrderByColumn
+                ,"@SearchBy", filterPrice.SearchBy
+                ,"@CourseID",filterPrice.CourseID
+                ,"@ClassID",filterPrice.ClassID
+                ,"@CourseName",filterPrice.CourseName
+                ,"@ClassName",filterPrice.ClassName
+                ,"@TeacherName",filterPrice.TeacherName
+                ,"@ToTalAmount",filterPrice.ToTalAmount
+            };
+            object[] outputParams =
+            {
+                 "@TotalRecords", DbType.Int32
+            };
+            return ForeignLanguageCenterAdapter.ReadDataTableToListByEntityAndOutput<Payment>(procedure, parms, outputParams);
+        }
+        public IEnumerable<Payment> GetStudentPaidByClassID(long classID)
+        {
+            const string procedure = "uspGet_Student_Paid_By_ClassID";
+            object[] parms = { "@ClassID", classID };
+            return ForeignLanguageCenterAdapter.ReadDataTableToListByEntity<Payment>(procedure, parms);
         }
         public Payment Get_PaymentByPaymentID(long PaymentID)
         {
@@ -28,13 +56,13 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@PaymentID", PaymentID };
             return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
         }
-        public int Count( string whereClause = null, bool isCreated = true)
+        public int Count(string whereClause = null, bool isCreated = true)
         {
             const string procedure = "uspCount_Payment";
             object[] parms = { "@WhereClause", whereClause };
             return ForeignLanguageCenterAdapter.GetCount(procedure, parms);
         }
-        public void Insert(Payment Payment )
+        public void Insert(Payment Payment)
         {
             const string procedure = "uspInsert_Payment";
             ForeignLanguageCenterAdapter.Insert(procedure, Take(Payment)).AsString();
@@ -62,7 +90,7 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
                StudentID = reader["StudentID"].AsLong(),
                ClassID = reader["ClassID"].AsLong(),
                Status = reader["Status"].AsShort(),
-               ClassName = reader["ClassName"].AsString(), 
+               ClassName = reader["ClassName"].AsString(),
            };
         private static readonly Func<IDataReader, Payment> MakePage = reader =>
            new Payment

@@ -12,7 +12,6 @@ namespace LanguageCenter.Areas.Home.Models.Class
         public string ClassName { get; set; }
 
         public DateTime? StartDate { get; set; }
-
         public DateTime? EndDate { get; set; }
 
         public decimal? Price { get; set; }
@@ -20,7 +19,7 @@ namespace LanguageCenter.Areas.Home.Models.Class
         public long? TeacherID { get; set; }
 
         public long? CourseID { get; set; }
-        
+
         public string FirtName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }

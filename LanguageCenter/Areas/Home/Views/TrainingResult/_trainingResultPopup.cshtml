@@ -17,27 +17,35 @@
         @Html.HiddenFor(x => x.TrainingResultDetailID)
         @Html.HiddenFor(x => x.IsEdit)
 
-        
+
         <div class="form-outline mb-4">
             <div id="StudentID-grp">
-                <label>Lớp</label>
+                <label>Sinh viên</label>
                 <select class="form-control js-select2-enable-search-form-search" name="StudentID" id="StudentID" data-placeholder="Chọn sinh viên" tabindex="4">
                     <option></option>
                     @foreach (var ClassStudent in ClassStudents)
                     {
                         var selected = Model.StudentID == ClassStudent.StudentID ? "selected" : ""; ;
-                <option @selected value="@ClassStudent.StudentID">@ClassStudent.FirtName @ClassStudent.LastName </option>
+                        <option @selected value="@ClassStudent.StudentID">@ClassStudent.FirtName @ClassStudent.LastName </option>
                     }
                 </select>
             </div>
         </div>
         <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example2">Điểm thi lần 1</label>
+            <label class="form-label" for="form1Example2">Điểm thi lý thuyết lần 1</label>
             <input type="text" name="ScoreFirt" id="ScoreFirt" value="@Model.ScoreFirt" class="form-control" tabindex="3" />
         </div>
         <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example2">Điểm thi lần 1</label>
+            <label class="form-label" for="form1Example2">Điểm thi lý thuyết lần 2</label>
             <input type="text" name="ScoreLast" id="ScoreLast" value="@Model.ScoreLast" class="form-control" tabindex="3" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Điểm thi thực hành lần 1</label>
+            <input type="text" name="ScorePracticeFirst" id="ScorePracticeFirst" value="@Model.ScorePracticeFirst" class="form-control" tabindex="3" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example2">Điểm thi thực hành lần 2</label>
+            <input type="text" name="ScorePracticeLast" id="ScorePracticeLast" value="@Model.ScorePracticeLast" class="form-control" tabindex="3" />
         </div>
     </form>
     <div class="modal-footer">
@@ -72,7 +80,10 @@
                     },
                 },
                 errorPlacement: function (error, element) {
-                    error.insertAfter(element, "label-error");
+                    if (element.attr("name") === "StudentID") {
+                        error.insertAfter("#StudentID-grp");
+                    } else
+                        error.insertAfter(element, "label-error");
                 }
             })
         };

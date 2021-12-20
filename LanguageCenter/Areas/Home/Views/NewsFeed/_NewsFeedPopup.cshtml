@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Tạo mới sản phẩm";
-    Layout = "~/Views/Shared/_Layout3.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 
@@ -66,7 +66,7 @@
                     if (element.attr("name") === "Description") {
                         error.insertAfter("#Description-grp");
                     } else
-                    error.insertAfter(element, "label-error");
+                        error.insertAfter(element, "label-error");
                 }
             })
         };
@@ -97,6 +97,6 @@
                 //    .css('cssText', 'border: 1px solid #f58a73 !important');
                 return false;
             }
-            });
+        });
     });
 </script>

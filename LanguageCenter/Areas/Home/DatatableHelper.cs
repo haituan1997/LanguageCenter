@@ -179,7 +179,92 @@ namespace LanguageCenter.Code.Helper.DatatableHelper
             // Return params
             return datatableParams;
         }
+        public static T GetFillter<T>([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel, NameValueCollection requestForm)
+        {
+            Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
 
+            var a = 0;
+            for (var i = 0; i < requestModel.Columns.Count(); i++)
+            {
+                var searchWord = "";
+                var columnCode = "";
+                var columnName = "";
+
+                if (requestForm == null) continue;
+
+                // ReSharper disable once PossibleNullReferenceException
+                foreach (var value in requestForm?.GetValues($"columns[{i}][search][value]"))
+                {
+                    searchWord = value.Trim();
+                    break;
+                }
+                foreach (var value in requestForm.GetValues($"columns[{i}][data]"))
+                {
+                    columnCode = value;
+                    break;
+                }
+                foreach (var value in requestForm.GetValues($"columns[{i}][name]"))
+                {
+                    columnName = value;
+                    break;
+                }
+                if (string.IsNullOrEmpty(searchWord.Trim())) continue;
+
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+
+                    if (columnName.ToLower().Contains("select"))
+                    {
+                        columnCode = columnName.Substring(0, columnName.IndexOf("Select"));
+
+                    }
+
+                    if (pro.Name == columnCode)
+                    {
+                        try
+                        {
+                            if (pro.PropertyType.FullName.Contains("DateTime"))
+                            {
+                                pro.SetValue(obj, Convert.ToDateTime(searchWord), null);
+                            }
+                            else if (pro.PropertyType.FullName.Contains("Int32"))
+                            {
+                                pro.SetValue(obj, Convert.ToInt32(searchWord), null);
+                            }
+                            else if (pro.PropertyType.FullName.Contains("Int16"))
+                            {
+                                pro.SetValue(obj, Convert.ToInt16(searchWord), null);
+                            }
+                            else if (pro.PropertyType.FullName.Contains("Int64"))
+                            {
+                                pro.SetValue(obj, Convert.ToInt64(searchWord), null);
+                            }
+                            else if (pro.PropertyType.FullName.Contains("byte"))
+                            {
+                                pro.SetValue(obj, Convert.ToByte(searchWord), null);
+                            }
+                            else
+                            {
+                                pro.SetValue(obj, searchWord, null);
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+                    else
+                        continue;
+
+
+                }
+            }
+
+
+            return obj;
+        }
         /// <summary>
         /// Gets the header filter.
         /// </summary>

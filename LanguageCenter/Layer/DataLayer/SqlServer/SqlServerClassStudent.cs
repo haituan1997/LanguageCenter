@@ -29,10 +29,10 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@ClassID", classID };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
         }
-        public IEnumerable<ClassStudent> Get_StudentInClass(long classID)
+        public IEnumerable<ClassStudent> Get_StudentInClass(long classID, string notInStudentIds = null)
         {
             const string procedure = "uspGet_StudentInClass";
-            object[] parms = { "@ClassID", classID };
+            object[] parms = { "@ClassID", classID, "@NotInStudentIds", notInStudentIds };
             return ForeignLanguageCenterAdapter.ReadList(procedure, MakStudent, parms);
         }
 

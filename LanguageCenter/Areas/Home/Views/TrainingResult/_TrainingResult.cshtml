@@ -2,7 +2,7 @@
 @using LanguageCenter.DataLayer.Object
 @{
     ViewData["Title"] = "Tạo mới sản phẩm";
-    Layout = "~/Views/Shared/_Layout3.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var Classes = (IEnumerable<Class>)ViewBag.Class;
 }
 
@@ -42,7 +42,7 @@
                             <div class="panel-body">
                                 <div class="row info">
                                     <div class="col-lg-12 col-md-12" style=" padding: 0px 15px;">
-                                        <div class="form-group">
+                                        <div class="form-group" id="ClassID-Grp">
                                             <label>Chọn lớp</label>
                                             <select @(Model.IsEdit ? "disabled" : "" ) class="form-control js-select2-enable-search-form-search" name="ClassID" id="ClassID" data-placeholder="Chọn lớp" tabindex="4">
                                                 <option></option>
@@ -95,8 +95,10 @@
                                             <th>ID</th>
                                             <th>Họ học sinh</th>
                                             <th>Tên học sinh</th>
-                                            <th>Điểm thi lần đầu</th>
-                                            <th>Điểm thi lần 2</th>
+                                            <th>Điểm thi lý thuyết lần đầu</th>
+                                            <th>Điểm thi lý thuyết lần 2</th>
+                                            <th>Điểm thi thực hành lần đầu</th>
+                                            <th>Điểm thi thực hành lần 2</th>
                                             <th>Hoạt động</th>
                                         </tr>
                                     </thead>
@@ -128,13 +130,13 @@
     </div>
 </div>
 
-    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
-    <script src="~/Scripts/ckfinder/ckfinder.js"></script>
-    <script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/ckfinder/ckfinder.js"></script>
+<script>
 
     var tableName = "TrainingResultDetailTable";
     var popUpName = "popUp";
-    var totalColum = 3;
+    var totalColum = 8;
     var dataJson;
     var urlUpdatePopup = '/luu-diem-hoc-sinh';
     var urlDetailPopup = "/chi-tiet-diem-hoc-sinh/";
@@ -142,7 +144,30 @@
     var urlDeleteDetail = "/xoa-diem-hoc-sinh";
     var idColum = "TrainingResultDetailID";
     var buildTable
-    $(document).ready(function () {
+        $(document).ready(function () {
+            var valid = function () {
+                $("#TrainingResultForm").validate({
+                    rules: {
+                        ClassID: { required: true},
+                    },
+                    messages: {
+                        ClassID: {
+                            required: "Tên lớp học không được để trống !",
+                            maxlength: "Tên lớp học không được quá {0} ký tự !",
+                        },
+
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.attr("name") === "ClassID") {
+                            error.insertAfter("#ClassID-Grp");
+                        }else
+                            error.insertAfter(element, "label-error");
+                    }
+                })
+            };
+            valid();
+
+
         if ('@Model.IsEdit' ==='True') {
 
         }
@@ -158,6 +183,8 @@
                 { "data": "LastName", "name": "LastName" },
                 { "data": "ScoreFirt", "name": "ScoreFirt" },
                 { "data": "ScoreLast", "name": "ScoreLast" },
+                { "data": "ScorePracticeFirst", "name": "ScorePracticeFirst" },
+                { "data": "ScorePracticeLast", "name": "ScorePracticeLast" },
                 {
                     "data": "TrainingResultDetailID", "render": function (data) {
                         return "<a class='btn btn-edit-table'  id=" + data + "><i class='fa fa-pencil-alt icon-edit-table'></i></a><a class='btn btn-delele-table' style='margin-left:5px' id=" + data + "><i class='fa fa-times icon-delete-table'></i></a>";
@@ -501,4 +528,4 @@
             window.location = "/diem-lop";
         });
     });
-    </script>
+</script>

@@ -7,8 +7,6 @@
 @{
     var courses = (IEnumerable<Course>)ViewBag.Courses;
     var teachers = (IEnumerable<Teacher>)ViewBag.Teachers;
-    var endDate = Model.EndDate != null ? Model.EndDate.Value.ToShortDateString().ToString() : "";
-    var startDate = Model.StartDate != null ? Model.StartDate.Value.ToShortDateString().ToString() : "";
 }
 @if (TempData["Success"] != null)
 {
@@ -74,14 +72,18 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4 ">
                                         <div class="form-group">
-                                            <label title="Cơ quan quản lý hồ sơ gốc">Ngày bắt đầu</label>
-                                            <input type="text" class="form-control" id="StartDate" name="StartDate" value="@startDate" tabindex="1">
+                                            <label title="Ngày bắt đầu">Ngày bắt đầu</label>
+                                            @*<input type="text" class="form-control" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("dd/MM/yyyy")" tabindex="1">*@
+                                            @Html.TextBoxFor(m => m.StartDate, "{0:MM/dd/yyyy}", new { @class = "form-control", @id = "StartDate", tabindex = "1", placeholder = "Ngày bắt đầu" })
+
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="form-group">
-                                            <label title="Số quyết định khen thưởng">Ngày kết thúc</label>
-                                            <input type="text" class="form-control" id="EndDate" name="EndDate" value="@endDate" tabindex="1">
+                                            <label title="Ngày kết thúc">Ngày kết thúc</label>
+                                            @Html.TextBoxFor(m => m.EndDate, "{0:MM/dd/yyyy}", new { @class = "form-control", @id = "EndDate", tabindex = "2", placeholder = "Ngày kết thúc" })
+
+                                            @*<input type="text" class="form-control" id="EndDate" name="EndDate" value="@Model.EndDate.ToString("dd/MM/yyyy")" tabindex="1">*@
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4">
@@ -236,6 +238,9 @@
     var buildTableClassWeekDay;
     var buildTable1;
     $(document).ready(function () {
+        $("#StartDate").datepicker({ orientation: 'auto', format: 'mm/dd/yyyy', language: 'vi' });
+        $("#EndDate").datepicker({ orientation: 'auto', format: 'mm/dd/yyyy', language: 'vi' });
+
         var actionControlMaster = function () {
             $('#btn-exit,.fa-arrow-left').off('click').on('click', function () {
                 window.location.href = "/lop";
@@ -274,7 +279,7 @@
                         required: "Danh mục không được để trống !",
                     },
                     TeacherID: {
-                        required: "Ngôn ngữ không được để trống !",
+                        required: "Giáo viên không được để trống !",
                     },
                     Price: {
                         required: "Học phí không được để trống !",
@@ -291,6 +296,17 @@
             })
         };
         valid();
+        $('.js-select2-enable-search-form-search').select2({
+            language:
+            {
+                noResults: function () {
+                    return "Không có dữ liệu";
+                }
+            },
+        });
+        $('.js-select2-enable-search-form-search').on('select2:select', function (e) {
+            $("#ClassForm").valid();
+        });
         var buildTableStudent = function () {
             buildTable = $('#' + tableName + '').DataTable({
                 "ajax": {

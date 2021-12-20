@@ -15,7 +15,9 @@
 
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Ngày học</label>
-            <input type="date" name="ClassWeekDayTime" id="ClassWeekDayTime" value="@classWeekDayTime" autofocus class="form-control" tabindex="1" />
+            @*<input type="date" name="ClassWeekDayTime" id="ClassWeekDayTime" value="@classWeekDayTime" autofocus class="form-control" tabindex="1" />*@
+            @Html.TextBoxFor(m => m.ClassWeekDayTime, "{0:MM/dd/yyyy}", new { @class = "form-control", @id = "ClassWeekDayTime", tabindex = "1", placeholder = "Ngày bắt đầu" })
+
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form1Example1">Thời gian bắt đầu</label>
@@ -35,6 +37,8 @@
 
 <script>
     $(document).ready(function () {
+        $("#ClassWeekDayTime").datepicker({ orientation: 'auto', format: 'mm/dd/yyyy', language: 'vi' });
+
         var valid2 = function () {
             $("#ClassWeekDayForm").validate({
                 rules: {

@@ -15,7 +15,20 @@ namespace LanguageCenter.DataLayer
 
 
         #region Fast data readers
+        public static List<T> ReadDataTableToListByEntity<T>(string procedure, object[] parms = null)
+        {
+            return Db.ReadDataTableToListByEntity<T>(procedure, ConnectionString, parms);
+        }
 
+        public static T ReadDataAndMapToObject<T>(string procedure, object[] parms = null)
+        {
+            return Db.ReadDataAndMapToObject<T>(procedure, ConnectionString, parms);
+        }
+
+        public static Tuple<List<T>, object[]> ReadDataTableToListByEntityAndOutput<T>(string procedure, object[] parms = null, object[] outputParms = null)
+        {
+            return Db.ReadDataTableToListByEntityAndOutput<T>(procedure, ConnectionString, parms, outputParms);
+        }
         /// <summary>
         /// Fast read of individual item.
         /// </summary>
