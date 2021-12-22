@@ -1,0 +1,120 @@
+﻿@using LanguageCenter.Areas.Home.Models.TrainingResultDetailModel
+
+@{ var trainingResultDetails = (List<TrainingResultDetailModel>)ViewBag.TrainingResultDetails; }
+<style>
+    .table100 .ps__rail-x::before, .table100 .ps__rail-x .ps__thumb-x::before {
+        content: none !important;
+    }
+
+    .row100.head th {
+        width: 300px;
+    }
+
+    .row100.head td, .row100.body td {
+        height: 54px;
+    }
+
+    .wrap-table100-nextcols.js-pscroll.ps.ps--active-x::-webkit-scrollbar {
+        background: #F5F5F5;
+        overflow-x: scroll;
+        margin-bottom: 25px;
+        height:7px;
+    }
+
+    .wrap-table100-nextcols.js-pscroll.ps.ps--active-x::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
+    .wrap-table100-nextcols.js-pscroll.ps.ps--active-x::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: rgba(255, 0, 0, 0.8);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+    .wrap-table100-nextcols.js-pscroll.ps.ps--active-x::-webkit-scrollbar-thumb {
+        background-color: #C4C4C4;
+    }
+</style>
+<link href="~/css/main.css" rel="stylesheet" />
+<link href="~/css/util.css" rel="stylesheet" />
+<h2 class="form-title" style="margin-bottom: 15px;">Bảng điểm</h2>
+<div class="wrap-table100">
+    <div class="table100 ver1">
+        <div class="table100-firstcol shadow-table100-firstcol">
+            <table>
+                <thead>
+                    <tr class="row100 head">
+                        <th class="cell100 column1">Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row100 body">
+                        <td class="cell100 column1">Điểm thi lý thuyết lần đầu</td>
+                    </tr>
+                    <tr class="row100 body">
+                        <td class="cell100 column1">Điểm thi lý thuyết lần 2</td>
+                    </tr>
+                    <tr class="row100 body">
+                        <td class="cell100 column1">Điểm thi thực hành lần đầu</td>
+                    </tr>
+                    <tr class="row100 body">
+                        <td class="cell100 column1">Điểm thi thực hành lần 2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @{ if (trainingResultDetails.Any())
+            {
+                <div class="wrap-table100-nextcols js-pscroll ps ps--active-x">
+                    <div class="table100-nextcols">
+                        <table>
+                            <thead>
+                                <tr class="row100 head">
+                                    @if (trainingResultDetails.Any())
+                                    {
+                                        foreach (var item in trainingResultDetails)
+                                        {
+                                            <th class="cell100 column2" id="@item.ClassID">@item.ClassName</th>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <th class="cell100 column2">  </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="row100 body">
+                                    @for (int i = 0; i < trainingResultDetails.Count(); i++)
+                                    {
+                                        <td class="cell100 column2">@trainingResultDetails[i].ScoreFirt</td>
+                                    }
+                                </tr>
+                                <tr class="row100 body">
+                                    @for (int i = 0; i < trainingResultDetails.Count(); i++)
+                                    {
+                                        <td class="cell100 column2">@trainingResultDetails[i].ScoreLast</td>
+                                    }
+                                </tr>
+                                <tr class="row100 body">
+                                    @for (int i = 0; i < trainingResultDetails.Count(); i++)
+                                    {
+                                        <td class="cell100 column2">@trainingResultDetails[i].ScorePracticeFirst</td>
+                                    }
+                                </tr>
+                                <tr class="row100 body">
+                                    @for (int i = 0; i < trainingResultDetails.Count(); i++)
+                                    {
+                                        <td class="cell100 column2">@trainingResultDetails[i].ScorePracticeLast</td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ps__rail-x" @*style="width: 1166px; left: 176px; bottom: 10px;"*@><div class="ps__thumb-x" tabindex="0" style="left: 103px; width: 688px;"></div></div><div class="ps__rail-y" style="top: 0px; right: -176px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+                </div>
+            }
+        }
+    </div>
+</div>

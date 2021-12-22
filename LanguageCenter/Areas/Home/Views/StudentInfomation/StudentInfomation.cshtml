@@ -1,0 +1,74 @@
+﻿@model LanguageCenter.Areas.Home.Models.StudentModel.StudentModel
+<style>
+    .register-form input {
+        height: 35px;
+        width: 50%;
+        float: right;
+    }
+
+    .form-outline.mb-4 {
+        display: inline-block;
+        width: 70%;
+    }
+
+        .form-outline.mb-4 label {
+            float: left;
+            margin: 5px 10px 5px 5px;
+        }
+</style>
+<div class="main">
+    <!-- Sign up form -->
+    <section class="signup">
+        <div class="signup-content">
+            <div class="signup-form">
+                <h2 class="form-title">Thông tin sinh viên</h2>
+                <form method="POST" class="register-form" id="register-form">
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example1">Họ sinh viên</label>
+                        <input type="text" name="FirtName" id="FirtName" value="@Model.FirtName"  class="form-control" tabindex="1" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Tên sinh viên</label>
+                        <input type="text" name="LastName" id="LastName" value="@Model.LastName" class="form-control" tabindex="2" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Ngày sinh</label>
+                        @*<input type="date" name="DateOfBirth" id="DateOfBirth" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" class="form-control" tabindex="3" />*@
+                        @Html.TextBoxFor(m => m.DateOfBirth, "{0:MM/dd/yyyy}", new { @class = "form-control", @id = "DateOfBirth", tabindex = "3", placeholder = "Ngày sinh" })
+
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Nơi sinh</label>
+                        <input type="text" name="CityName" id="CityName" value="@Model.CityName" class="form-control" tabindex="3" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Địa chỉ</label>
+                        <input type="text" name="CurrentAddress" id="CurrentAddress" value="@Model.CurrentAddress" class="form-control" tabindex="3" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Số điện thoại</label>
+                        <input type="text" name="PhoneNumber" id="PhoneNumber" value="@Model.PhoneNumber" class="form-control" tabindex="4" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Email</label>
+                        <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" tabindex="4" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Tài khoản</label>
+                        <input type="text" name="Email" id="Email" value="@Model.UserLogin" class="form-control" tabindex="4" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form1Example2">Mật khẩu</label>
+                        <input type="text" name="Email" id="Email" value="@Model.PassWordLogin" class="form-control" tabindex="4" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $(document).ready(function () {
+        //$('#register-form input').prop('readonly', true);
+    })
+</script>

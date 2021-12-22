@@ -1,4 +1,4 @@
-﻿    
+﻿
 @{
     ViewBag.Title = "ClassWeekDay";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 }
 
 @using LanguageCenter.DataLayer.Object
-@{ 
+@{
     var datas = (IEnumerable<Class>)ViewBag.Classes;
 }
 
@@ -24,69 +24,72 @@
             <h1 class="bold">Lịch học</h1>
         </div>
         <div class="row" style="padding: 0px 15px;">
-            @if (datas != null)
-            {
-                foreach (var item in datas)
+            <div class="post-content">
+
+                @if (datas != null)
                 {
-                    <div class="post-warp clearfix">
-                        <div class="flat-course flat-hover-zoom">
-                            <div class="featured-post">
-                                <div class="overlay">
-                                    <div class="link"></div>
-                                </div>
-                                <div class="entry-image">
-                                    <a ><img src="images/index/course1.jpg" alt="Course1"></a>
-                                </div>
-                            </div><!-- /.featured-post -->
+                    foreach (var item in datas)
+                    {
+                        <div class="post-warp clearfix">
+                            <div class="flat-course flat-hover-zoom" style="width: -webkit-fill-available;">
+                                <div class="featured-post">
+                                    <div class="overlay">
+                                        <div class="link"></div>
+                                    </div>
+                                    <div class="entry-image">
+                                        <a><img src="images/index/course1.jpg" alt="Course1"></a>
+                                    </div>
+                                </div><!-- /.featured-post -->
 
-                            <div class="course-content">
-                                <h4><a >@item.ClassName </a></h4>
+                                <div class="course-content">
+                                    <h4><a>@item.ClassName </a></h4>
 
-                                <div class="price">@item.Price</div>
+                                    <div class="price">@item.Price</div>
 
-                                <ul class="course-meta review clearfix">
-                                    <li class="author">
-                                        <div class="thumb">
-                                            <img  src="@(item.AvatarUrl == null? "images/flickr/4.jpg" : @item.AvatarUrl)" style="width:40px;height:40px" alt="image">
-                                        </div>
+                                    <ul class="course-meta review clearfix">
+                                        <li class="author">
+                                            <div class="thumb">
+                                                <img src="@(item.AvatarUrl == null? "images/flickr/4.jpg" : @item.AvatarUrl)" style="width:40px;height:40px" alt="image">
+                                            </div>
 
-                                        <div class="text">
-                                            <a >@item.FirtName @item.LastName</a>
-                                            <p>Giáo viên</p>
-                                        </div>
-                                    </li>
-                                   
-                                </ul>
+                                            <div class="text">
+                                                <a>@item.FirtName @item.LastName</a>
+                                                <p>Giáo viên</p>
+                                            </div>
+                                        </li>
 
-                                <p> @*Celebrate success right, the only way, apple. To succeed you must believe. When you believe, you will succeed.*@</p>
+                                    </ul>
 
-                                <ul class="course-meta desc" >
-                                    <li>
-                                        <h6>@( @item.StartDate != null? @item.StartDate.Value.ToShortDateString() : "" ) </h6>
-                                        <span>Thời gian bắt đầu</span>
-                                    </li>
+                                    <p> @*Celebrate success right, the only way, apple. To succeed you must believe. When you believe, you will succeed.*@</p>
 
-                                    <li>
-                                        <h6>@( @item.EndDate != null? @item.EndDate.Value.ToShortDateString() : "" ) </h6>
-                                        <span>Dự kiến kết thúc</span>
-                                    </li>
-                                </ul>
-                                <a class="flat-button orange" id="@item.ClassID" >Lịch học</a>
-                            </div><!-- /.course-content -->
-                        </div>
-                    </div><!-- / .post-wrap -->
+                                    <ul class="course-meta desc">
+                                        <li>
+                                            <h6>@( @item.StartDate != null? @item.StartDate.Value.ToShortDateString() : "" ) </h6>
+                                            <span>Thời gian bắt đầu</span>
+                                        </li>
+
+                                        <li>
+                                            <h6>@( @item.EndDate != null? @item.EndDate.Value.ToShortDateString() : "" ) </h6>
+                                            <span>Dự kiến kết thúc</span>
+                                        </li>
+                                    </ul>
+                                    <a class="flat-button orange" id="@item.ClassID">Lịch học</a>
+                                </div><!-- /.course-content -->
+                            </div>
+                        </div><!-- / .post-wrap -->
+                    }
                 }
-            }
-            
-            <div class="blog-pagination">
-                <ul class="flat-pagination">
-                    <li><span class="active">1</span></li>
-                    <li><a  >2</a></li>
-                    <li><a  >3</a></li>
-                    <li class="next">
-                        <a  >Next</a>
-                    </li>
-                </ul><!-- /.flat-pagination -->
+
+                <!--<div class="blog-pagination">
+                    <ul class="flat-pagination">
+                        <li><span class="active">1</span></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li class="next">
+                            <a>Next</a>
+                        </li>
+                    </ul>--><!-- /.flat-pagination -->
+                <!--</div>-->
             </div>
         </div><!-- /row -->
     </div><!-- /container -->

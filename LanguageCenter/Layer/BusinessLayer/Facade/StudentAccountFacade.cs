@@ -37,6 +37,7 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
 
                 sqlServerStudentAccount.Insert(StudentAccount);
 
+
                 response.StudentAccountID = StudentAccount.StudentAccountID;
             }
             catch (Exception ex)

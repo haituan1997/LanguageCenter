@@ -23,6 +23,13 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             return ForeignLanguageCenterAdapter.ReadDataTableToListByEntity<TrainingResultDetail>(procedure, parms);
         }
 
+        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetai_By_StudentID(long studentID)
+        {
+            const string procedure = "uspGet_TrainingResultDetai_By_StudentID";
+            object[] parms = { "@StudentID", studentID };
+            return ForeignLanguageCenterAdapter.ReadDataTableToListByEntity<TrainingResultDetail>(procedure, parms);
+        }
+
         public TrainingResultDetail Get_TrainingResultDetailByTrainingResultDetailID(long TrainingResultDetailID)
         {
             const string procedure = "uspGet_TrainingResultDetailByTrainingResultDetailID";

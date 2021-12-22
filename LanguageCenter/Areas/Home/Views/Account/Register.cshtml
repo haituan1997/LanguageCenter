@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Đăng ký</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="/fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -14,55 +14,54 @@
 <body>
 
     <div class="main">
-
         <!-- Sign up form -->
         <section class="signup">
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <h2 class="form-title">Sign up</h2>
+                        <h2 class="form-title">Đăng ký</h2>
                         <form method="POST" class="register-form" id="register-form">
                             @Html.ValidationMessageFor(model => model.FirtName)
                             <div class="form-group" id="FirtName-grp">
                                 <label for="FirtName"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" value="@Model.FirtName" name="FirtName" id="FirtName" placeholder="Firt Name" />
+                                <input type="text" value="@Model.FirtName" name="FirtName" id="FirtName" placeholder="Họ" />
                             </div>
                             @Html.ValidationMessageFor(model => model.LastName)
                             <div class="form-group" id="LastName=grp">
                                 <label for="LastName"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" value="@Model.LastName" name="LastName" id="LastName" placeholder="Last Name" />
+                                <input type="text" value="@Model.LastName" name="LastName" id="LastName" placeholder="Tên" />
                             </div>
                             @Html.ValidationMessageFor(model => model.UserLogin)
                             <div class="form-group" id="UserLogin-grp">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" value="@Model.UserLogin" name="UserLogin" id="UserLogin" placeholder="User Name" />
+                                <input type="text" value="@Model.UserLogin" name="UserLogin" id="UserLogin" placeholder="Tài khoản" />
                             </div>
                             @Html.ValidationMessageFor(model => model.CurrentAddress)
                             <div class="form-group" id="CurrentAddress-grp">
                                 <label for="CurrentAddress"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="CurrentAddress" value="@Model.CurrentAddress" id="CurrentAddress" placeholder="Current Address" />
+                                <input type="text" name="CurrentAddress" value="@Model.CurrentAddress" id="CurrentAddress" placeholder="Địa chỉ" />
                             </div>
                             @Html.ValidationMessageFor(model => model.DateOfBirth)
                             <div class="form-group" id="DateOfBirth-grp">
                                 <label for="DateOfBirth"><i class="zmdi zmdi-view-day"></i></label>
-                                <input type="date" name="DateOfBirth" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" id="DateOfBirth" placeholder="Your Date Of Birth" />
+                                <input type="date" name="DateOfBirth" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" id="DateOfBirth" placeholder="Ngày sinh" />
                             </div>
 
                             @Html.ValidationMessageFor(model => model.PhoneNumber)
                             <div class="form-group" id="PhoneNumber-grp">
                                 <label for="PhoneNumber"><i class="zmdi zmdi-account-box-phone"></i></label>
-                                <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" id="PhoneNumber" placeholder="Phone Number" />
+                                <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" id="PhoneNumber" placeholder="Số điện thoại" />
                             </div>
                             @Html.ValidationMessageFor(model => model.PassWordLogin)
                             <div class="form-group" id="PassWordLogin-grp">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="PassWordLogin" value="@Model.PassWordLogin" id="password" placeholder="Password" />
+                                <input type="password" name="PassWordLogin" value="@Model.PassWordLogin" id="password" placeholder="Mật khẩu" />
                             </div>
                             @Html.ValidationMessageFor(model => model.re_pass)
 
                             <div class="form-group" id="re-pass-grp">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" value="@Model.re_pass" id="re_pass" placeholder="Repeat your password" />
+                                <input type="password" name="re_pass" value="@Model.re_pass" id="re_pass" placeholder="Nhập lại mật khẩu" />
                             </div>
 
                             @*<div class="form-group">
@@ -70,13 +69,13 @@
             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
         </div>*@
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Đăng ký" />
                             </div>
                         </form>
                     </div>
                     <div class="signup-image">
                         <figure><img src="~/images/signup-image.jpg" alt="sing up image"></figure>
-                        <a href="/Account/Login" class="signup-image-link">I am already member</a>
+                        <a href="/Account/Login" class="signup-image-link">Tôi đã là thành viên</a>
                     </div>
                 </div>
             </div>

@@ -10,29 +10,41 @@ namespace LanguageCenter.Repository
 {
     public class TrainingResultDetailRepository
     {
-        TrainingResultDetailFacade TrainingResultDetailFacade= new TrainingResultDetailFacade();
+        TrainingResultDetailFacade TrainingResultDetailFacade = new TrainingResultDetailFacade();
         public TrainingResultDetailRepository()
         {
             TrainingResultDetailFacade = new TrainingResultDetailFacade();
         }
 
-        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetails(out int total,long trainingResultID,int page , int pageSize , string orderBy = null, string searchBy = null)
+        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetails(out int total, long trainingResultID, int page, int pageSize, string orderBy = null, string searchBy = null)
         {
             try
             {
                 total = TrainingResultDetailFacade.Count(searchBy, trainingResultID);
-                return TrainingResultDetailFacade.Get_TrainingResultDetails(trainingResultID, page, pageSize, orderBy, searchBy); 
+                return TrainingResultDetailFacade.Get_TrainingResultDetails(trainingResultID, page, pageSize, orderBy, searchBy);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-       
+        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetai_By_StudentID(long studentID)
+        {
+            try
+            {
+
+                return TrainingResultDetailFacade.Get_TrainingResultDetai_By_StudentID(studentID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public TrainingResultDetail Get_TrainingResultDetailByTrainingResultDetailID(long TrainingResultDetailID)
         {
             try
-            { 
+            {
                 return TrainingResultDetailFacade.Get_TrainingResultDetailByTrainingResultDetailID(TrainingResultDetailID);
             }
             catch (Exception ex)
@@ -56,7 +68,7 @@ namespace LanguageCenter.Repository
             {
                 throw new Exception(ex.Message);
             }
-            
+
         }
         public string Update(TrainingResultDetail TrainingResultDetail)
         {

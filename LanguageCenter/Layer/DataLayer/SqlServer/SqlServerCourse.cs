@@ -28,6 +28,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspGet_AllCourses";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
+        public IEnumerable<Course> Get_Courses_For_Home()
+        {
+            const string procedure = "uspGet_Courses_For_Home";
+            return ForeignLanguageCenterAdapter.ReadDataTableToListByEntity<Course>(procedure);
+        }
+        
         public IEnumerable<Course> Get_CoursesAndCountClass()
         {
             const string procedure = "uspGet_CoursesAndCountClass";

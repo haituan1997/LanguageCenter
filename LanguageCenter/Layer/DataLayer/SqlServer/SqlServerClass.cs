@@ -43,13 +43,13 @@ namespace LanguageCenter.DataLayer.SqlServer
             const string procedure = "Get_AllClassesNotTrainingResult";
             return ForeignLanguageCenterAdapter.ReadList(procedure, Make);
         }
-        
+
 
         public Class Get_ClassByClassID(long id)
         {
             const string procedure = "uspGet_ClassByClassID";
             object[] parms = { "@ClassID", id };
-            return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
+            return ForeignLanguageCenterAdapter.ReadDataAndMapToObject<Class>(procedure, parms);
         }
         public Class Get_ClassByClassName(string className)
         {
@@ -122,18 +122,19 @@ namespace LanguageCenter.DataLayer.SqlServer
                 FullName = reader["FirtName"].AsString() + " " + reader["LastName"].AsString(),
                 CourseName = reader["Name"].AsString(),
             };
-        private static object[] Take(Class objclass) 
+        private static object[] Take(Class objclass)
         {
-	        return new object[]  
-	        {
-		        "@ClassID",objclass.ClassID,
-		        "@ClassName",objclass.ClassName,
-		        "@StartDate",objclass.StartDate,
-		        "@EndDate",objclass.EndDate,
-		        "@Price",objclass.Price,
-		        "@TeacherID",objclass.TeacherID,
-		        "@CourseID",objclass.CourseID,
+            return new object[]
+            {
+                "@ClassID",objclass.ClassID,
+                "@ClassName",objclass.ClassName,
+                "@StartDate",objclass.StartDate,
+                "@EndDate",objclass.EndDate,
+                "@Price",objclass.Price,
+                "@TeacherID",objclass.TeacherID,
+                "@CourseID",objclass.CourseID,
                 "@IsCreated",objclass.IsCreated,
+                "@IsComplete",objclass.IsComplete,
             };
         }
 

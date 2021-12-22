@@ -50,10 +50,10 @@ namespace LanguageCenter.Areas.Home.Controllers
         [HttpGet]
         public ActionResult StudentAccount(long? id)
         {
-            ViewBag.Students = _StudentRepository.GetAll_StudentsNotAccont().ToList();
+            
             if (id == null)
             {
-                
+                ViewBag.Students = _StudentRepository.GetAll_StudentsNotAccont().ToList();
                 var model = new StudentAccountModel();
                 model.Title = "Thêm mới tài khoản sinh viên";
                 model.IsEdit = false;
@@ -61,6 +61,7 @@ namespace LanguageCenter.Areas.Home.Controllers
             }
             else
             {
+                ViewBag.Students = _StudentRepository.GetAll_Students();
                 var StudentAccount = _StudentAccountRepository.Get_StudentAccountByStudentAccountID((long)id);
                 var model = Mapper.Map<StudentAccount, StudentAccountModel>(StudentAccount);
                 model.Title = "Cập nhập tài khoản sinh viên";

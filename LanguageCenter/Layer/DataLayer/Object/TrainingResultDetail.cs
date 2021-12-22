@@ -14,9 +14,12 @@ namespace LanguageCenter.Layer.DataLayer.Object
         public string LastName { get; set; }
         public string FirtName { get; set; }
         public decimal ScoreFirt { get; set; }
-        public decimal ScoreLast { get; set; }
-        public decimal ScorePracticeFirst { get; set; }
-        public decimal ScorePracticeLast { get; set; }
+        public decimal? ScoreLast { get; set; }
+        public decimal? ScorePracticeFirst { get; set; }
+        public decimal? ScorePracticeLast { get; set; }
+
+        public string ClassName { get; set; }
+        public long ClassID { get; set; }
 
     }
 

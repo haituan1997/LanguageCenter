@@ -19,6 +19,11 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerCourse.Get_AllCourses();
         }
+        public IEnumerable<Course> Get_Courses_For_Home()
+        {
+            return sqlServerCourse.Get_Courses_For_Home();
+        }
+        
         public IEnumerable<Course> Get_CoursesAndCountClass()
         {
             return sqlServerCourse.Get_CoursesAndCountClass();

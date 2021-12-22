@@ -14,7 +14,7 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         SqlServerStudentAccount sqlServerStudentAccount = new SqlServerStudentAccount();
         public IEnumerable<Student> Get_Students(int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
-            return sqlServerStudent.Get_Students(page,pageSize,orderBy,searchBy);
+            return sqlServerStudent.Get_Students(page, pageSize, orderBy, searchBy);
         }
         public IEnumerable<Student> GetAll_Students()
         {
@@ -24,14 +24,14 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerStudent.GetAll_StudentsNotAccont();
         }
-        
+
         public Student Get_StudentByStudentID(long studenIDl)
         {
             return sqlServerStudent.Get_StudentByStudentID(studenIDl);
         }
-        public int Count( string whereClause)
+        public int Count(string whereClause)
         {
-            return sqlServerStudent.Count( whereClause);
+            return sqlServerStudent.Count(whereClause);
         }
         public StudentResponse Insert(Student student)
         {
@@ -40,6 +40,14 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
             {
                 student.StudentID = sqlServerStudent.GetId();
                 sqlServerStudent.Insert(student);
+                var studentAccount = new StudentAccount()
+                {
+                    IsActive = true,
+                    UserLogin = $"HV{student.StudentID}",
+                    PassWordLogin = "123456a",
+                    StudentID = student.StudentID,
+                };
+                sqlServerStudentAccount.Insert(studentAccount);
 
                 response.StudentID = student.StudentID;
             }
@@ -88,9 +96,9 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
                         {
                             checkxoaall = false;
                         }
-                       
+
                     }
-                    if(checkxoaall==false)
+                    if (checkxoaall == false)
                     {
                         throw new Exception("Sinh viên này đã được dùng ở chức năng khác.");
                     }

@@ -17,8 +17,10 @@ namespace LanguageCenter.Areas.Home.Models.TrainingResultDetailModel
         public string LastName { get; set; }
         public string FirtName { get; set; }
         public decimal ScoreFirt { get; set; } 
-        public decimal ScoreLast { get; set; }
-        public decimal ScorePracticeFirst { get; set; }
-        public decimal ScorePracticeLast { get; set; }
+        public decimal? ScoreLast { get; set; }
+        public decimal? ScorePracticeFirst { get; set; }
+        public decimal? ScorePracticeLast { get; set; }
+        public string ClassName { get; set; }
+        public string ClassID { get; set; }
     }
 }

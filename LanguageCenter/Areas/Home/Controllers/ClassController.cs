@@ -16,6 +16,7 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -585,7 +586,17 @@ namespace LanguageCenter.Areas.Home.Controllers
             {
                 try
                 {
-                    var student = Mapper.Map<Student>(item);
+                    string[] formats = { "dd/MM/yyyy" };
+                    var student = new Student()
+                    {
+                        FirtName = item.FirtName,
+                        LastName = item.LastName,
+                        DateOfBirth = DateTime.ParseExact(item.DateOfBirth, formats, new CultureInfo("en-US"), DateTimeStyles.None),
+                        Email = item.Email,
+                        PhoneNumber = item.PhoneNumber,
+                        CurrentAddress = item.CurrentAddress,
+                    };
+
                     var studentId = Convert.ToInt64(_studentRepository.Insert(student));
                     var model = new ClassStudent
                     {
