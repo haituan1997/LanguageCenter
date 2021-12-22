@@ -197,6 +197,7 @@
     <Compile Include="Areas\Home\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeClassWeekDayController.cs" />
     <Compile Include="Areas\Home\Controllers\RegistrationClassController.cs" />
+    <Compile Include="Areas\Home\Controllers\StudentInfomationController.cs" />
     <Compile Include="Areas\Home\Controllers\ViewNewsFedController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeController.cs" />
     <Compile Include="Areas\Home\Controllers\AccountController.cs" />
@@ -407,6 +408,7 @@
     <Content Include="css\LayOutAdmin.css" />
     <Content Include="css\Account.css" />
     <Content Include="css\Home.css" />
+    <Content Include="css\main.css" />
     <Content Include="css\stylesheets\animate.css" />
     <Content Include="css\stylesheets\bootstrap.css" />
     <Content Include="css\stylesheets\bootstrap_h.css" />
@@ -422,6 +424,7 @@
     <Content Include="css\stylesheets\revolution-slider.css" />
     <Content Include="css\stylesheets\shortcodes.css" />
     <Content Include="css\stylesheets\style.css" />
+    <Content Include="css\util.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome\css\all.css" />
@@ -9127,6 +9130,9 @@
     <Content Include="Scripts\ckfinder\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="Scripts\ckfinder\userfiles\.htaccess" />
     <Content Include="Areas\Home\Views\FilterPrice\FilterPrices.cshtml" />
+    <Content Include="Areas\Home\Views\StudentInfomation\StudentInfomations.cshtml" />
+    <Content Include="Areas\Home\Views\StudentInfomation\StudentInfomation.cshtml" />
+    <Content Include="Areas\Home\Views\StudentInfomation\ReportForStudent.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckfinder\changelog.txt" />
     <Content Include="Scripts\ckfinder\ckfinder.html" />

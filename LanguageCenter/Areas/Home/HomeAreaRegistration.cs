@@ -143,6 +143,12 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "tra-cuu-hoc-phi", defaults: new { controller = "FilterPrice", action = "FilterPrices", area = "Home", });
             context.MapRoute("", "danh-sach-tra-cuu-hoc-phi", defaults: new { controller = "FilterPrice", action = "Paged_FilterPrices", area = "Home", });
             #endregion
+
+            #region thông tin sinh viên
+            context.MapRoute("", "thong-tin-sinh-vien", defaults: new { controller = "StudentInfomation", action = "StudentInfomations", area = "Home", });
+            context.MapRoute("", "thong-tin-chi-tiet-sinh-vien", defaults: new { controller = "StudentInfomation", action = "StudentInfomation", area = "Home", });
+            context.MapRoute("", "thong-tin-diem-sinh-vien", defaults: new { controller = "StudentInfomation", action = "ReportForStudent", area = "Home", });
+            #endregion
         }
     }
 }

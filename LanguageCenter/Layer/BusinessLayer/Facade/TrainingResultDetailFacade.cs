@@ -10,19 +10,22 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
 {
     public class TrainingResultDetailFacade
     {
-        SqlServerTrainingResultDetail sqlServerTrainingResultDetail = new SqlServerTrainingResultDetail(); 
-        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetails(long trainingResultID,int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
+        SqlServerTrainingResultDetail sqlServerTrainingResultDetail = new SqlServerTrainingResultDetail();
+        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetails(long trainingResultID, int page = 0, int pageSize = 15, string orderBy = null, string searchBy = null)
         {
-            return sqlServerTrainingResultDetail.Get_TrainingResultDetails(trainingResultID,page, pageSize,orderBy,searchBy);
+            return sqlServerTrainingResultDetail.Get_TrainingResultDetails(trainingResultID, page, pageSize, orderBy, searchBy);
         }
-        
+        public IEnumerable<TrainingResultDetail> Get_TrainingResultDetai_By_StudentID(long studentID)
+        {
+            return sqlServerTrainingResultDetail.Get_TrainingResultDetai_By_StudentID(studentID);
+        }
         public TrainingResultDetail Get_TrainingResultDetailByTrainingResultDetailID(long studenIDl)
         {
             return sqlServerTrainingResultDetail.Get_TrainingResultDetailByTrainingResultDetailID(studenIDl);
         }
-        public int Count( string whereClause, long trainingResultID)
+        public int Count(string whereClause, long trainingResultID)
         {
-            return sqlServerTrainingResultDetail.Count( whereClause, trainingResultID);
+            return sqlServerTrainingResultDetail.Count(whereClause, trainingResultID);
         }
         public TrainingResultDetailResponse Insert(TrainingResultDetail TrainingResultDetail)
         {
@@ -69,13 +72,13 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
                     var checkxoaall = true;
                     foreach (var item in ids)
                     {
-                         
-                            sqlServerTrainingResultDetail.Delete(item);
 
-                       
-                       
+                        sqlServerTrainingResultDetail.Delete(item);
+
+
+
                     }
-                   
+
                 }
             }
             catch (Exception ex)

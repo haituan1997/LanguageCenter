@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "StudentInfomations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .sidebar .widget:after {
+        position: absolute;
+        top: 0;
+        right: -10px;
+        width: 3px;
+        height: 50px;
+        content: "";
+        z-index: 999;
+        background-color: #ffaa30;
+        left: auto;
+    }
+
+    .sidebar .widget:before {
+        position: absolute;
+        top: 0;
+        right: -10px;
+        width: 1px;
+        height: 100%;
+        content: "";
+        background-color: #e5e5e5;
+        left: auto;
+    }
+</style>
+<div class="container">
+    <div class="col-md-12 col-lg-12 col-sm-12" style="background-color: white; padding-top: 30px;">
+        <div class=" col-md-3 col-lg-3 col-sm-3 student-info-left">
+            <div class="sidebar" style="width : 100%">
+                <div class="widget widget-categories">
+                    <h5 class="widget-title">Thông tin</h5>
+                    <ul class="widget-title-ul" id="student-info-left-ul">
+                        <li style="cursor: pointer;" id="1">
+                            <a class="widget-title-ul-a">Sinh viên</a>
+                        </li>
+                        <li style="cursor: pointer;" id="2">
+                            <a class="widget-title-ul-a">Điểm</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class=" col-md-9 col-lg-9 col-sm-9 student-info-right" style="min-height: 350px;">
+
+        </div>
+
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var studentID = '@ViewBag.StudentID';
+        $("#student-info-left-ul").on('click', 'li', function (e) {
+            var id = $(this).attr('id');
+            var url = '';
+            if (id == '1') {
+                url = '/thong-tin-chi-tiet-sinh-vien?studentID=' + studentID;
+            }
+            else {
+                url = '/thong-tin-diem-sinh-vien?studentID=' + studentID;
+            }
+            loadInfo(url);
+        });
+
+        var loadInfo = function (url,studentID) {
+            $('.student-info-right').load(url,
+                function () {
+                });
+        }
+        loadInfo('/thong-tin-chi-tiet-sinh-vien?studentID=' + studentID);
+
+    })
+</script>
+

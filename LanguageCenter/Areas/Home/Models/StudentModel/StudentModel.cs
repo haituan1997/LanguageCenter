@@ -24,5 +24,7 @@ namespace LanguageCenter.Areas.Home.Models.StudentModel
         public string CityName { get; set; }
         public DateTime  DateOfBirth { get; set; }
         public string  DateOfBirthBackUp { get; set; }
+        public string UserLogin { get; set; }
+        public string PassWordLogin { get; set; }
     }
 }
