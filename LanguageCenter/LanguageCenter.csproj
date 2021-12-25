@@ -196,6 +196,7 @@
     <Compile Include="Areas\Home\Controllers\FilterPriceController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeClassWeekDayController.cs" />
+    <Compile Include="Areas\Home\Controllers\IntroduceController.cs" />
     <Compile Include="Areas\Home\Controllers\RegistrationClassController.cs" />
     <Compile Include="Areas\Home\Controllers\StudentInfomationController.cs" />
     <Compile Include="Areas\Home\Controllers\ViewNewsFedController.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Areas\Home\Models\Course\CourseModel.cs" />
     <Compile Include="Areas\Home\Models\FilterPrice\FilterPriceModel.cs" />
     <Compile Include="Areas\Home\Models\StudentModel\ImportStudentModel.cs" />
+    <Compile Include="Areas\Home\Models\TrainingResultDetailModel\ImportTrainingResultDetailModel.cs" />
     <Compile Include="Areas\Home\Models\TrainingResultDetailModel\TrainingResultDetailModel.cs" />
     <Compile Include="Areas\Home\Models\TrainingResultModel\TrainingResultModel.cs" />
     <Compile Include="Areas\Home\Models\RegisterModel\RegisterModel.cs" />
@@ -404,6 +406,7 @@
     <Content Include="Content\fullcalendar.print.css" />
     <Content Include="Content\fullcalendar.print.min.css" />
     <Content Include="Content\jquery.ui.all.css" />
+    <Content Include="css\ViewImport.css" />
     <Content Include="css\DataTable.css" />
     <Content Include="css\LayOutAdmin.css" />
     <Content Include="css\Account.css" />
@@ -9133,6 +9136,10 @@
     <Content Include="Areas\Home\Views\StudentInfomation\StudentInfomations.cshtml" />
     <Content Include="Areas\Home\Views\StudentInfomation\StudentInfomation.cshtml" />
     <Content Include="Areas\Home\Views\StudentInfomation\ReportForStudent.cshtml" />
+    <Content Include="Areas\Home\Views\Introduce\Introduce.cshtml" />
+    <Content Include="Areas\Home\Views\TrainingResult\_ImportStudent.cshtml" />
+    <Content Include="Areas\Home\Views\TrainingResult\_UploadPartial.cshtml" />
+    <Content Include="Code\TemplateImport\template_diem_sinh_vien.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckfinder\changelog.txt" />
     <Content Include="Scripts\ckfinder\ckfinder.html" />

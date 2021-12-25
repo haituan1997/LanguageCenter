@@ -15,6 +15,10 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
         {
             return sqlServerTrainingResultDetail.Get_TrainingResultDetails(trainingResultID, page, pageSize, orderBy, searchBy);
         }
+        public IEnumerable<TrainingResultDetail> GetTrainingResultDetailForExport(long classID)
+        {
+            return sqlServerTrainingResultDetail.GetTrainingResultDetailForExport(classID);
+        }
         public IEnumerable<TrainingResultDetail> Get_TrainingResultDetai_By_StudentID(long studentID)
         {
             return sqlServerTrainingResultDetail.Get_TrainingResultDetai_By_StudentID(studentID);
@@ -62,6 +66,31 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
             }
             return response;
         }
+        public TrainingResultDetailResponse Import(TrainingResultDetail TrainingResultDetail)
+        {
+            var response = new TrainingResultDetailResponse { Acknowledge = AcknowledgeType.Success };
+            try
+            {
+                var obj = sqlServerTrainingResultDetail.GetByStudentIdAndClassId(TrainingResultDetail.StudentID, TrainingResultDetail.ClassID);
+                if (obj != null)
+                {
+                    TrainingResultDetail.TrainingResultDetailID = obj.TrainingResultDetailID;
+                    sqlServerTrainingResultDetail.Update(TrainingResultDetail);
+                }
+                else
+                {
+                    TrainingResultDetail.TrainingResultDetailID = sqlServerTrainingResultDetail.GetId();
+                    sqlServerTrainingResultDetail.Insert(TrainingResultDetail);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Acknowledge = AcknowledgeType.Failure;
+                response.Message = ex.Message;
+                return response;
+            }
+            return response;
+        }
         public TrainingResultDetailResponse Delete(List<long> ids)
         {
             var response = new TrainingResultDetailResponse { Acknowledge = AcknowledgeType.Success };
@@ -72,13 +101,8 @@ namespace LanguageCenter.Layer.BusinessLayer.Facade
                     var checkxoaall = true;
                     foreach (var item in ids)
                     {
-
                         sqlServerTrainingResultDetail.Delete(item);
-
-
-
                     }
-
                 }
             }
             catch (Exception ex)

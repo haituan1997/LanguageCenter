@@ -22,6 +22,12 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             object[] parms = { "@TrainingResultID", trainingResultID, "@Page", page, "@PageSize", pageSize, "@OrderByColumn", orderBy, "@SearchBy", searchBy };
             return ForeignLanguageCenterAdapter.ReadDataTableToListByEntity<TrainingResultDetail>(procedure, parms);
         }
+        public IEnumerable<TrainingResultDetail> GetTrainingResultDetailForExport(long classID)
+        {
+            const string procedure = "uspGet_TrainingResultDetail_For_Export";
+            object[] parms = { "@ClassID", classID };
+            return ForeignLanguageCenterAdapter.ReadDataTableToListByEntity<TrainingResultDetail>(procedure, parms);
+        }
 
         public IEnumerable<TrainingResultDetail> Get_TrainingResultDetai_By_StudentID(long studentID)
         {
@@ -35,6 +41,13 @@ namespace LanguageCenter.Layer.DataLayer.SqlServer
             const string procedure = "uspGet_TrainingResultDetailByTrainingResultDetailID";
             object[] parms = { "@TrainingResultDetailID", TrainingResultDetailID };
             return ForeignLanguageCenterAdapter.Read(procedure, Make, parms);
+        }
+
+        public TrainingResultDetail GetByStudentIdAndClassId(long studentID, long classID)
+        {
+            const string procedure = "uspGet_TrainingResultDetail_By_StudentId_And_ClassId";
+            object[] parms = { "@StudentID", studentID, "@ClassID", classID };
+            return ForeignLanguageCenterAdapter.ReadDataAndMapToObject<TrainingResultDetail>(procedure, parms);
         }
         public int Count(string whereClause = null, long? trainingResultID = null)
         {

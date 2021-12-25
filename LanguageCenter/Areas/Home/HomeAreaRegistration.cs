@@ -21,6 +21,7 @@ namespace LanguageCenter.Areas
             context.MapRoute("", "admin", defaults: new { controller = "HomeAdmin", action = "Index", area = "Home" });
             context.MapRoute("", "dang-nhap", defaults: new { controller = "Account", action = "LoginUser", area = "Home" });
             context.MapRoute("", "dang-ky", defaults: new { controller = "Account", action = "Register", area = "Home" });
+            context.MapRoute("", "gioi-thieu", defaults: new { controller = "Introduce", action = "Introduce", area = "Home" });
 
             #region home
             context.MapRoute("", "trang-chu", defaults: new { controller = "Home", action = "Index", area = "Home" });
