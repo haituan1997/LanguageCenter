@@ -28,6 +28,17 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<TrainingResultDetail> GetTrainingResultDetailForExport(long classID)
+        {
+            try
+            {
+                return TrainingResultDetailFacade.GetTrainingResultDetailForExport(classID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public IEnumerable<TrainingResultDetail> Get_TrainingResultDetai_By_StudentID(long studentID)
         {
             try
@@ -75,6 +86,24 @@ namespace LanguageCenter.Repository
             try
             {
                 var response = TrainingResultDetailFacade.Update(TrainingResultDetail);
+                if (response.Acknowledge == AcknowledgeType.Failure)
+                {
+                    throw new Exception(response.Message);
+                }
+                return response.TrainingResultDetailID.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        public string Import(TrainingResultDetail TrainingResultDetail)
+        {
+            try
+            {
+                var response = TrainingResultDetailFacade.Import(TrainingResultDetail);
                 if (response.Acknowledge == AcknowledgeType.Failure)
                 {
                     throw new Exception(response.Message);

@@ -1,7 +1,7 @@
 ﻿@model LanguageCenter.Areas.Home.Models.TrainingResultModel.TrainingResultModel
 @using LanguageCenter.DataLayer.Object
 @{
-    ViewData["Title"] = "Tạo mới sản phẩm";
+    ViewData["Title"] = "Điểm";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var Classes = (IEnumerable<Class>)ViewBag.Class;
 }
@@ -85,6 +85,7 @@
                             <div class="action-FormList">
                                 <button id="btnAddNew" class="btn-add-new"><span class="">Thêm mới</span></button>
                                 <a id="btnDeleteAll" class="btn-delete-all" style="padding-top: 5px;"><span>Xóa tất cả</span></a>
+                                <a id="btnImport" style="margin-left:10px" class="a-import"><span class="">Import</span></a>
                             </div>
                         </div>
                         <div class="row" style="padding: 0px 11px;">
@@ -128,6 +129,13 @@
             </div>
         </div>
     </div>
+    <section>
+        <div id="ImportStudentModal" class="modal modal-full-screen" data-backdrop="static" data-keyboard="false" role="dialog" style="display: none; ">
+            <div class="modal-content modal-content-full-screen">
+                @Html.Partial("_ImportStudent")
+            </div>
+        </div>
+    </section>
 </div>
 
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
@@ -527,5 +535,21 @@
         $("#exit-view,.fa-arrow-left").off('click').on('click', function (e) {
             window.location = "/diem-lop";
         });
+
+            var ClickImport = function (e) {
+                $('#btnImport').off('click').on('click', function (e) {
+                    var classID = $('#ClassID').find(':selected').val();
+                    if (classID == '' || classID == undefined) {
+                        $("#TrainingResultForm").valid();
+                    }
+                    else
+                    {
+                        $('#ImportStudentModal').modal('show');
+                        var step1 = $('a[href="#step-1"]');
+                        step1.removeAttr('disabled').trigger('click');
+                    }
+                });
+            }
+            ClickImport();
     });
 </script>

@@ -1,0 +1,259 @@
+﻿<div class="row">
+    <div class="col-md-3 col-lg-3"></div>
+    <div class="col-md-6 col-lg-6" style=" margin-left: 25%;">
+        <form method="post" enctype="multipart/form-data" novalidate class="box">
+            <div class="box__input">
+                <img src="/images/upload-start.png" />
+                <input style="display:none" type="file" name="files" id="file" class="box__file" />
+                <label style="margin-bottom:0px !important" id="lblFile" for="file"><span class="box__dragndrop">Kéo thả tệp tại đây để tải lên<br />hoặc<br /></span><strong>Chọn tệp tin</strong></label>
+                <button id="btnUploadFile" type="submit" class="box__button">Upload</button>
+            </div>
+            <div class="box__uploading">
+                <img id="imgUpload" src="/images/upload-start.png" />
+                <label for="file" id="lblFileUploading"></label>
+                <p id="lblUploadStatus" ></p>
+            </div>
+
+        </form>
+        <div id="class-file-erros" style="margin-top:20px !important; overflow-y:auto;">
+            <p id="Header-erros">Danh sách tệp tin lỗi gần nhất</p>
+            <div id="List-File-import-Erros">
+                <div class="item" style="text-align:center !important">
+                        <img src="/images/emptydata.png" alt="Smiley face" style="margin-top:45px !important" height="94px" width="76px">
+                        <div class="empty-table-warning-1">
+                            <span> Danh sách tệp tin lỗi gần nhất chưa có dữ liệu! </span>
+                        </div>
+                        <div class="empty-table-warning-2">
+                            <span>Bạn có thể nhìn thấy các tệp tin tải lên lỗi gần nhất tại đây. Sau đó có thể tải xuống, xem và sửa đổi nếu cần. </span>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    'use strict';
+    function uploadError(step) {
+        var curStep = $("div.setup-panel a.btn-current-step");
+        curStep.addClass("btn-error-step");
+        curStep.children("i").addClass("fa fa-times");
+        if (step == 1) {
+            $("#btnRetry").show();
+            $("#btnNext").hide();
+            //$(".progress").hide();
+            $("#imgUpload").attr("src", '/images/upload-error.png');
+            $("#lblImportStatus").text("Tải tệp lỗi");
+            $("#uploadStatus").text("Tải tệp lỗi");
+            $('#lblFileUploading').click(false);
+        } else {
+            $("#btnRetry").show();
+            $("#btnNext").hide();
+            $("#imgUploadComplete").attr("src", '/images/upload-error.png');
+            $("#lblFinalStatus").text("Tải lên lỗi");
+            $("#stepStatus").text("Tải lên lỗi");
+        }
+    }
+
+    function formatBytes(bytes, decimals) {
+        if (bytes == 0) return '0 Bytes';
+        var k = 1024,
+            dm = decimals || 2,
+            sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    (function ($, window, document, undefined) {
+        // feature detection for drag&drop upload
+        var isAdvancedUpload = function () {
+            var div = document.createElement('div');
+            return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) &&
+                'FormData' in window &&
+                'FileReader' in window;
+        }();
+
+        // applying the effect for every form
+        $('.box')
+            .each(function () {
+                var $form = $(this),
+                    $input = $form.find('input[type="file"]'),
+                    $label = $form.find('label'),
+                    droppedFiles = false,
+                    showFiles = function (files) {
+                        // preventing the duplicate submissions if the current one is in progress
+                        if ($form.hasClass('is-uploading'))
+                            return false;
+                        $form.addClass('is-uploading').removeClass('is-error');
+                        //$('.myprogress').css('width', '0');
+                        var fileInfo = files.name + ' (' + formatBytes(files.size, 2) + ')';
+                        $label.text(fileInfo);
+                        $label.addClass("file-info");
+
+                        var filename = files.name;
+                        var extension = filename.split('.').pop().toUpperCase();
+                        if (extension != "XLSX") {
+                            uploadError(1);
+                            $("#lblUploadStatus").text("File tải lên không đúng định dạng yêu cầu. Vui lòng tải file đúng định dạng .xlsm");
+                            $("#lblUploadStatus").show();
+                        } else if (files.size > 26214400) {
+                            uploadError(1);
+                            $("#lblUploadStatus").text("File vượt quá dung lượng cho phép. Vui lòng tải lên file có dung lượng không quá 25MB.");
+                            $("#lblUploadStatus").show();
+                        } else {
+                            $("#btnNext").show();
+                        }
+                    };
+
+                // letting the server side to know we are going to make an Ajax request
+                $form.append('<input type="hidden" name="ajax" value="1" />');
+
+                // automatically submit the form on file select
+                $input.on('change',
+                    function (e) {
+                        showFiles(e.target.files[0]);
+
+                    });
+
+                // drag&drop files if the feature is available
+                if (isAdvancedUpload) {
+                    $form
+                        .addClass('has-advanced-upload')
+                        .on('drag dragstart dragend dragover dragenter dragleave drop',
+                            function (e) {
+                                // preventing the unwanted behaviours
+                                e.preventDefault();
+                                e.stopPropagation();
+                            })
+                        .on('dragover dragenter',
+                            function () //
+                            {
+                                $form.addClass('is-dragover');
+                            })
+                        .on('dragleave dragend drop',
+                            function () {
+                                $form.removeClass('is-dragover');
+                            })
+                        .on('drop',
+                            function (e) {
+                                $("input[type='file']")
+                                    .prop("files", e.originalEvent.dataTransfer.files);
+                                droppedFiles = e.originalEvent.dataTransfer.files[0]; // the files that were dropped
+                                showFiles(droppedFiles);
+                            });
+                }
+
+                // if the form was submitted
+                var table;
+                $form.on('submit',
+                    function (e) {
+                        //|| droppedFiles
+                        if (document.getElementById('file').files.length > 0) {
+                            debugger
+                            if (isAdvancedUpload) // ajax file upload for modern browsers
+                            {
+                                e.preventDefault();
+                                // gathering the form data
+                                var ajaxData = new FormData($form.get(0));
+                                var curStep = $("div.setup-panel a.btn-current-step");
+                                $("#lblImportStatus").text("Đang tải lên");
+                                $("#lblFileUpload").text($('#lblFile').text());
+                                $("#lblUploadStatus").hide();
+                                //$(".progress").show();
+
+                                $.ajax(
+                                    {
+                                        url: "/TrainingResult/ImportExcelFile?classID=" + $('#ClassID').find(':selected').val() + '&trainingResultID=' + '@ViewBag.TrainingResultID',
+                                        type: "POST",
+                                        data: ajaxData,
+                                        dataType: 'json',
+                                        cache: false,
+                                        contentType: false,
+                                        processData: false,
+                                        // this part is progress bar
+                                        //xhr: function () {
+                                        //    var xhr = new window.XMLHttpRequest();
+                                        //    xhr.upload.addEventListener("progress",
+                                        //        function (evt) {
+                                        //            if (evt.lengthComputable) {
+                                        //                var percentComplete = evt.loaded / evt.total;
+                                        //                percentComplete = parseInt(percentComplete * 100);
+                                        //                $('.myprogress').text(percentComplete + '%');
+                                        //                $('.myprogress').css('width', percentComplete + '%');
+                                        //            }
+                                        //        },
+                                        //        false);
+                                        //    return xhr;
+                                        //},
+                                        complete: function () {
+                                            //$form.removeClass('is-uploading');
+
+                                        },
+                                        success: function (data) {
+                                            debugger
+                                            //$('#ImportStudentModal').faLoading('remove');
+                                            if (data.status === true) {
+                                                curStep.addClass("btn-actived-step");
+                                                curStep.children("i").addClass("fa fa-check");
+                                                $("#lblFinalStatus").text(data.message);
+                                                $("#btnFinish").show();
+                                                $("#btnNext").hide();
+                                                $("#imgUploadComplete").attr("src", '/images/upload-success.png');
+                                            } else {
+                                                uploadError(2);
+
+                                                if (data.rowTotal != "0") {
+                                                    $('#link-path-file').attr('href', "/FileHistoryImport/" + data.nameFile);
+                                                    $('#link-path-file').text(data.nameFile);
+                                                    $(".Note-Erros-import").css("cssText", "display: block !important;text-align: center !important;");
+                                                }
+                                                if (data.rowTotal == "0") {
+                                                    $("#lblImportMessage").text(data.errorMessage);
+                                                    $("#lblImportMessage").show();
+                                                };
+                                                $("#lblFinalStatus").text(data.message);
+                                                if (data.data != null) {
+                                                    $("#lblUploadStatus").hide();
+                                                    loadFileErros();
+                                                    $("#importCadreError").show();
+                                                } else {
+                                                    $("#btnRetry").show();
+                                                    $("#btnNext").hide();
+
+                                                }
+                                            }
+                                        },
+                                        error: function () {
+                                            //$('#ImportStudentModal').faLoading('remove');
+                                            $("#btnRetry").show();
+                                            $("#btnNext").hide();
+                                            $.notify("Có lỗi xảy ra, vui lòng thử lại sau!", {
+                                                globalPosition: "top center",
+                                                className: "error"
+                                            });
+                                            
+                                        }
+                                    });
+                            }
+                        } else {
+                            $.notify("Bạn phải chọn tệp tin để tải lên!", {
+                                globalPosition: "top center",
+                                className: "error"
+                            });
+                            return false;
+                        }
+                    });
+
+                // Firefox focus bug fix for file input
+                $input
+                    .on('focus', function () { $input.addClass('has-focus'); })
+                    .on('blur', function () { $input.removeClass('has-focus'); });
+            });
+
+    })(jQuery, window, document);
+
+</script>
+
+
+
