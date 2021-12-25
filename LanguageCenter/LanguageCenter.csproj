@@ -196,6 +196,7 @@
     <Compile Include="Areas\Home\Controllers\FilterPriceController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Home\Controllers\HomeClassWeekDayController.cs" />
+    <Compile Include="Areas\Home\Controllers\IntroduceController.cs" />
     <Compile Include="Areas\Home\Controllers\RegistrationClassController.cs" />
     <Compile Include="Areas\Home\Controllers\StudentInfomationController.cs" />
     <Compile Include="Areas\Home\Controllers\ViewNewsFedController.cs" />
@@ -9133,6 +9134,7 @@
     <Content Include="Areas\Home\Views\StudentInfomation\StudentInfomations.cshtml" />
     <Content Include="Areas\Home\Views\StudentInfomation\StudentInfomation.cshtml" />
     <Content Include="Areas\Home\Views\StudentInfomation\ReportForStudent.cshtml" />
+    <Content Include="Areas\Home\Views\Introduce\Introduce.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckfinder\changelog.txt" />
     <Content Include="Scripts\ckfinder\ckfinder.html" />
