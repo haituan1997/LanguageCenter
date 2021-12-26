@@ -40,6 +40,18 @@ namespace LanguageCenter.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public StudentAccount Get_StudentAccountByStudentID(long studentID)
+        {
+            try
+            {
+                return StudentAccountFacade.Get_StudentAccountByStudentID(studentID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        
         public User Get_StudentAccountByUserName(string user)
         {
             try
