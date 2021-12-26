@@ -34,7 +34,7 @@ namespace LanguageCenter.Areas.Home.Controllers
         public ActionResult StudentInfomation(long studentID)
         {
             var student = _studentRepository.Get_StudentByStudentID(studentID);
-            var studentAccount = _studentAccountRepository.Get_StudentAccountByStudentAccountID(studentID);
+            var studentAccount = _studentAccountRepository.Get_StudentAccountByStudentID(studentID);
             var model = Mapper.Map<StudentModel>(student);
             model.UserLogin = studentAccount?.UserLogin;
             model.PassWordLogin = studentAccount?.PassWordLogin;
